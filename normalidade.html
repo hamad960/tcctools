@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teste de Normalidade Online — Shapiro-Wilk e Gráfico Q-Q Grátis</title>
+<meta name="description" content="Teste a normalidade dos seus dados com Shapiro-Wilk, gráfico Q-Q, histograma, assimetria e curtose. Descubra se deve usar estatística paramétrica ou não paramétrica no seu TCC.">
+<link rel="canonical" href="https://tcctools.com.br/normalidade">
+<meta property="og:title" content="Teste de Normalidade Online — Shapiro-Wilk">
+<meta property="og:description" content="Shapiro-Wilk, Q-Q plot e histograma em segundos, direto do seu Excel.">
+<meta property="og:type" content="website">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/css/tokens.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"O que significa p maior que 0,05 no teste de Shapiro-Wilk?","acceptedAnswer":{"@type":"Answer","text":"Significa que a hipótese de normalidade não foi rejeitada, ou seja, seus dados são compatíveis com uma distribuição normal e você pode usar testes paramétricos como o teste t e a ANOVA."}},
+{"@type":"Question","name":"Devo usar Shapiro-Wilk ou Kolmogorov-Smirnov?","acceptedAnswer":{"@type":"Answer","text":"Shapiro-Wilk é preferível na maioria dos casos, pois tem maior poder estatístico para detectar desvios de normalidade, especialmente em amostras pequenas e médias, até cerca de 2000 observações."}},
+{"@type":"Question","name":"Meus dados não são normais. O que fazer?","acceptedAnswer":{"@type":"Answer","text":"Você tem três alternativas: usar testes não paramétricos equivalentes, como Mann-Whitney no lugar do teste t; transformar a variável, por exemplo com logaritmo; ou, se a amostra for grande, invocar o teorema central do limite e prosseguir com testes paramétricos justificando a decisão."}}]}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="page page-wide">
+  <header>
+    <h1 class="h1">Teste de Normalidade — Shapiro-Wilk e Gráfico Q-Q</h1>
+    <p class="sub mt-2">Descubra se seus dados seguem distribuição normal e, portanto, se você deve
+    usar <strong>estatística paramétrica</strong> (teste t, ANOVA) ou <strong>não paramétrica</strong>
+    (Mann-Whitney, Kruskal-Wallis). Inclui Q-Q plot, histograma, assimetria e curtose.</p>
+  </header>
+
+  <!-- DADOS -->
+  <section class="card">
+    <h2 class="card-t">1. Seus dados</h2>
+    <div class="tabs mb-3">
+      <button class="tab on" id="tabFile">Enviar Excel / CSV</button>
+      <button class="tab" id="tabPaste">Colar valores</button>
+      <button class="tab" id="tabDemo">Exemplo</button>
+    </div>
+    <div id="paneFile">
+      <input type="file" id="file" accept=".csv,.xlsx,.xls" class="inp" style="padding:.4rem">
+      <span class="hint">A primeira linha deve conter os nomes das colunas.</span>
+    </div>
+    <div id="panePaste" class="hidden">
+      <textarea id="paste" rows="6" class="inp" style="font-family:ui-monospace"
+        placeholder="Cole uma coluna de números, um por linha:&#10;4,5&#10;5,1&#10;6,3&#10;..."></textarea>
+    </div>
+    <div id="colWrap" class="hidden mt-3 grid2">
+      <label class="lbl">Variável a testar
+        <select id="col" class="sel"></select></label>
+      <label class="lbl">Testar separadamente por grupo (opcional)
+        <select id="grp" class="sel"><option value="-1">Não separar — testar tudo junto</option></select>
+        <span class="hint">Recomendado: teste a normalidade dentro de cada grupo, nunca na amostra inteira.</span></label>
+    </div>
+    <button id="btnRun" class="btn mt-3">Testar normalidade</button>
+    <p id="msg" class="hint mt-2"></p>
+  </section>
+
+  <!-- RESULTADO -->
+  <section id="out" class="hidden flex flex-col gap-6">
+    <div id="verdict" class="card" style="border-width:2px"></div>
+
+    <div class="card">
+      <h2 class="card-t">Resultados por grupo</h2>
+      <div id="tblWrap" class="overflow-x-auto"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2 class="card-t">Gráfico Q-Q (quantil-quantil)</h2>
+        <div style="height:18rem"><canvas id="qq"></canvas></div>
+        <p class="hint mt-2">Se os pontos seguem a linha diagonal, os dados são compatíveis com
+        normalidade. Curvatura em S indica assimetria; pontos afastados nas extremidades indicam
+        caudas pesadas ou outliers.</p>
+      </div>
+      <div class="card">
+        <h2 class="card-t">Histograma com curva normal</h2>
+        <div style="height:18rem"><canvas id="hist"></canvas></div>
+        <p class="hint mt-2">A linha vermelha é a curva normal teórica com a mesma média e desvio-padrão
+        dos seus dados.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-t">Estatística descritiva</h2>
+      <div id="desc" class="metrics"></div>
+    </div>
+
+    <div class="card">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="card-t" style="margin:0">Texto pronto para o capítulo de métodos</h2>
+        <button id="btnCopy" class="btn-o">Copiar</button>
+      </div>
+      <p id="rep" class="box"></p>
+    </div>
+
+    <div class="card">
+      <h2 class="card-t">Testes recomendados para seus dados</h2>
+      <div id="recs" class="flex flex-col gap-2"></div>
+    </div>
+  </section>
+
+  <!-- SEO -->
+  <article class="prose border-t border-slate-800 pt-8">
+    <h2>Como interpretar o teste de normalidade</h2>
+    <p>O teste de Shapiro-Wilk tem uma lógica invertida em relação aos testes que você conhece, e é
+    exatamente aí que a maioria erra. A hipótese nula é <em>"os dados provêm de uma população com
+    distribuição normal"</em>. Logo:</p>
+    <ul>
+      <li><strong>p &gt; 0,05</strong> — a normalidade <strong>não foi rejeitada</strong>. Você pode
+      seguir com testes paramétricos. Aqui, p alto é o resultado desejável.</li>
+      <li><strong>p &lt; 0,05</strong> — a normalidade foi <strong>rejeitada</strong>. Use testes não
+      paramétricos, transforme a variável, ou invoque o teorema central do limite se a amostra for
+      grande.</li>
+    </ul>
+    <p>Note que o teste nunca "prova" que os dados são normais — apenas indica que não há evidência
+    suficiente para afirmar o contrário. É uma distinção lógica que vale mencionar corretamente na
+    dissertação.</p>
+
+    <h3>Por que testar dentro de cada grupo</h3>
+    <p>Se você tem dois grupos com médias diferentes e testa a amostra inteira junta, a distribuição
+    resultante será bimodal e falhará no Shapiro-Wilk mesmo que cada grupo seja perfeitamente
+    normal. O pressuposto do teste t é a normalidade <em>dentro de cada grupo</em>, não da amostra
+    total. Use o campo "separar por grupo" desta ferramenta.</p>
+
+    <h3>O paradoxo das amostras grandes</h3>
+    <p>Com n acima de aproximadamente 300, o Shapiro-Wilk torna-se hipersensível: detecta desvios
+    minúsculos e sem qualquer consequência prática, rejeitando a normalidade de dados que são,
+    para todos os efeitos, normais. Nesses casos, priorize:</p>
+    <ul>
+      <li>O <strong>gráfico Q-Q</strong> — inspeção visual é mais informativa que o p-valor.</li>
+      <li><strong>Assimetria entre −2 e +2</strong> e <strong>curtose entre −7 e +7</strong>, faixas
+      amplamente aceitas como indicativas de normalidade aproximada suficiente.</li>
+      <li>O <strong>teorema central do limite</strong>: com n grande, a distribuição das médias
+      amostrais tende à normal independentemente da distribuição original, o que torna o teste t
+      robusto.</li>
+    </ul>
+    <p>Inversamente, com n muito pequeno (abaixo de 15) o teste tem pouco poder e raramente rejeita
+    a normalidade — o que não é evidência de que ela exista. Amostras pequenas favorecem a escolha
+    conservadora do teste não paramétrico.</p>
+
+    <h3>Alternativas quando a normalidade é violada</h3>
+    <p><strong>1. Testes não paramétricos.</strong> A rota mais direta e segura. Mann-Whitney
+    substitui o teste t independente, Wilcoxon o pareado, Kruskal-Wallis a ANOVA e Spearman a
+    correlação de Pearson. Custo: leve perda de poder estatístico e necessidade de reportar mediana
+    em vez de média.</p>
+    <p><strong>2. Transformação da variável.</strong> Para dados com assimetria positiva, a
+    transformação logarítmica frequentemente normaliza. Raiz quadrada funciona para contagens;
+    inverso para assimetrias severas. A desvantagem é interpretativa: os coeficientes passam a estar
+    na escala transformada, o que dificulta a comunicação dos resultados.</p>
+    <p><strong>3. Remoção de outliers.</strong> Legítima <em>apenas</em> quando há justificativa
+    técnica documentada — erro de digitação, falha de equipamento, participante que não atendeu ao
+    critério de inclusão. Remover pontos apenas porque atrapalham o teste é manipulação de dados e
+    problema de integridade de pesquisa.</p>
+    <p><strong>4. Assumir robustez.</strong> Com grupos de tamanho semelhante e n razoável, o teste t
+    e a ANOVA são notoriamente robustos a desvios moderados de normalidade. Essa decisão é
+    defensável, mas exige justificativa explícita e citação de referência.</p>
+
+    <h3>Shapiro-Wilk ou Kolmogorov-Smirnov?</h3>
+    <p>Shapiro-Wilk, na grande maioria dos casos. Tem poder estatístico superior para detectar
+    desvios de normalidade, especialmente em amostras pequenas e médias, e é o teste recomendado
+    pela literatura metodológica contemporânea. O Kolmogorov-Smirnov com correção de Lilliefors
+    aparece por tradição em alguns manuais de SPSS, mas é menos sensível. Esta ferramenta implementa
+    o algoritmo AS R94 de Royston (1995), o mesmo utilizado pela função
+    <code>shapiro.test</code> do R.</p>
+
+    <h3>Perguntas frequentes</h3>
+    <details class="faq"><summary>Assimetria e curtose substituem o Shapiro-Wilk?</summary>
+      <p class="mt-2">Complementam, não substituem. São especialmente úteis em amostras grandes,
+      onde o p-valor perde utilidade prática. Assimetria zero indica simetria perfeita; curtose zero
+      (na definição de excesso, usada aqui) indica achatamento igual ao da normal.</p></details>
+    <details class="faq"><summary>Preciso testar normalidade para regressão linear?</summary>
+      <p class="mt-2">Sim, mas dos <strong>resíduos</strong>, não das variáveis originais. É um
+      equívoco muito comum. Rode a regressão primeiro e teste a normalidade dos resíduos obtidos.</p></details>
+    <details class="faq"><summary>Como cito este teste no meu trabalho?</summary>
+      <p class="mt-2">Cite a fonte do método, não a ferramenta: SHAPIRO, S. S.; WILK, M. B.
+      An analysis of variance test for normality. <em>Biometrika</em>, v. 52, n. 3-4, p. 591-611, 1965.
+      O texto gerado acima já traz a redação no padrão esperado.</p></details>
+
+    <p>Definida a abordagem, siga para a <a href="/calculadora">calculadora estatística</a>, que já
+    aplica automaticamente o teste apropriado, ou consulte o guia
+    <a href="/guias/qual-teste-estatistico-usar">qual teste estatístico usar</a>.</p>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script type="module">
+import { shapiroWilk, qqPlotData, describe, clean, br, fmtP, normPdf } from '/js/stats.js';
+import { mountShell } from '/js/ui.js';
+mountShell();
+
+const $ = id => document.getElementById(id);
+let rows = [], cQQ = null, cH = null;
+
+// abas
+const panes = { tabFile: 'paneFile', tabPaste: 'panePaste', tabDemo: null };
+Object.keys(panes).forEach(t => $(t).onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+  $(t).classList.add('on');
+  $('paneFile').classList.toggle('hidden', t !== 'tabFile');
+  $('panePaste').classList.toggle('hidden', t !== 'tabPaste');
+  if (t === 'tabDemo') demo();
+});
+
+$('file').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    const wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' });
+    rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, blankrows: false });
+    setup();
+  };
+  r.readAsArrayBuffer(f);
+};
+
+$('paste').oninput = e => {
+  const lines = e.target.value.trim().split(/\r?\n/).filter(Boolean);
+  if (lines.length < 3) return;
+  rows = [['Valores'], ...lines.map(l => [l.trim()])];
+  setup();
+};
+
+function demo() {
+  rows = [['Grupo', 'Escore_normal', 'Escore_assimetrico'],
+    ...Array.from({ length: 60 }, (_, i) => {
+      const g = i < 30 ? 'Controle' : 'Intervenção';
+      const z = (Math.random() + Math.random() + Math.random() + Math.random()
+                + Math.random() + Math.random() - 3) * 1.4;
+      return [g, +((i < 30 ? 65 : 74) + z * 8).toFixed(2),
+              +(Math.exp(Math.random() * 2.2) * 4).toFixed(2)];
+    })];
+  setup();
+  $('msg').textContent = 'Dados de exemplo carregados: uma variável normal e uma assimétrica.';
+}
+
+function setup() {
+  if (rows.length < 4) return alert('São necessários pelo menos 3 valores.');
+  const hdr = rows[0];
+  const opt = hdr.map((h, i) => `<option value="${i}">${h || 'Coluna ' + (i + 1)}</option>`).join('');
+  $('col').innerHTML = opt;
+  $('grp').innerHTML = '<option value="-1">Não separar — testar tudo junto</option>' + opt;
+  // heurística: primeira coluna numérica como variável
+  const firstNum = hdr.findIndex((_, i) => clean(rows.slice(1).map(r => r?.[i])).length > rows.length * 0.6);
+  if (firstNum >= 0) $('col').value = firstNum;
+  $('colWrap').classList.remove('hidden');
+  $('msg').textContent = `${rows.length - 1} linhas carregadas.`;
+}
+
+$('btnRun').onclick = run;
+
+function run() {
+  if (rows.length < 4) return alert('Carregue seus dados primeiro.');
+  const ci = +$('col').value, gi = +$('grp').value;
+  const name = rows[0][ci] || 'Variável';
+
+  // montar grupos
+  let groups;
+  if (gi < 0) {
+    groups = { [name]: clean(rows.slice(1).map(r => r?.[ci])) };
+  } else {
+    groups = {};
+    rows.slice(1).forEach(r => {
+      if (!r) return;
+      const v = Number(String(r[ci] ?? '').replace(',', '.'));
+      if (!Number.isFinite(v)) return;
+      const k = String(r[gi] ?? '—').trim();
+      (groups[k] ||= []).push(v);
+    });
+  }
+  const keys = Object.keys(groups).filter(k => groups[k].length >= 3);
+  if (!keys.length) return alert('Nenhum grupo com ao menos 3 valores numéricos válidos.');
+
+  // testes
+  const res = keys.map(k => ({ k, d: describe(groups[k]), sw: shapiroWilk(groups[k]) }));
+  const allNormal = res.every(r => r.sw.normal);
+  const anyBig = res.some(r => r.d.n > 300);
+
+  // veredito
+  $('verdict').style.borderColor = allNormal ? '#065f46' : '#78350f';
+  $('verdict').innerHTML = `
+    <p class="metric-k">Conclusão</p>
+    <p class="text-xl font-bold ${allNormal ? 'text-emerald-400' : 'text-amber-400'} mt-1">
+      ${allNormal ? '✓ Dados compatíveis com distribuição normal' : '⚠ Normalidade rejeitada em ao menos um grupo'}</p>
+    <p class="sub mt-2">${allNormal
+      ? 'Você pode utilizar testes <strong>paramétricos</strong>: teste t, ANOVA, correlação de Pearson e regressão linear.'
+      : 'Recomenda-se o uso de testes <strong>não paramétricos</strong>: Mann-Whitney, Wilcoxon, Kruskal-Wallis ou correlação de Spearman.'}
+      ${anyBig ? ' <em>Atenção: com n acima de 300 o Shapiro-Wilk é hipersensível. Priorize a inspeção do gráfico Q-Q, da assimetria e da curtose.</em>' : ''}</p>`;
+
+  // tabela
+  $('tblWrap').innerHTML = `<table class="apa">
+    <thead><tr><th>Grupo</th><th>n</th><th>W</th><th>p</th><th>Assimetria</th><th>Curtose</th><th>Conclusão</th></tr></thead>
+    <tbody>${res.map(r => `<tr>
+      <td>${r.k}</td><td>${r.d.n}</td><td>${br(r.sw.W, 4)}</td><td>${fmtP(r.sw.p)}</td>
+      <td>${br(r.d.skew, 3)}</td><td>${br(r.d.kurt, 3)}</td>
+      <td><span class="tag ${r.sw.normal ? 'tag-ok' : 'tag-no'}">${r.sw.normal ? 'NORMAL' : 'NÃO NORMAL'}</span></td>
+    </tr>`).join('')}</tbody>
+    <tfoot><tr><td colspan="7">Nota. W = estatística de Shapiro-Wilk. Adotou-se α = 0,05.
+      Assimetria e curtose (excesso) na formulação amostral corrigida; valores entre −2 e +2 e entre
+      −7 e +7, respectivamente, são usualmente aceitos como indicativos de normalidade aproximada.</td></tr></tfoot>
+  </table>`;
+
+  // descritiva do primeiro grupo (ou do conjunto)
+  const d0 = res[0].d;
+  $('desc').innerHTML = [
+    ['n', d0.n], ['Média', br(d0.mean)], ['Desvio-padrão', br(d0.sd)], ['Erro-padrão', br(d0.sem, 3)],
+    ['Mediana', br(d0.median)], ['Q1', br(d0.q1)], ['Q3', br(d0.q3)],
+    ['Mín–Máx', `${br(d0.min)} – ${br(d0.max)}`],
+    ['IC 95% da média', `[${br(d0.ci95[0])}; ${br(d0.ci95[1])}]`],
+    ['Assimetria', br(d0.skew, 3)], ['Curtose', br(d0.kurt, 3)],
+    ['Grupo exibido', res[0].k]
+  ].map(([k, v]) => `<div class="metric"><div class="metric-k">${k}</div><div class="metric-v">${v}</div></div>`).join('');
+
+  drawQQ(groups, keys);
+  drawHist(groups[keys[0]], keys[0]);
+
+  // texto
+  const parts = res.map(r =>
+    `${keys.length > 1 ? `no grupo ${r.k} ` : ''}(W = ${br(r.sw.W, 4)}; ${fmtP(r.sw.p)}; n = ${r.d.n})`);
+  $('rep').textContent =
+    `A normalidade da distribuição da variável ${name} foi verificada pelo teste de Shapiro-Wilk, `
+    + `complementado pela inspeção do gráfico quantil-quantil. Os resultados ${parts.join(', ')} `
+    + `${allNormal ? 'não permitiram rejeitar a hipótese de normalidade' : 'indicaram violação do pressuposto de normalidade'} `
+    + `ao nível de significância de 5%. ${allNormal
+      ? `Dessa forma, optou-se pela utilização de testes paramétricos nas análises subsequentes.`
+      : `Consequentemente, adotaram-se testes não paramétricos, e os dados são apresentados por mediana e intervalo interquartil.`}`
+    + ` Os valores de assimetria (${br(d0.skew, 2)}) e curtose (${br(d0.kurt, 2)}) situaram-se `
+    + `${Math.abs(d0.skew) < 2 && Math.abs(d0.kurt) < 7 ? 'dentro' : 'fora'} dos parâmetros de referência.`;
+
+  // recomendações
+  const recs = allNormal
+    ? [['Comparar 2 grupos independentes', 'Teste t de Student'],
+       ['Comparar 2 medidas pareadas', 'Teste t pareado'],
+       ['Comparar 3+ grupos', 'ANOVA one-way + pós-teste de Tukey'],
+       ['Associação entre 2 numéricas', 'Correlação de Pearson'],
+       ['Previsão', 'Regressão linear']]
+    : [['Comparar 2 grupos independentes', 'Teste U de Mann-Whitney'],
+       ['Comparar 2 medidas pareadas', 'Teste de Wilcoxon'],
+       ['Comparar 3+ grupos', 'Kruskal-Wallis + pós-teste de Dunn'],
+       ['Associação entre 2 numéricas', 'Correlação de Spearman'],
+       ['Alternativa', 'Transformar a variável (log, raiz) e reavaliar']];
+  $('recs').innerHTML = recs.map(([o, t]) =>
+    `<div class="kv"><span>${o}</span><span>${t}</span></div>`).join('')
+    + `<a href="/calculadora" class="btn mt-3 inline-block text-center" style="text-decoration:none">Calcular na calculadora estatística →</a>`;
+
+  $('out').classList.remove('hidden');
+  $('out').scrollIntoView({ behavior: 'smooth' });
+}
+
+const PAL = ['#2563eb', '#dc2626', '#059669', '#d97706', '#7c3aed'];
+
+function drawQQ(groups, keys) {
+  if (cQQ) cQQ.destroy();
+  const ds = [];
+  keys.forEach((k, i) => {
+    const q = qqPlotData(groups[k]);
+    ds.push({ type: 'scatter', label: k, data: q.points, pointRadius: 3,
+      backgroundColor: PAL[i % 5] + 'aa' });
+    if (i === 0) ds.push({ type: 'line', label: 'Normal teórica', data: q.line,
+      pointRadius: 0, borderColor: '#94a3b8', borderWidth: 2, borderDash: [5, 4] });
+  });
+  cQQ = new Chart($('qq'), { data: { datasets: ds }, options: {
+    responsive: true, maintainAspectRatio: false, animation: false, devicePixelRatio: 3,
+    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } },
+    scales: { x: { type: 'linear', title: { display: true, text: 'Quantis teóricos (z)', color: '#94a3b8' },
+        ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } },
+      y: { title: { display: true, text: 'Quantis observados', color: '#94a3b8' },
+        ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } } } } });
+}
+
+function drawHist(data, label) {
+  if (cH) cH.destroy();
+  const n = data.length, m = data.reduce((a, b) => a + b, 0) / n;
+  const sd = Math.sqrt(data.reduce((s, v) => s + (v - m) ** 2, 0) / (n - 1));
+  const bins = Math.max(5, Math.min(20, Math.ceil(Math.sqrt(n))));
+  const mn = Math.min(...data), mx = Math.max(...data), w = (mx - mn) / bins || 1;
+  const counts = new Array(bins).fill(0);
+  data.forEach(v => counts[Math.min(bins - 1, Math.floor((v - mn) / w))]++);
+  const centers = counts.map((_, i) => mn + w * (i + 0.5));
+  const curve = centers.map(c => normPdf((c - m) / sd) / sd * n * w);
+
+  cH = new Chart($('hist'), { data: {
+    labels: centers.map(c => br(c, 1)),
+    datasets: [
+      { type: 'bar', label: label, data: counts, backgroundColor: '#2563eb99', borderColor: '#2563eb', borderWidth: 1 },
+      { type: 'line', label: 'Curva normal teórica', data: curve, borderColor: '#dc2626',
+        borderWidth: 2, pointRadius: 0, tension: 0.4 }]
+  }, options: {
+    responsive: true, maintainAspectRatio: false, animation: false, devicePixelRatio: 3,
+    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } },
+    scales: { x: { title: { display: true, text: 'Valor', color: '#94a3b8' }, ticks: { color: '#94a3b8', maxRotation: 0 }, grid: { display: false } },
+      y: { title: { display: true, text: 'Frequência', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } } } } });
+}
+
+$('btnCopy').onclick = e => navigator.clipboard.writeText($('rep').textContent)
+  .then(() => { e.target.textContent = 'Copiado!'; setTimeout(() => e.target.textContent = 'Copiar', 1500); });
+</script>
+</body>
+</html>

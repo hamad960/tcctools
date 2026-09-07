@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Como Interpretar o summary(lm) do R — Guia Linha por Linha</title>
+<meta name="description" content="Entenda cada linha da saída de regressão do R: coeficientes, erro-padrão, valor t, Pr(>|t|), R², R² ajustado, estatística F e resíduos. Com exemplos de redação para dissertação.">
+<link rel="canonical" href="https://r-latex-generator.vercel.app/guias/interpretar-summary-lm-r">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+"headline":"Como interpretar o summary(lm) do R linha por linha",
+"inLanguage":"pt-BR","datePublished":"2026-09-07",
+"author":{"@type":"Organization","name":"Estatística TCC"}}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4"><a href="/" class="hover:text-blue-400">Início</a> › Guias › summary(lm)</nav>
+  <h1 class="text-3xl font-bold leading-tight mb-3">Como interpretar o summary(lm) do R, linha por linha</h1>
+  <p class="text-sm text-slate-400 mb-8">Atualizado em 7 de setembro de 2026 · leitura de 14 minutos</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+  <p class="text-base text-slate-200">A saída do <code class="text-emerald-400">summary(lm)</code> é
+  provavelmente o bloco de texto mais intimidante que um estudante encontra ao usar o R pela
+  primeira vez. São vinte linhas de números sem rótulos amigáveis, siglas em inglês e notação
+  científica. A boa notícia: essa saída tem estrutura fixa, e cada elemento responde a uma pergunta
+  específica. Depois de entender a lógica uma vez, você lê qualquer regressão em trinta segundos.</p>
+
+  <p>Vamos dissecar um exemplo completo. Suponha um estudo que investiga se idade e renda predizem
+  um escore de qualidade de vida:</p>
+
+  <pre class="bg-slate-900 border border-slate-800 rounded-lg p-4 text-xs overflow-x-auto text-emerald-400 leading-relaxed">Call:
+lm(formula = qualidade_vida ~ idade + renda, data = dados)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.4531  -3.2104   0.1876   3.4522  11.9087 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  42.35601    4.51203   9.388  &lt; 2e-16 ***
+idade         0.81230    0.12450   6.524 4.56e-09 ***
+renda        -0.14560    0.08920  -1.632    0.105    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.124 on 147 degrees of freedom
+Multiple R-squared:  0.4231,	Adjusted R-squared:  0.4152 
+F-statistic: 53.89 on 2 and 147 DF,  p-value: &lt; 2.2e-16</pre>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Bloco 1 — Call</h2>
+  <p>Reproduz exatamente o modelo ajustado. Parece trivial, mas é sua principal proteção contra o
+  erro mais custoso da análise: <strong>reportar resultados de um modelo diferente daquele que você
+  pensa ter rodado</strong>. Depois de vinte tentativas de especificação, é fácil perder o fio.
+  Sempre confira o Call antes de copiar números para o texto.</p>
+  <p>A notação <code>y ~ x1 + x2</code> lê-se "y explicado por x1 e x2". O til separa desfecho de
+  preditores.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Bloco 2 — Residuals</h2>
+  <p>Resíduo é o erro do modelo para cada observação: o valor observado menos o valor previsto.
+  O R mostra os cinco números descritivos dessa distribuição.</p>
+  <p>O que você deve verificar aqui é a <strong>simetria</strong>. Num modelo bem ajustado, a mediana
+  fica próxima de zero e o mínimo e o máximo têm magnitudes semelhantes. No exemplo: mediana de
+  0,19 (próxima de zero), mínimo de −12,45 e máximo de 11,91 — razoavelmente simétricos, e o
+  primeiro e terceiro quartis quase espelhados. Sinal de que o pressuposto de normalidade dos
+  resíduos é plausível.</p>
+  <p><strong>Sinais de alerta:</strong> mediana muito distante de zero indica assimetria; um extremo
+  três ou quatro vezes maior que o outro sugere outliers influentes ou relação não linear que o
+  modelo linear não captura. Nesses casos, investigue com
+  <code class="text-emerald-400">plot(modelo)</code>, que produz os quatro gráficos diagnósticos
+  padrão.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Bloco 3 — Coefficients (o coração da análise)</h2>
+  <p>É daqui que sai praticamente todo o conteúdo que você reportará. Cada linha é uma variável,
+  cada coluna uma informação diferente sobre ela.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Coluna Estimate</h3>
+  <p>O coeficiente estimado, na unidade original das variáveis. É o número mais interpretável de
+  toda a saída, e o que você deve destacar.</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>(Intercept) = 42,356</strong> — o valor previsto de qualidade de vida quando
+    <em>todas</em> as preditoras valem zero. Cuidado: frequentemente isso não tem significado
+    substantivo. Uma pessoa com zero anos de idade e zero de renda não existe. O intercepto é
+    matematicamente necessário, mas raramente interpretável por si só. Se quiser que ele signifique
+    algo, centralize as preditoras na média — aí o intercepto passa a ser o valor previsto para o
+    indivíduo médio.</li>
+    <li><strong>idade = 0,812</strong> — cada ano adicional de idade associa-se a um aumento de
+    0,812 ponto no escore de qualidade de vida, <strong>mantendo a renda constante</strong>.
+    Essa última cláusula é o que distingue regressão múltipla de correlações separadas: o
+    coeficiente é o efeito <em>parcial</em>, já descontada a influência das outras preditoras.</li>
+    <li><strong>renda = −0,146</strong> — o sinal negativo indica direção inversa, mas veja a coluna
+    de p-valor antes de interpretar: esse coeficiente não é significativo. Interpretar a direção de
+    um coeficiente não significativo é erro comum — a estimativa é indistinguível de zero.</li>
+  </ul>
+
+  <h3 class="text-lg font-bold text-white pt-2">Coluna Std. Error</h3>
+  <p>O erro-padrão do coeficiente: a incerteza da estimativa. Quanto menor em relação ao Estimate,
+  mais precisa a estimativa. Serve para construir o intervalo de confiança de 95%, que
+  aproximadamente é o coeficiente mais ou menos duas vezes o erro-padrão. Para idade:
+  0,812 ± 2 × 0,124, ou seja, aproximadamente de 0,56 a 1,06. No R, obtenha o valor exato com
+  <code class="text-emerald-400">confint(modelo)</code>.</p>
+  <p><strong>Regra prática útil:</strong> se o intervalo de confiança contém zero, o coeficiente não
+  é significativo a 5%. É a mesma informação do p-valor, expressa de forma mais informativa —
+  e revistas de qualidade preferem intervalos de confiança a p-valores isolados.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Coluna t value</h3>
+  <p>Simplesmente o Estimate dividido pelo Std. Error. É a estatística de teste que gera o p-valor.
+  Como referência mental: valores de t com módulo acima de aproximadamente 2 correspondem a
+  p menor que 0,05 em amostras de tamanho razoável. Para idade, t = 6,524 — bem acima do limiar.
+  Para renda, t = −1,632 — abaixo.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Coluna Pr(&gt;|t|)</h3>
+  <p>O p-valor bilateral. Testa a hipótese nula de que aquele coeficiente é igual a zero, isto é,
+  de que a variável não contribui para explicar o desfecho, controladas as demais.</p>
+  <p>Duas notações confundem iniciantes:</p>
+  <ul class="list-disc pl-6 space-y-1.5">
+    <li><code>4.56e-09</code> é notação científica: 0,00000000456. Reporte como
+    <strong>p &lt; 0,001</strong>.</li>
+    <li><code>&lt; 2e-16</code> é o limite de precisão numérica do R — o p-valor é tão pequeno que
+    não pode ser representado. Reporte também como <strong>p &lt; 0,001</strong>.
+    Nunca escreva "p = 0,000", que é matematicamente impossível e sinaliza desconhecimento.</li>
+  </ul>
+
+  <h3 class="text-lg font-bold text-white pt-2">Os asteriscos e os Signif. codes</h3>
+  <p>Marcação visual da significância: três asteriscos para p &lt; 0,001, dois para p &lt; 0,01, um
+  para p &lt; 0,05, um ponto para p &lt; 0,1. Úteis para leitura rápida da saída, mas
+  <strong>não os reproduza no texto corrido</strong> da dissertação — reporte o p-valor numérico.
+  Em tabelas, asteriscos são aceitáveis desde que a legenda explique a convenção.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Bloco 4 — Residual standard error</h2>
+  <p>O desvio-padrão dos resíduos: o erro típico de previsão do modelo, na unidade do desfecho.
+  Aqui, 5,124 pontos. Significa que as previsões do modelo erram, em média, cerca de 5 pontos no
+  escore de qualidade de vida.</p>
+  <p>Esse número só é interpretável em relação à escala da variável. Se o escore varia de 0 a 100,
+  errar 5 pontos é bom. Se varia de 0 a 10, é um modelo praticamente inútil. Compare sempre com o
+  desvio-padrão original do desfecho — se o erro residual é próximo do desvio-padrão bruto, o
+  modelo não está agregando poder explicativo.</p>
+  <p>Os <strong>147 graus de liberdade</strong> equivalem a n menos o número de parâmetros
+  estimados. Com três parâmetros (intercepto e duas preditoras), a amostra tinha 150 observações
+  válidas. Útil para conferir se o R descartou casos com dados faltantes sem você perceber —
+  um dos erros silenciosos mais frequentes na prática.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Bloco 5 — R² e R² ajustado</h2>
+  <p><strong>Multiple R-squared: 0,4231.</strong> O modelo explica 42,31% da variância do desfecho.
+  Varia de 0 a 1, e quanto maior, melhor o ajuste.</p>
+  <p><strong>Adjusted R-squared: 0,4152.</strong> O mesmo indicador, penalizado pelo número de
+  preditoras. Isto existe porque o R² <em>sempre</em> aumenta quando você adiciona variáveis,
+  mesmo variáveis puramente aleatórias e sem qualquer relação com o desfecho. O R² ajustado só
+  aumenta se a variável adicionada agregar poder explicativo real. <strong>Em regressão múltipla,
+  reporte o ajustado</strong> — é o indicador honesto.</p>
+  <p>Quanto é "bom"? Depende radicalmente da área. Em física ou engenharia, R² de 0,95 é esperado.
+  Em ciências sociais, psicologia e educação, R² entre 0,20 e 0,40 é comum e publicável, porque
+  comportamento humano tem muitas fontes de variação não medidas. Não persiga R² alto às custas de
+  incluir preditoras sem fundamentação teórica — isso é <em>overfitting</em>, e o modelo não
+  generalizará para novos dados.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Bloco 6 — F-statistic</h2>
+  <p>Testa a significância <strong>global</strong> do modelo: a hipótese nula de que todos os
+  coeficientes das preditoras são simultaneamente zero, ou seja, de que o modelo inteiro não
+  explica nada além do que a média do desfecho explicaria.</p>
+  <p>No exemplo, F = 53,89 com 2 e 147 graus de liberdade, p &lt; 2,2 × 10⁻¹⁶. O modelo é
+  globalmente significativo.</p>
+  <p>Este é o <strong>primeiro número que você deve olhar</strong>, antes dos coeficientes
+  individuais. Se o F global não é significativo, examinar coeficientes individualmente é
+  problemático — você estará fazendo múltiplas comparações sem proteção contra falsos positivos.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Como escrever isso na dissertação</h2>
+  <div class="bg-slate-900 border border-slate-800 rounded-lg p-5 text-slate-200 leading-relaxed">
+  <p>"O modelo de regressão linear múltipla mostrou-se estatisticamente significativo
+  (F(2, 147) = 53,89; p &lt; 0,001), explicando 41,5% da variância da qualidade de vida
+  (R² ajustado = 0,415). A idade apresentou associação positiva e significativa com o desfecho
+  (β = 0,81; EP = 0,12; t = 6,52; p &lt; 0,001; IC 95% [0,57; 1,06]), indicando aumento médio de
+  0,81 ponto no escore por ano adicional de idade, controlada a renda. A renda, por sua vez, não
+  apresentou contribuição significativa ao modelo (β = −0,15; EP = 0,09; t = −1,63; p = 0,105).
+  O erro-padrão residual foi de 5,12 pontos."</p>
+  </div>
+  <p>Note a estrutura: primeiro o modelo global, depois o poder explicativo, depois cada preditora
+  com estimativa, precisão e significância, e por fim a interpretação substantiva na unidade
+  original. Essa é a sequência que bancas e revisores esperam.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Pressupostos que o summary não mostra</h2>
+  <p>Uma saída bonita não garante um modelo válido. Verifique sempre, com
+  <code class="text-emerald-400">plot(modelo)</code>:</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Linearidade</strong> — gráfico "Residuals vs Fitted". Os pontos devem espalhar-se
+    aleatoriamente em torno da linha horizontal. Um padrão em curva indica relação não linear.</li>
+    <li><strong>Normalidade dos resíduos</strong> — gráfico "Normal Q-Q". Os pontos devem seguir a
+    diagonal. Note: a normalidade exigida é <em>dos resíduos</em>, não das variáveis originais —
+    equívoco muito comum.</li>
+    <li><strong>Homocedasticidade</strong> — gráfico "Scale-Location". A dispersão deve ser constante
+    ao longo dos valores previstos. Um formato de cone indica heterocedasticidade.</li>
+    <li><strong>Observações influentes</strong> — gráfico "Residuals vs Leverage". Pontos com
+    distância de Cook acima de 1 merecem investigação individual.</li>
+    <li><strong>Multicolinearidade</strong> — não aparece nos gráficos. Use
+    <code class="text-emerald-400">car::vif(modelo)</code>. Valores de VIF acima de 5 indicam
+    preditoras redundantes entre si, o que infla erros-padrão e desestabiliza os coeficientes.</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Erros frequentes</h2>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Escrever "p = 0,000".</strong> Impossível. Use "p &lt; 0,001".</li>
+    <li><strong>Interpretar coeficiente não significativo.</strong> Se p = 0,105, a estimativa é
+    indistinguível de zero — não afirme que "houve tendência de redução".</li>
+    <li><strong>Interpretar o intercepto sem sentido substantivo.</strong> Mencione que é apenas
+    parâmetro do modelo, ou centralize as preditoras.</li>
+    <li><strong>Afirmar causalidade.</strong> "Preditora" é termo técnico da estrutura matemática.
+    Regressão sobre dados observacionais não estabelece causa.</li>
+    <li><strong>Reportar R² em vez do ajustado</strong> em modelo múltiplo.</li>
+    <li><strong>Esquecer de verificar os graus de liberdade.</strong> Se o n do modelo é menor que o
+    esperado, o R descartou casos com dados faltantes silenciosamente.</li>
+  </ul>
+
+  <div class="bg-slate-900 border border-blue-800/50 rounded-xl p-5 mt-8">
+    <p class="text-sm font-bold text-white mb-2">Ferramentas relacionadas</p>
+    <p class="text-xs text-slate-400 mb-3">Cole sua saída do R no
+    <a href="/r-latex" class="text-blue-400 underline">conversor R → LaTeX</a> para gerar a tabela de
+    coeficientes formatada em booktabs. Se preferir não usar o R, a
+    <a href="/calculadora" class="text-blue-400 underline">calculadora estatística</a> roda regressão
+    simples direto do Excel, com o parágrafo em ABNT já redigido.</p>
+  </div>
+
+  <h2 class="text-xl font-bold text-white pt-8">Referências</h2>
+  <ul class="text-xs space-y-1 text-slate-400">
+    <li>FOX, J.; WEISBERG, S. <strong>An R companion to applied regression</strong>. 3. ed. Thousand Oaks: Sage, 2019.</li>
+    <li>JAMES, G. et al. <strong>An introduction to statistical learning</strong>. 2. ed. New York: Springer, 2021.</li>
+    <li>KUTNER, M. H. et al. <strong>Applied linear statistical models</strong>. 5. ed. Boston: McGraw-Hill, 2005.</li>
+  </ul>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">import{mountShell}from'/js/ui.js';mountShell();</script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Como Reportar Resultados Estatísticos em ABNT e APA — Modelos de Frases</title>
+<meta name="description" content="Modelos prontos de redação para teste t, ANOVA, correlação e regressão em normas ABNT e APA. Formatação de tabelas e figuras, arredondamento e erros que a banca cobra.">
+<link rel="canonical" href="https://r-latex-generator.vercel.app/guias/como-reportar-resultados-abnt">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+"headline":"Como reportar resultados estatísticos em ABNT e APA",
+"inLanguage":"pt-BR","datePublished":"2026-09-07",
+"author":{"@type":"Organization","name":"Estatística TCC"}}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4"><a href="/" class="hover:text-blue-400">Início</a> › Guias › Reportar resultados</nav>
+  <h1 class="text-3xl font-bold leading-tight mb-3">Como reportar resultados estatísticos em ABNT e APA</h1>
+  <p class="text-sm text-slate-400 mb-8">Atualizado em 7 de setembro de 2026 · leitura de 13 minutos</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+  <p class="text-base text-slate-200">Você rodou a análise, o p-valor deu significativo, e agora
+  vem a parte que ninguém ensina: transformar números em prosa acadêmica. Esta é a etapa em que
+  trabalhos estatisticamente corretos recebem correções extensas — não por erro de cálculo, mas por
+  redação inadequada, formatação fora de norma e omissão de informações obrigatórias.</p>
+
+  <p>A seção de resultados tem uma regra de ouro que resolve metade dos problemas:
+  <strong>ela apresenta, não interpreta</strong>. Interpretação, comparação com a literatura e
+  explicações causais pertencem à discussão. Nos resultados você relata o que os dados mostraram,
+  de forma objetiva e completa.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">O que todo resultado inferencial deve conter</h2>
+  <p>Independentemente do teste, cinco elementos são obrigatórios em padrões contemporâneos:</p>
+  <ol class="list-decimal pl-6 space-y-1.5">
+    <li><strong>Nome do teste</strong> aplicado</li>
+    <li><strong>Estatística de teste</strong> com graus de liberdade (t, F, U, χ², H)</li>
+    <li><strong>P-valor</strong> exato, ou "&lt; 0,001" quando muito pequeno</li>
+    <li><strong>Tamanho de efeito</strong> (d de Cohen, η², r, V de Cramér)</li>
+    <li><strong>Estatística descritiva</strong> dos grupos: média e desvio-padrão, ou mediana e
+    intervalo interquartil</li>
+  </ol>
+  <p>O item 4 é o mais negligenciado e o mais cobrado atualmente. Desde a declaração da American
+  Statistical Association sobre p-valores (2016), reportar apenas significância é considerado
+  prática insuficiente. Tamanho de efeito responde à pergunta que realmente importa: o efeito é
+  grande o bastante para ter relevância prática? Adicionar o intervalo de confiança (item
+  opcional, mas fortemente recomendado) eleva ainda mais a qualidade.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Convenções numéricas em português</h2>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Separador decimal é a vírgula.</strong> Escreva p = 0,032, não p = 0.032. Este é o
+    erro de formatação mais frequente em trabalhos brasileiros, porque o software estatístico
+    devolve ponto e a conversão é esquecida.</li>
+    <li><strong>Duas casas decimais</strong> para médias, desvios-padrão e estatísticas de teste.
+    <strong>Três casas</strong> para p-valores, coeficientes de correlação e tamanhos de efeito.</li>
+    <li><strong>Nunca "p = 0,000".</strong> Um p-valor nunca é exatamente zero. Use "p &lt; 0,001".</li>
+    <li><strong>Não use zero à esquerda</strong> em quantidades que não podem exceder 1: escreva
+    p = ,032 e r = ,45 segundo a APA estrita. Na prática brasileira, "p = 0,032" é amplamente
+    aceito — verifique o manual do seu programa.</li>
+    <li><strong>Símbolos estatísticos em itálico</strong>: <em>p</em>, <em>t</em>, <em>F</em>,
+    <em>r</em>, <em>M</em>, <em>DP</em>, <em>n</em>, <em>d</em>. Já os subscritos e os nomes de
+    testes ficam em redondo.</li>
+    <li><strong>Graus de liberdade entre parênteses</strong>, imediatamente após a estatística:
+    t(48), F(2, 147), χ²(3).</li>
+    <li><strong>Abreviaturas em português</strong>: M para média, DP para desvio-padrão, Md para
+    mediana, IIQ para intervalo interquartil, EP para erro-padrão, IC para intervalo de confiança.
+    Em APA em inglês seriam M, SD, Mdn, IQR, SE, CI.</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Modelos de redação por teste</h2>
+
+  <h3 class="text-lg font-bold text-white pt-2">Teste t independente</h3>
+  <div class="mdl">O grupo intervenção (<em>M</em> = 74,32; <em>DP</em> = 8,15; <em>n</em> = 25)
+  apresentou desempenho significativamente superior ao grupo controle (<em>M</em> = 62,08;
+  <em>DP</em> = 9,42; <em>n</em> = 25), <em>t</em>(48) = 4,91; <em>p</em> &lt; 0,001;
+  IC 95% [7,23; 17,25]; <em>d</em> de Cohen = 1,39, caracterizando efeito de grande magnitude.</div>
+  <p class="text-xs text-slate-500">Se a correção de Welch foi aplicada, informe: "adotou-se a
+  correção de Welch em razão da heterogeneidade das variâncias (Levene: <em>F</em> = 6,12;
+  <em>p</em> = 0,017)", e os graus de liberdade aparecerão fracionários — t(43,7).</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Teste t pareado</h3>
+  <div class="mdl">Observou-se aumento significativo do escore entre o pré-teste
+  (<em>M</em> = 58,40; <em>DP</em> = 7,21) e o pós-teste (<em>M</em> = 68,95; <em>DP</em> = 6,88),
+  <em>t</em>(29) = 8,14; <em>p</em> &lt; 0,001; Δ = 10,55 pontos; IC 95% [7,90; 13,20];
+  <em>d</em> = 1,49.</div>
+
+  <h3 class="text-lg font-bold text-white pt-2">Mann-Whitney</h3>
+  <div class="mdl">Considerando a violação do pressuposto de normalidade verificada pelo teste de
+  Shapiro-Wilk, aplicou-se o teste U de Mann-Whitney. O grupo experimental
+  (<em>Md</em> = 8,00; <em>IIQ</em> = 7,00–9,00) obteve escores significativamente superiores ao
+  grupo controle (<em>Md</em> = 6,00; <em>IIQ</em> = 5,00–7,00), <em>U</em> = 142,5;
+  <em>z</em> = −3,42; <em>p</em> &lt; 0,001; <em>r</em> = 0,48, indicando efeito moderado.</div>
+  <p class="text-xs text-slate-500">Em testes não paramétricos reporte <strong>mediana e intervalo
+  interquartil</strong>, não média e desvio-padrão — usar média aqui contradiz a própria
+  justificativa de escolha do teste.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Wilcoxon</h3>
+  <div class="mdl">O teste de Wilcoxon para amostras pareadas indicou variação significativa entre
+  os momentos (<em>n</em> = 28), <em>T</em> = 34,0; <em>z</em> = −3,88; <em>p</em> &lt; 0,001;
+  <em>r</em> = 0,52.</div>
+
+  <h3 class="text-lg font-bold text-white pt-2">ANOVA one-way com pós-teste</h3>
+  <div class="mdl">A análise de variância one-way revelou diferença significativa entre os três
+  grupos, <em>F</em>(2, 87) = 12,47; <em>p</em> &lt; 0,001; <em>η</em>² = 0,223, correspondente a
+  efeito de grande magnitude. A homogeneidade das variâncias foi confirmada pelo teste de Levene
+  (<em>F</em> = 1,08; <em>p</em> = 0,344). O pós-teste de Tukey indicou que o grupo A
+  (<em>M</em> = 78,2; <em>DP</em> = 6,1) diferiu significativamente do grupo B
+  (<em>M</em> = 68,5; <em>DP</em> = 7,3; <em>p</em> = 0,002) e do grupo C (<em>M</em> = 65,1;
+  <em>DP</em> = 6,9; <em>p</em> &lt; 0,001), sem diferença entre B e C (<em>p</em> = 0,182).</div>
+  <p class="text-xs text-slate-500">Sempre informe qual pós-teste foi usado e apenas execute-o se o
+  <em>F</em> global for significativo.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Kruskal-Wallis</h3>
+  <div class="mdl">O teste de Kruskal-Wallis apontou diferença significativa entre os grupos,
+  <em>H</em>(2) = 15,82; <em>p</em> &lt; 0,001; <em>ε</em>² = 0,178. O pós-teste de Dunn com
+  correção de Bonferroni identificou diferença entre os grupos A e C (<em>p</em> = 0,003).</div>
+
+  <h3 class="text-lg font-bold text-white pt-2">Correlação de Pearson</h3>
+  <div class="mdl">Verificou-se correlação positiva moderada e significativa entre horas de estudo
+  e desempenho acadêmico, <em>r</em>(48) = 0,624; <em>p</em> &lt; 0,001; IC 95% [0,42; 0,77];
+  <em>R</em>² = 0,389, indicando que 38,9% da variância do desempenho é compartilhada com a
+  variável horas de estudo.</div>
+  <p class="text-xs text-slate-500">Nunca escreva que uma variável "causou" a outra. Use
+  "associou-se a", "relacionou-se com", "variou conjuntamente com".</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Correlação de Spearman</h3>
+  <div class="mdl">A correlação de Spearman indicou associação negativa moderada e significativa
+  entre nível de ansiedade e qualidade do sono, <em>ρ</em>(62) = −0,438; <em>p</em> &lt; 0,001.</div>
+
+  <h3 class="text-lg font-bold text-white pt-2">Regressão linear simples</h3>
+  <div class="mdl">A regressão linear simples mostrou-se significativa
+  (<em>F</em>(1, 98) = 41,23; <em>p</em> &lt; 0,001), explicando 29,6% da variância do desfecho
+  (<em>R</em>² = 0,296; <em>R</em>² ajustado = 0,289). O coeficiente angular foi
+  <em>β</em> = 0,4218 (<em>EP</em> = 0,0657; <em>t</em> = 6,42; <em>p</em> &lt; 0,001;
+  IC 95% [0,2914; 0,5522]), resultando na equação Y = 42,3560 + 0,4218·X. Assim, cada unidade
+  adicional na variável preditora associou-se a aumento médio de 0,42 unidade no desfecho.</div>
+
+  <h3 class="text-lg font-bold text-white pt-2">Chi-quadrado</h3>
+  <div class="mdl">A associação entre sexo e adesão ao tratamento foi estatisticamente
+  significativa, <em>χ</em>²(1) = 8,74; <em>p</em> = 0,003; <em>V</em> de Cramér = 0,264. Entre as
+  mulheres, 72,4% (<em>n</em> = 42) apresentaram adesão, contra 48,9% (<em>n</em> = 23) dos
+  homens.</div>
+  <p class="text-xs text-slate-500">Se alguma frequência esperada foi inferior a 5, reporte o teste
+  exato de Fisher e justifique a substituição.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Resultado não significativo</h3>
+  <div class="mdl">Não foi observada diferença estatisticamente significativa entre os grupos,
+  <em>t</em>(58) = 1,24; <em>p</em> = 0,220; <em>d</em> = 0,32. Ressalta-se que o poder observado
+  de 63% indica que efeitos de menor magnitude podem não ter sido detectados, não sendo possível
+  afirmar equivalência entre os grupos.</div>
+  <p class="text-xs text-slate-500">Jamais escreva "não houve diferença" ou "os grupos são iguais".
+  A formulação correta é sempre "não foi observada diferença estatisticamente significativa".
+  Reportar o tamanho de efeito e o poder em resultados nulos é sinal de rigor.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Formatação de tabelas</h2>
+  <p>ABNT e APA convergem em um ponto essencial: <strong>tabelas científicas não têm linhas verticais
+  nem grades completas</strong>. Apenas três linhas horizontais — acima do cabeçalho, abaixo do
+  cabeçalho e ao final. Copiar tabela do Excel com todas as bordas é o erro visual mais imediato
+  que um avaliador identifica.</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Título acima</strong> da tabela, alinhado à esquerda, numerado sequencialmente:
+    "Tabela 1 — Caracterização da amostra".</li>
+    <li><strong>Fonte e notas abaixo</strong>, em tamanho menor (10 pt), precedidas de "Nota." em
+    itálico. Explique aqui todas as abreviaturas e a convenção de asteriscos, se usados.</li>
+    <li><strong>Toda tabela deve ser citada no texto</strong> antes de aparecer: "conforme a Tabela 1"
+    ou "(Tabela 1)". Tabela que não é mencionada no texto é considerada erro.</li>
+    <li><strong>Não repita no texto</strong> tudo que está na tabela. Destaque no parágrafo apenas os
+    achados centrais e remeta à tabela para o detalhamento.</li>
+    <li><strong>Alinhe números pela vírgula decimal</strong> e mantenha o mesmo número de casas em
+    toda a coluna.</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Formatação de figuras</h2>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Legenda abaixo</strong> da figura — ao contrário da tabela, cujo título vai acima.
+    ABNT usa "Figura 1 — ..." e APA usa "Figura 1" em negrito com o título na linha seguinte, em
+    itálico.</li>
+    <li><strong>Resolução mínima de 300 dpi.</strong> Captura de tela de gráfico é a principal causa
+    de figura recusada por revista, e fica visivelmente serrilhada quando impressa.</li>
+    <li><strong>Fundo branco, texto preto.</strong> Gráfico com fundo escuro ou colorido não imprime
+    bem e encarece publicação. Use a opção de tema claro antes de exportar.</li>
+    <li><strong>Rotule os dois eixos</strong> com o nome da variável e sua unidade de medida.
+    Eixo sem rótulo é falha básica.</li>
+    <li><strong>Não use gráfico 3D nem efeitos decorativos.</strong> Distorcem a percepção de
+    proporção e são desaconselhados por todos os manuais.</li>
+    <li><strong>Barras de erro devem ser identificadas</strong> na legenda: informe se representam
+    desvio-padrão, erro-padrão ou intervalo de confiança — são coisas diferentes e a omissão torna
+    o gráfico ininterpretável.</li>
+    <li><strong>Considere acessibilidade a daltônicos.</strong> Não dependa apenas de cor para
+    distinguir séries; use também padrões, marcadores ou rótulos diretos.</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Estrutura recomendada da seção de resultados</h2>
+  <ol class="list-decimal pl-6 space-y-2">
+    <li><strong>Caracterização da amostra.</strong> N final, perdas e exclusões com justificativa,
+    dados sociodemográficos. Se houve perda de participantes, informe quantos e por quê — omitir
+    isso levanta suspeita de viés de seleção.</li>
+    <li><strong>Verificação de pressupostos.</strong> Resultados do Shapiro-Wilk e do Levene,
+    justificando a escolha entre abordagem paramétrica e não paramétrica.</li>
+    <li><strong>Estatística descritiva</strong> das variáveis principais, geralmente em tabela.</li>
+    <li><strong>Análises inferenciais</strong> na ordem dos objetivos específicos declarados na
+    introdução. Essa correspondência é verificada pela banca.</li>
+    <li><strong>Análises complementares</strong> ou exploratórias, claramente identificadas como
+    tais.</li>
+  </ol>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Erros que geram correção</h2>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Ponto decimal em vez de vírgula.</strong> Faça busca e substituição no documento
+    final — o software devolve ponto e a conversão sempre escapa em algum número.</li>
+    <li><strong>Interpretar na seção de resultados.</strong> "Isso ocorreu provavelmente porque..."
+    pertence à discussão. Nos resultados, apenas o que os dados mostram.</li>
+    <li><strong>Omitir o tamanho de efeito.</strong> Cobrança cada vez mais frequente.</li>
+    <li><strong>Não informar quantos participantes foram perdidos.</strong></li>
+    <li><strong>Tabela com todas as bordas do Excel.</strong></li>
+    <li><strong>Gráfico sem rótulo de eixo ou com fundo colorido.</strong></li>
+    <li><strong>Reportar quatro ou cinco casas decimais.</strong> Precisão espúria — duas ou três
+    bastam e demonstram compreensão de incerteza de medida.</li>
+    <li><strong>Usar "significante" no lugar de "significativo".</strong> Em português,
+    "estatisticamente significativo" é o termo correto.</li>
+    <li><strong>Tabela ou figura não citada no texto.</strong></li>
+    <li><strong>Não informar o software utilizado.</strong> Declare na seção de métodos: "As análises
+    foram conduzidas no software X, versão Y, adotando-se nível de significância de 5%."</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Como declarar o método no capítulo de métodos</h2>
+  <div class="mdl">A normalidade da distribuição dos dados foi verificada pelo teste de
+  Shapiro-Wilk e a homogeneidade das variâncias pelo teste de Levene. Atendidos os pressupostos,
+  as comparações entre grupos foram realizadas por meio do teste t de Student para amostras
+  independentes; nos casos de violação, adotou-se o teste U de Mann-Whitney. As correlações foram
+  estimadas pelo coeficiente de Pearson. O tamanho de efeito foi calculado pelo <em>d</em> de
+  Cohen, interpretado conforme os parâmetros de Cohen (1988). Adotou-se nível de significância de
+  5% (<em>α</em> = 0,05) para todas as análises.</div>
+
+  <div class="bg-slate-900 border border-blue-800/50 rounded-xl p-5 mt-8">
+    <p class="text-sm font-bold text-white mb-2">Gere isso automaticamente</p>
+    <p class="text-xs text-slate-400 mb-3">A <a href="/calculadora" class="text-blue-400 underline">calculadora
+    estatística</a> produz o parágrafo já redigido nesses padrões, com vírgula decimal, tamanho de
+    efeito e intervalo de confiança, além da tabela em formato editorial e da figura em 300 dpi com
+    fundo branco. Basta revisar e adaptar.</p>
+    <a href="/calculadora" class="inline-block bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-lg text-xs font-medium">Abrir calculadora</a>
+  </div>
+
+  <h2 class="text-xl font-bold text-white pt-8">Referências</h2>
+  <ul class="text-xs space-y-1 text-slate-400">
+    <li>AMERICAN PSYCHOLOGICAL ASSOCIATION. <strong>Publication manual of the American Psychological Association</strong>. 7. ed. Washington: APA, 2020.</li>
+    <li>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <strong>NBR 14724</strong>: informação e documentação — trabalhos acadêmicos — apresentação. Rio de Janeiro: ABNT, 2011.</li>
+    <li>COHEN, J. <strong>Statistical power analysis for the behavioral sciences</strong>. 2. ed. Hillsdale: Erlbaum, 1988.</li>
+    <li>INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. <strong>Normas de apresentação tabular</strong>. 3. ed. Rio de Janeiro: IBGE, 1993.</li>
+    <li>WASSERSTEIN, R. L.; LAZAR, N. A. The ASA statement on p-values. <strong>The American Statistician</strong>, v. 70, n. 2, p. 129-133, 2016.</li>
+  </ul>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<style>.mdl{background:#0f172a;border-left:3px solid #2563eb;border-radius:.4rem;padding:1rem;color:#e2e8f0;line-height:1.7}</style>
+<script type="module">import{mountShell}from'/js/ui.js';mountShell();</script>
+</body>
+</html>

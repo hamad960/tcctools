@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gerador de Referências ABNT, APA e Vancouver a partir do DOI</title>
+<meta name="description" content="Cole o DOI, o título ou o link do artigo e receba a referência formatada em ABNT NBR 6023, APA 7ª edição, Vancouver, BibTeX e RIS. Grátis, sem cadastro.">
+<link rel="canonical" href="https://estatistica-tcc.vercel.app/citacao">
+<meta property="og:title" content="Gerador de Referências ABNT, APA e Vancouver">
+<meta property="og:description" content="Do DOI à referência formatada em 2 segundos.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Como fazer referência ABNT de artigo científico?","acceptedAnswer":{"@type":"Answer","text":"Segundo a NBR 6023:2018, o formato é: SOBRENOME, Iniciais. Título do artigo. Nome da Revista, v. volume, n. número, p. páginas, ano. DOI. Disponível em: link. Acesso em: data. O sobrenome do autor vai em maiúsculas e o nome da revista em negrito."}},
+{"@type":"Question","name":"O que é DOI e onde encontro?","acceptedAnswer":{"@type":"Answer","text":"DOI (Digital Object Identifier) é o código permanente de um documento científico, no formato 10.xxxx/xxxxx. Aparece na primeira página do PDF, na página do artigo no site da revista, ou nos resultados de busca do Google Acadêmico."}},
+{"@type":"Question","name":"Qual a diferença entre ABNT, APA e Vancouver?","acceptedAnswer":{"@type":"Answer","text":"ABNT é a norma brasileira, predominante em trabalhos nacionais. APA é usada em psicologia, educação e ciências sociais internacionais. Vancouver é padrão nas ciências da saúde e medicina, com referências numeradas na ordem de citação."}}]}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-4xl mx-auto px-6 py-8 space-y-8">
+  <header class="space-y-2">
+    <h1 class="text-2xl font-bold">Gerador de Referências Bibliográficas</h1>
+    <p class="text-sm text-slate-400">Cole o <strong>DOI, o link ou o título</strong> do artigo e
+    receba a referência pronta em <strong>ABNT NBR 6023, APA 7ª edição, Vancouver, BibTeX e RIS</strong>.
+    Metadados obtidos diretamente da base Crossref, com mais de 150 milhões de registros.</p>
+  </header>
+
+  <!-- BUSCA -->
+  <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+    <div class="flex gap-2">
+      <input id="q" placeholder="10.1590/1806-9282.20230456  ·  ou  ·  título do artigo  ·  ou  ·  https://doi.org/..."
+        class="flex-1 p-3 bg-slate-950 border border-slate-700 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      <button id="btnGo" class="bg-blue-600 hover:bg-blue-700 px-6 rounded-lg text-xs font-medium whitespace-nowrap">Gerar referência</button>
+    </div>
+    <div class="flex flex-wrap gap-2 items-center text-xs">
+      <span class="text-slate-500">Exemplos:</span>
+      <button class="ex px-2 py-1 rounded border border-slate-700 hover:bg-slate-800 text-slate-300">10.1038/nature12373</button>
+      <button class="ex px-2 py-1 rounded border border-slate-700 hover:bg-slate-800 text-slate-300">10.1590/S1413-81232012000600002</button>
+      <button class="ex px-2 py-1 rounded border border-slate-700 hover:bg-slate-800 text-slate-300">machine learning education</button>
+    </div>
+    <p id="status" class="text-xs text-slate-500"></p>
+  </section>
+
+  <!-- LISTA (busca por título) -->
+  <section id="listBox" class="hidden space-y-2">
+    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Selecione o artigo correto</h2>
+    <div id="list" class="space-y-2"></div>
+  </section>
+
+  <!-- RESULTADO -->
+  <section id="out" class="hidden space-y-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
+      <h2 id="wTitle" class="font-bold text-white text-sm"></h2>
+      <p id="wMeta" class="text-xs text-slate-400 mt-1"></p>
+    </div>
+
+    <div id="cards" class="space-y-3"></div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
+      <h3 class="text-xs font-bold text-blue-400">Citação no corpo do texto</h3>
+      <div id="inText" class="space-y-2 text-xs"></div>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <button id="btnRis" class="text-xs bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg">Baixar .ris (Zotero / Mendeley)</button>
+      <button id="btnBib" class="text-xs bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg">Baixar .bib (LaTeX)</button>
+      <button id="btnAdd" class="text-xs border border-slate-700 hover:bg-slate-800 px-4 py-2 rounded-lg">Adicionar à minha lista</button>
+    </div>
+  </section>
+
+  <!-- LISTA ACUMULADA -->
+  <section id="myBox" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
+    <div class="flex justify-between items-center">
+      <h2 class="text-xs font-bold text-blue-400">Minhas referências (<span id="myCount">0</span>)</h2>
+      <div class="flex gap-2">
+        <select id="myFmt" class="text-xs bg-slate-950 border border-slate-700 rounded px-2 py-1">
+          <option value="abnt">ABNT</option><option value="apa">APA</option><option value="van">Vancouver</option>
+        </select>
+        <button id="btnCopyAll" class="text-xs border border-slate-700 px-3 py-1 rounded hover:bg-slate-800">Copiar tudo</button>
+        <button id="btnDocAll" class="text-xs bg-emerald-600 px-3 py-1 rounded hover:bg-emerald-700">Baixar .doc</button>
+        <button id="btnClear" class="text-xs border border-slate-700 px-3 py-1 rounded hover:bg-slate-800">Limpar</button>
+      </div>
+    </div>
+    <ol id="myList" class="space-y-2 text-xs list-decimal pl-5"></ol>
+    <p class="text-[11px] text-slate-500">Salvo localmente no seu navegador. Em ABNT a lista é
+    ordenada alfabeticamente; em Vancouver, pela ordem de inserção.</p>
+  </section>
+
+  <!-- CONTEÚDO SEO -->
+  <article class="text-sm text-slate-300 space-y-5 border-t border-slate-800 pt-8 leading-relaxed">
+    <h2 class="text-xl font-bold text-white">Como referenciar artigos científicos corretamente</h2>
+    <p>Referências malformatadas são a causa mais frequente de correções em bancas — e a mais
+    evitável. O problema não é falta de capacidade, é volume: um TCC com sessenta referências
+    formatadas manualmente acumula erros de vírgula, itálico e ordem de campos que o avaliador
+    inevitavelmente encontra.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">ABNT NBR 6023:2018 — o padrão brasileiro</h3>
+    <p>Estrutura de artigo de periódico:</p>
+    <p class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono">
+    SOBRENOME, Nome abreviado. Título do artigo. <strong>Nome do Periódico</strong>, v. 12, n. 3,
+    p. 45-58, 2023. DOI: 10.xxxx/xxxxx. Disponível em: https://doi.org/... Acesso em: 7 set. 2026.</p>
+    <p>Pontos em que quase todo mundo erra:</p>
+    <ul class="list-disc pl-6 space-y-1.5">
+      <li>O <strong>sobrenome do autor vai em letras maiúsculas</strong>, seguido de vírgula e do
+      prenome abreviado.</li>
+      <li>O <strong>destaque tipográfico (negrito ou itálico) vai no nome do periódico</strong>,
+      nunca no título do artigo. É o inverso do que a intuição sugere.</li>
+      <li>Autores múltiplos são separados por <strong>ponto e vírgula</strong>, não por vírgula.</li>
+      <li>Com mais de três autores, admite-se indicar apenas o primeiro seguido de
+      <em>et al.</em> — mas a escolha deve ser <strong>uniforme em toda a lista</strong>.</li>
+      <li>A lista de referências é ordenada <strong>alfabeticamente</strong> e alinhada à esquerda,
+      sem justificação.</li>
+      <li>A data de acesso é obrigatória para documentos online, com mês abreviado em minúsculas
+      e ponto (jan., fev., mar. — exceto maio, que não abrevia).</li>
+    </ul>
+
+    <h3 class="text-lg font-bold text-white pt-2">APA 7ª edição</h3>
+    <p>Padrão internacional em psicologia, educação e ciências sociais. Diferenças centrais em
+    relação à ABNT: o <strong>ano vem entre parênteses logo após os autores</strong>, apenas a
+    primeira letra do título é maiúscula, o itálico recai sobre o periódico e o volume, e o
+    último autor é precedido por "&". A partir da 7ª edição, listam-se até vinte autores antes de
+    usar reticências, e o DOI aparece como URL completa, sem "Disponível em" nem data de acesso.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Vancouver</h3>
+    <p>Dominante nas ciências da saúde. As referências são <strong>numeradas na ordem em que
+    aparecem no texto</strong>, e as citações no corpo usam esse número, não autor-data.
+    Os prenomes são abreviados sem pontos, e listam-se até seis autores antes de "et al".
+    Não há destaque tipográfico, e os títulos de periódicos usam abreviações padronizadas do
+    Index Medicus.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Onde encontrar o DOI</h3>
+    <p>O DOI é o identificador permanente do documento, no formato <code>10.xxxx/yyyyy</code>.
+    Procure: na primeira página do PDF (geralmente no rodapé ou cabeçalho); na página do artigo no
+    site da revista; nos resultados do Google Acadêmico; ou na plataforma SciELO e PubMed.
+    Artigos anteriores a 2000 e capítulos de livros frequentemente não possuem DOI — nesses casos
+    a formatação precisa ser manual.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Por que verificar sempre o resultado</h3>
+    <p>Esta ferramenta lê os metadados que a <strong>própria editora depositou</strong> na Crossref.
+    Se o registro estiver incompleto ou com erro na origem — nome de autor truncado, ausência de
+    número de página, título em caixa alta — a referência gerada refletirá isso. Confira sempre
+    contra o PDF original, especialmente: grafia dos nomes, intervalo de páginas e ano de publicação
+    (que pode diferir do ano de publicação online antecipada).</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Perguntas frequentes</h3>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">O artigo não tem DOI. E agora?</summary>
+      <p class="mt-2">Busque pelo título nesta ferramenta — a Crossref indexa muitos registros
+      recuperáveis por título. Se não encontrar, a formatação será manual: use a estrutura da NBR
+      6023 apresentada acima, substituindo o DOI pela URL de acesso.</p>
+    </details>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">Preciso da data de acesso em ABNT?</summary>
+      <p class="mt-2">Sim, para todo documento consultado online. A ferramenta insere
+      automaticamente a data de hoje no formato correto. Se você consultou o artigo em outra data,
+      ajuste manualmente.</p>
+    </details>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">Funciona para livros e teses?</summary>
+      <p class="mt-2">Parcialmente. A base Crossref é centrada em artigos de periódicos e anais de
+      congresso. Livros com DOI registrado são recuperados; a maioria dos livros brasileiros e das
+      teses não. Para esses, a formatação manual é necessária.</p>
+    </details>
+
+    <h3 class="text-lg font-bold text-white pt-2">Fluxo recomendado</h3>
+    <p>Encontre a literatura no <a class="text-blue-400 underline" href="/buscador">buscador de
+    artigos científicos</a>, gere as referências aqui e acumule tudo em "Minhas referências" para
+    exportar de uma vez. Depois, com os dados coletados, siga para a
+    <a class="text-blue-400 underline" href="/calculadora">calculadora estatística</a>.</p>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module">
+import { fetchWork, abnt, apa7, vancouver, bibtex, riscsv } from '/js/cite.js';
+import { mountShell } from '/js/ui.js';
+mountShell();
+
+const $ = id => document.getElementById(id);
+const MAILTO = 'seuemail@gmail.com'; // <-- troque pelo seu
+let current = null;
+let my = JSON.parse(localStorage.getItem('myRefs') || '[]');
+
+document.querySelectorAll('.ex').forEach(b => b.onclick = () => { $('q').value = b.textContent; go(); });
+$('btnGo').onclick = go;
+$('q').onkeydown = e => { if (e.key === 'Enter') go(); };
+
+async function go() {
+  const v = $('q').value.trim();
+  if (!v) return;
+  $('status').textContent = 'Consultando a base Crossref...';
+  $('out').classList.add('hidden'); $('listBox').classList.add('hidden');
+
+  const isDoi = /10\.\d{4,9}\//.test(v);
+  try {
+    if (isDoi) {
+      current = await fetchWork(v);
+      show(current);
+      $('status').textContent = '';
+    } else {
+      const r = await fetch(`https://api.crossref.org/works?query.bibliographic=${encodeURIComponent(v)}&rows=8&mailto=${MAILTO}`
+        + `&select=DOI,title,author,issued,container-title,volume,issue,page,publisher`);
+      const items = (await r.json()).message.items || [];
+      if (!items.length) { $('status').textContent = 'Nenhum registro encontrado. Tente o DOI.'; return; }
+      $('status').textContent = `${items.length} registros encontrados.`;
+      $('list').innerHTML = items.map((it, i) => `
+        <button data-i="${i}" class="pick w-full text-left bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg p-3 transition">
+          <p class="text-xs font-bold text-slate-100">${(it.title || ['—'])[0]}</p>
+          <p class="text-[11px] text-slate-400 mt-1">${(it.author || []).slice(0, 3).map(a => `${a.given || ''} ${a.family || ''}`).join(', ')}
+            ${(it.author || []).length > 3 ? ' et al.' : ''} · ${(it['container-title'] || [''])[0]}
+            · ${it.issued?.['date-parts']?.[0]?.[0] || 's.d.'}</p>
+        </button>`).join('');
+      $('listBox').classList.remove('hidden');
+      document.querySelectorAll('.pick').forEach(b => b.onclick = () => {
+        current = items[+b.dataset.i]; show(current); $('listBox').classList.add('hidden');
+      });
+    }
+  } catch (e) { $('status').textContent = 'Erro: ' + e.message + '. Verifique o DOI.'; }
+}
+
+function show(w) {
+  $('wTitle').textContent = (w.title || ['—'])[0];
+  $('wMeta').textContent = [(w['container-title'] || [])[0], w.issued?.['date-parts']?.[0]?.[0],
+    w.volume && 'v. ' + w.volume, w.page && 'p. ' + w.page, 'DOI: ' + w.DOI].filter(Boolean).join(' · ');
+
+  const fmts = [['ABNT NBR 6023:2018', abnt(w)], ['APA 7ª edição', apa7(w)], ['Vancouver', vancouver(w)]];
+  $('cards').innerHTML = fmts.map(([name, txt], i) => `
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
+      <div class="flex justify-between items-center">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-blue-400">${name}</span>
+        <button data-c="${i}" class="cp text-xs border border-slate-700 px-3 py-1 rounded hover:bg-slate-800">Copiar</button>
+      </div>
+      <p class="ref text-xs leading-relaxed text-slate-200 bg-slate-950 p-3 rounded-lg border border-slate-800">${txt}</p>
+    </div>`).join('');
+  document.querySelectorAll('.cp').forEach(b => b.onclick = () => {
+    const t = document.querySelectorAll('.ref')[+b.dataset.c].innerText;
+    navigator.clipboard.writeText(t);
+    b.textContent = 'Copiado!'; setTimeout(() => b.textContent = 'Copiar', 1500);
+  });
+
+  const a = w.author || [], y = w.issued?.['date-parts']?.[0]?.[0] || 's.d.';
+  const s1 = (a[0]?.family || 'AUTOR').toUpperCase();
+  const abntIn = a.length === 0 ? `(AUTOR, ${y})`
+    : a.length === 1 ? `(${s1}, ${y})`
+    : a.length === 2 ? `(${s1}; ${(a[1].family || '').toUpperCase()}, ${y})`
+    : `(${s1} et al., ${y})`;
+  const apaIn = a.length === 0 ? `(${y})` : a.length === 1 ? `(${a[0].family}, ${y})`
+    : a.length === 2 ? `(${a[0].family} & ${a[1].family}, ${y})` : `(${a[0].family} et al., ${y})`;
+  $('inText').innerHTML = [
+    ['ABNT — citação indireta (fim da frase)', abntIn],
+    ['ABNT — citação no texto', `${(a[0]?.family || 'Autor').replace(/^./, c => c.toUpperCase())} ${a.length > 2 ? 'et al.' : ''} (${y})`],
+    ['APA', apaIn],
+    ['Vancouver', 'Use o número da referência na lista, ex.: ¹ ou (1)']
+  ].map(([k, v]) => `<div class="flex justify-between gap-3 border-b border-slate-800 py-1.5">
+    <span class="text-slate-400">${k}</span><span class="font-mono text-slate-100">${v}</span></div>`).join('');
+
+  $('out').classList.remove('hidden');
+}
+
+// downloads
+const dl = (txt, name, mime) => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF' + txt], { type: mime }));
+  a.download = name; a.click();
+};
+$('btnRis').onclick = () => current && dl(riscsv(current), 'referencia.ris', 'application/x-research-info-systems');
+$('btnBib').onclick = () => current && dl(bibtex(current), 'referencia.bib', 'application/x-bibtex');
+
+// lista acumulada
+$('btnAdd').onclick = () => {
+  if (!current) return;
+  if (my.some(w => w.DOI === current.DOI)) return alert('Esta referência já está na lista.');
+  my.push(current); persist();
+};
+$('btnClear').onclick = () => { if (confirm('Limpar todas as referências salvas?')) { my = []; persist(); } };
+$('myFmt').onchange = persist;
+
+function persist() {
+  localStorage.setItem('myRefs', JSON.stringify(my));
+  $('myCount').textContent = my.length;
+  $('myBox').classList.toggle('hidden', my.length === 0);
+  const f = $('myFmt').value;
+  const fn = f === 'abnt' ? abnt : f === 'apa' ? apa7 : vancouver;
+  let list = my.map(w => ({ w, txt: fn(w) }));
+  if (f !== 'van') list.sort((a, b) => a.txt.localeCompare(b.txt, 'pt-BR'));
+  $('myList').innerHTML = list.map(({ w, txt }) => `<li class="leading-relaxed text-slate-200">
+    ${txt} <button data-d="${w.DOI}" class="rm text-red-400 ml-1 hover:underline">remover</button></li>`).join('');
+  document.querySelectorAll('.rm').forEach(b => b.onclick = () => {
+    my = my.filter(w => w.DOI !== b.dataset.d); persist();
+  });
+}
+
+$('btnCopyAll').onclick = e => {
+  navigator.clipboard.writeText([...document.querySelectorAll('#myList li')]
+    .map(li => li.innerText.replace(/\s*remover$/, '')).join('\n\n'));
+  e.target.textContent = 'Copiado!'; setTimeout(() => e.target.textContent = 'Copiar tudo', 1500);
+};
+$('btnDocAll').onclick = () => {
+  const refs = [...document.querySelectorAll('#myList li')].map(li => li.innerText.replace(/\s*remover$/, ''));
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>
+<w:p><w:r><w:rPr><w:b/><w:rFonts w:ascii="Times New Roman"/><w:sz w:val="24"/></w:rPr><w:t>REFERÊNCIAS</w:t></w:r></w:p>
+${refs.map(r => `<w:p><w:pPr><w:spacing w:after="240" w:line="240" w:lineRule="auto"/></w:pPr>
+<w:r><w:rPr><w:rFonts w:ascii="Times New Roman"/><w:sz w:val="24"/></w:rPr><w:t xml:space="preserve">${esc(r)}</w:t></w:r></w:p>`).join('')}
+</w:body></w:document>`;
+  dl(xml, 'referencias.doc', 'application/vnd.ms-word');
+};
+
+persist();
+</script>
+</body>
+</html>

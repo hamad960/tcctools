@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sobre e Metodologia — Estatística TCC</title>
+<meta name="description" content="Quem somos, como os cálculos estatísticos são implementados, quais referências utilizamos e como validamos os resultados.">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-300">
+<div id="site-header"></div>
+<main class="max-w-3xl mx-auto px-6 py-10 space-y-6 text-sm leading-relaxed">
+  <h1 class="text-2xl font-bold text-white">Sobre o projeto</h1>
+
+  <p>O <strong>Estatística TCC</strong> nasceu de um problema concreto e muito comum:
+  estudantes de graduação e pós-graduação brasileiros terminam a coleta de dados do TCC,
+  da dissertação ou da tese e travam na etapa de análise. Não por falta de esforço, mas porque
+  o software estatístico tradicional cobra licença caríssima, tem curva de aprendizado íngreme
+  e devolve saídas cruas que ainda precisam ser traduzidas para o texto formatado que a banca
+  espera.</p>
+
+  <p>Nossa proposta é fechar exatamente essa lacuna: você traz a planilha, o site verifica os
+  pressupostos, calcula o teste apropriado, gera a figura em resolução de publicação, monta a
+  tabela no padrão editorial e escreve o parágrafo de resultados já formatado nas normas
+  ABNT ou APA. Do dado bruto ao texto pronto para revisão, em poucos cliques.</p>
+
+  <h2 class="text-lg font-bold text-white pt-4">Princípios</h2>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Privacidade por arquitetura.</strong> Todo o processamento acontece no seu
+    navegador. Sua planilha nunca sai do seu computador — não é uma promessa de política,
+    é uma característica técnica do sistema. Você pode inclusive desconectar da internet
+    depois de carregar a página e as calculadoras continuam funcionando.</li>
+    <li><strong>Gratuito de verdade.</strong> Sem cadastro, sem limite de uso, sem versão
+    premium. O custo é coberto por publicidade discreta.</li>
+    <li><strong>Transparência metodológica.</strong> Informamos qual algoritmo e qual referência
+    sustentam cada cálculo, para que você possa citar e defender o método na banca.</li>
+    <li><strong>Educar, não apenas calcular.</strong> Cada resultado vem acompanhado de tamanho
+    de efeito e intervalo de confiança, não apenas do p-valor — porque significância estatística
+    não é o mesmo que relevância prática.</li>
+  </ul>
+
+  <h2 class="text-lg font-bold text-white pt-4">Metodologia e referências</h2>
+  <p>Os procedimentos são implementados a partir da literatura estatística consolidada:</p>
+  <ul class="list-disc pl-6 space-y-1">
+    <li><strong>Teste de normalidade:</strong> Shapiro-Wilk com o algoritmo AS R94 de
+    Royston (1995), incluindo a aproximação do p-valor por transformação normalizadora.</li>
+    <li><strong>Homogeneidade de variâncias:</strong> teste de Levene centrado na média.</li>
+    <li><strong>Comparação de médias:</strong> teste t de Student e correção de Welch-Satterthwaite
+    para variâncias desiguais.</li>
+    <li><strong>Testes não paramétricos:</strong> Mann-Whitney e Wilcoxon com aproximação normal
+    e correção para empates.</li>
+    <li><strong>ANOVA:</strong> decomposição clássica da soma de quadrados, com comparações
+    múltiplas ajustadas por Bonferroni.</li>
+    <li><strong>Correlação:</strong> Pearson com intervalo de confiança pela transformação z de
+    Fisher; Spearman por correlação de postos.</li>
+    <li><strong>Tamanho de efeito:</strong> d de Cohen, eta quadrado, epsilon quadrado e
+    V de Cramér, com faixas interpretativas conforme Cohen (1988).</li>
+    <li><strong>Dimensionamento amostral:</strong> fórmulas de aproximação normal com correção
+    para população finita, conforme Cochran (1977).</li>
+    <li><strong>Distribuições de probabilidade:</strong> função beta incompleta regularizada por
+    fração continuada de Lentz e algoritmo de Acklam para o quantil normal.</li>
+  </ul>
+
+  <h2 class="text-lg font-bold text-white pt-4">Validação</h2>
+  <p>Cada procedimento é conferido contra saídas do <strong>R</strong> (funções
+  <code>t.test</code>, <code>aov</code>, <code>shapiro.test</code>, <code>cor.test</code>,
+  <code>wilcox.test</code>) usando conjuntos de dados de referência. Estatísticas de teste e
+  p-valores convergem até a terceira casa decimal. Ainda assim, e por princípio, recomendamos
+  a conferência de resultados críticos em software de referência antes da submissão final —
+  orientação que consta também dos nossos <a class="text-blue-400 underline" href="/termos">Termos de Uso</a>.</p>
+
+  <h2 class="text-lg font-bold text-white pt-4">Encontrou um erro?</h2>
+  <p>Divergência de resultado, comportamento inesperado ou sugestão de nova ferramenta:
+  fale com a gente pela <a class="text-blue-400 underline" href="/contato">página de contato</a>.
+  Correções de cálculo são tratadas como prioridade máxima.</p>
+</main>
+<div id="site-footer"></div>
+<script type="module">import{mountShell}from'/js/ui.js';mountShell();</script>
+</body>
+</html>

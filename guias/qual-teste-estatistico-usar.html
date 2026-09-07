@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Qual Teste Estatístico Usar? Árvore de Decisão Completa para TCC</title>
+<meta name="description" content="Guia definitivo para escolher entre teste t, ANOVA, Mann-Whitney, Kruskal-Wallis, Pearson, Spearman, regressão e chi-quadrado. Com árvore de decisão interativa e exemplos de TCC.">
+<link rel="canonical" href="https://r-latex-generator.vercel.app/guias/qual-teste-estatistico-usar">
+<meta property="og:title" content="Qual teste estatístico usar? Árvore de decisão completa">
+<meta property="og:description" content="Responda 4 perguntas e descubra o teste correto para sua pesquisa.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+"headline":"Qual teste estatístico usar? Árvore de decisão completa para TCC",
+"description":"Como escolher o teste estatístico correto a partir do tipo de variável, distribuição dos dados e delineamento do estudo.",
+"inLanguage":"pt-BR","datePublished":"2026-09-07",
+"author":{"@type":"Organization","name":"Estatística TCC"},
+"publisher":{"@type":"Organization","name":"Estatística TCC"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Como escolher o teste estatístico correto?","acceptedAnswer":{"@type":"Answer","text":"A escolha depende de quatro fatores: o tipo da variável desfecho (numérica ou categórica), o objetivo da análise (comparar grupos, associar variáveis ou prever), o número de grupos comparados e se os dados atendem ao pressuposto de normalidade. Definidos esses quatro pontos, o teste é determinado de forma praticamente unívoca."}},
+{"@type":"Question","name":"Quando usar teste t e quando usar Mann-Whitney?","acceptedAnswer":{"@type":"Answer","text":"Use teste t quando os dados forem numéricos e apresentarem distribuição aproximadamente normal em cada grupo, verificada pelo teste de Shapiro-Wilk. Use Mann-Whitney quando a normalidade for violada, quando a amostra for pequena ou quando a variável for ordinal, como escalas Likert."}},
+{"@type":"Question","name":"Qual a diferença entre correlação e regressão?","acceptedAnswer":{"@type":"Answer","text":"A correlação mede a força e a direção da associação entre duas variáveis, sem distinguir causa de efeito, e é simétrica. A regressão assume uma variável preditora e uma variável desfecho, gera uma equação que permite previsão e não é simétrica."}}]}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4"><a href="/" class="hover:text-blue-400">Início</a> ›
+    <a href="/guias/qual-teste-estatistico-usar" class="hover:text-blue-400">Guias</a> › Qual teste usar</nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Qual teste estatístico usar? Árvore de decisão completa</h1>
+  <p class="text-sm text-slate-400 mb-8">Atualizado em 7 de setembro de 2026 · leitura de 12 minutos</p>
+
+  <!-- ÁRVORE INTERATIVA -->
+  <section class="bg-slate-900 border border-blue-800/50 rounded-xl p-6 mb-10 space-y-4">
+    <h2 class="text-sm font-bold text-blue-400">Descubra em 4 perguntas</h2>
+    <div class="space-y-3 text-xs">
+      <label class="block space-y-1">1. Sua variável desfecho (o que você mediu) é:
+        <select id="q1" class="sel">
+          <option value="num">Numérica — peso, idade, nota, tempo, escore</option>
+          <option value="cat">Categórica — sim/não, aprovado/reprovado, tipo</option>
+          <option value="ord">Ordinal — Likert, estágio, classificação</option>
+        </select></label>
+      <label class="block space-y-1">2. Seu objetivo é:
+        <select id="q2" class="sel">
+          <option value="comp">Comparar grupos entre si</option>
+          <option value="assoc">Verificar associação entre duas variáveis</option>
+          <option value="pred">Prever uma variável a partir de outra</option>
+        </select></label>
+      <label class="block space-y-1" id="w3">3. Quantos grupos você compara?
+        <select id="q3" class="sel">
+          <option value="2">Dois grupos</option>
+          <option value="3">Três ou mais grupos</option>
+        </select></label>
+      <label class="block space-y-1" id="w4">4. Os grupos são:
+        <select id="q4" class="sel">
+          <option value="ind">Independentes — pessoas diferentes em cada grupo</option>
+          <option value="par">Pareados — mesmas pessoas em dois momentos (pré/pós)</option>
+        </select></label>
+      <label class="block space-y-1" id="w5">5. Os dados passaram no teste de normalidade?
+        <select id="q5" class="sel">
+          <option value="s">Sim — p &gt; 0,05 no Shapiro-Wilk</option>
+          <option value="n">Não, ou não sei / amostra pequena</option>
+        </select></label>
+    </div>
+    <div id="ans" class="bg-slate-950 border border-slate-800 rounded-lg p-4 space-y-2">
+      <p class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold">Teste indicado</p>
+      <p id="ansName" class="text-lg font-bold text-white"></p>
+      <p id="ansWhy" class="text-xs text-slate-400"></p>
+      <p id="ansAlt" class="text-xs text-slate-500"></p>
+      <a href="/calculadora" class="inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-xs font-medium mt-1">Calcular agora →</a>
+    </div>
+  </section>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+
+  <p class="text-base text-slate-200">Se você chegou aqui com a planilha pronta e a sensação de que
+  qualquer escolha pode estar errada, a notícia boa é esta: <strong>a escolha do teste estatístico
+  não é uma questão de opinião ou de preferência do orientador</strong>. É uma decisão determinada
+  por quatro características objetivas do seu estudo. Uma vez identificadas, o teste se impõe
+  quase sozinho.</p>
+
+  <p>O que costuma confundir é a ordem em que as pessoas atacam o problema. O erro típico é começar
+  perguntando "qual teste é melhor?" — como se houvesse um ranking de qualidade. Não há. O teste t
+  não é superior ao Mann-Whitney; eles respondem à mesma pergunta sob pressupostos diferentes.
+  Usar o teste t com dados que violam a normalidade não é usar uma ferramenta melhor: é usar a
+  ferramenta errada.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Os quatro critérios de decisão</h2>
+
+  <h3 class="text-lg font-bold text-white pt-2">Critério 1 — O tipo da sua variável desfecho</h3>
+  <p>Variável desfecho (ou dependente) é o que você <em>mediu como resultado</em>. Se você quer saber
+  se um treinamento melhora o desempenho, o desfecho é o desempenho, não o treinamento.</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Numérica contínua ou discreta:</strong> peso em quilos, tempo em segundos, nota de 0 a
+    10, número de acertos, concentração sérica. Admite média e desvio-padrão de forma
+    interpretável.</li>
+    <li><strong>Categórica nominal:</strong> aprovado ou reprovado, presença ou ausência de sintoma,
+    tipo de tratamento escolhido. Só admite contagem e proporção — calcular média aqui não faz
+    sentido.</li>
+    <li><strong>Ordinal:</strong> escalas Likert de 1 a 5, estágios de doença, classificação
+    socioeconômica. Existe ordem, mas os intervalos entre categorias não são necessariamente
+    iguais — a distância entre "concordo" e "concordo totalmente" não é a mesma que entre
+    "discordo" e "neutro".</li>
+  </ul>
+  <p>O caso ordinal gera o debate mais frequente. A prática predominante nas ciências da saúde e
+  sociais é tratar <strong>itens Likert isolados como ordinais</strong> (usando testes não
+  paramétricos) e <strong>escores somados de múltiplos itens como numéricos</strong> — por exemplo,
+  a soma dos 21 itens do Inventário de Depressão de Beck pode legitimamente ser tratada como
+  variável contínua, mesmo que cada item seja ordinal. Se sua banca é conservadora nesse ponto,
+  a rota segura é o teste não paramétrico.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Critério 2 — O objetivo da análise</h3>
+  <p>Três objetivos cobrem quase todo TCC:</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Comparar.</strong> "O grupo que treinou tem desempenho diferente do grupo controle?"
+    Você tem uma variável que <em>divide</em> a amostra e uma que <em>mede</em> o resultado.</li>
+    <li><strong>Associar.</strong> "Quanto mais horas de estudo, maior a nota?" Duas variáveis medidas
+    nos mesmos indivíduos, sem divisão em grupos e sem afirmação de causalidade.</li>
+    <li><strong>Prever.</strong> "Quanto a nota aumenta a cada hora adicional de estudo?" Você quer
+    uma equação, não apenas constatar que existe relação.</li>
+  </ul>
+  <p>Note que "associar" e "prever" usam os mesmos dados, mas respondem a perguntas diferentes e
+  produzem resultados diferentes. Voltaremos a isso.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Critério 3 — Número de grupos e pareamento</h3>
+  <p>Comparar dois grupos e comparar três grupos não são a mesma operação com um número maior.
+  <strong>Fazer três testes t entre três grupos é um dos erros mais graves e mais comuns</strong> em
+  trabalhos acadêmicos. A razão é o acúmulo do erro tipo I: com α de 5% por comparação, a chance de
+  encontrar pelo menos um falso positivo em três testes sobe para aproximadamente 14%. Com seis
+  comparações, chega a 26%. Por isso existe a ANOVA — ela testa a hipótese global com um único α, e
+  só depois, se significativa, aplica-se um pós-teste com correção para comparações múltiplas.</p>
+  <p>Pareamento é o segundo eixo. Grupos são <strong>pareados</strong> quando as observações se
+  correspondem uma a uma: os mesmos participantes medidos antes e depois de uma intervenção, gêmeos,
+  olho direito e olho esquerdo do mesmo paciente, casos e controles emparelhados por idade e sexo.
+  São <strong>independentes</strong> quando pessoas diferentes compõem cada grupo. Testes pareados
+  são substancialmente mais poderosos, porque eliminam a variabilidade entre indivíduos — usar um
+  teste independente em dados pareados desperdiça informação e reduz sua chance de detectar o
+  efeito real.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Critério 4 — Normalidade</h3>
+  <p>Testes paramétricos assumem que os dados seguem distribuição aproximadamente normal. Isso é
+  verificado formalmente pelo <strong>teste de Shapiro-Wilk</strong>, complementado pela inspeção
+  visual do gráfico Q-Q. A lógica do resultado é contraintuitiva e vale memorizar:</p>
+  <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 space-y-1">
+    <p><strong class="text-emerald-400">p &gt; 0,05</strong> → a normalidade <strong>não</strong> foi
+    rejeitada → pode usar teste paramétrico</p>
+    <p><strong class="text-amber-400">p &lt; 0,05</strong> → a normalidade foi rejeitada →
+    use teste não paramétrico</p>
+  </div>
+  <p>Aqui o p-valor "bom" é o alto — o oposto do que você quer no teste principal. A hipótese nula do
+  Shapiro-Wilk é "os dados vêm de uma distribuição normal"; rejeitá-la significa violar o
+  pressuposto.</p>
+  <p>Duas ressalvas importantes. Primeiro: teste a normalidade <strong>dentro de cada grupo</strong>,
+  não na amostra inteira junta — dois grupos com médias distintas produzem uma distribuição
+  bimodal que falha no teste mesmo quando cada grupo é perfeitamente normal. Segundo: com amostras
+  muito grandes (n acima de 300), o Shapiro-Wilk se torna hipersensível e rejeita a normalidade por
+  desvios triviais e sem consequência prática. Nesses casos, o gráfico Q-Q, a assimetria e a curtose
+  são guias mais confiáveis do que o p-valor. Verifique isso na
+  <a href="/normalidade" class="text-blue-400 underline">página de teste de normalidade</a>.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">A tabela de decisão</h2>
+  <div class="overflow-x-auto">
+  <table class="w-full text-xs border-collapse">
+    <thead><tr class="border-t-2 border-b border-slate-600 text-slate-100 font-bold">
+      <th class="py-2 px-2 text-left">Situação</th>
+      <th class="py-2 px-2 text-left">Normal</th>
+      <th class="py-2 px-2 text-left">Não normal</th></tr></thead>
+    <tbody class="text-slate-300">
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">2 grupos independentes</td>
+        <td class="py-2 px-2">Teste t independente</td><td class="py-2 px-2">Mann-Whitney (U)</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">2 grupos pareados (pré/pós)</td>
+        <td class="py-2 px-2">Teste t pareado</td><td class="py-2 px-2">Wilcoxon</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">3+ grupos independentes</td>
+        <td class="py-2 px-2">ANOVA one-way + Tukey</td><td class="py-2 px-2">Kruskal-Wallis + Dunn</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">3+ medidas pareadas</td>
+        <td class="py-2 px-2">ANOVA de medidas repetidas</td><td class="py-2 px-2">Friedman</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">Associação (2 numéricas)</td>
+        <td class="py-2 px-2">Correlação de Pearson</td><td class="py-2 px-2">Correlação de Spearman</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">Previsão (2 numéricas)</td>
+        <td class="py-2 px-2" colspan="2">Regressão linear simples (normalidade exigida dos <em>resíduos</em>)</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">2 variáveis categóricas</td>
+        <td class="py-2 px-2" colspan="2">Chi-quadrado; Fisher se esperado &lt; 5</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">Categórica pareada (antes/depois)</td>
+        <td class="py-2 px-2" colspan="2">Teste de McNemar</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Os erros que mais aparecem em bancas</h2>
+
+  <h3 class="text-lg font-bold text-white pt-2">Testes t múltiplos no lugar de ANOVA</h3>
+  <p>Já detalhado acima. Se você comparou três ou mais grupos com testes t pareados dois a dois, sem
+  correção, o trabalho tem um problema estatístico real — não uma questão de estilo. A correção é
+  refazer com ANOVA (ou Kruskal-Wallis) e aplicar o pós-teste apenas se o resultado global for
+  significativo.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Confundir pareado com independente</h3>
+  <p>Um estudo pré e pós-intervenção com os mesmos vinte participantes tem <strong>vinte
+  participantes, não quarenta</strong>. Tratar as quarenta medidas como independentes inflaciona
+  artificialmente o n, viola o pressuposto de independência das observações e produz p-valores
+  otimistas e inválidos.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Testar normalidade na amostra inteira</h3>
+  <p>Se você tem dois grupos com médias diferentes, a distribuição conjunta será bimodal e falhará no
+  Shapiro-Wilk mesmo que cada grupo seja normal. Teste separadamente, sempre.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Reportar só o p-valor</h3>
+  <p>Este é o erro mais universal e o mais fácil de corrigir. O p-valor informa se o efeito é
+  <em>detectável</em>, não se ele é <em>relevante</em>. Com amostra grande o suficiente, diferenças
+  clinicamente irrelevantes atingem p &lt; 0,001. Sempre reporte o <strong>tamanho de efeito</strong>
+  (d de Cohen, eta quadrado, r) e o <strong>intervalo de confiança</strong>. Bancas cada vez mais
+  perguntam por isso, e revistas de qualidade exigem.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Concluir "não há diferença" a partir de p &gt; 0,05</h3>
+  <p>Ausência de evidência não é evidência de ausência. Um resultado não significativo pode
+  refletir ausência real de efeito <em>ou</em> amostra insuficiente para detectá-lo. A redação
+  correta é "não foi observada diferença estatisticamente significativa", acompanhada da
+  discussão do poder do estudo. Verifique isso na
+  <a href="/amostra" class="text-blue-400 underline">calculadora de poder</a>.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Afirmar causalidade a partir de correlação</h3>
+  <p>Um r de 0,80 entre horas de estudo e nota não prova que estudar causa nota alta — pode haver
+  variável confundidora (motivação, condição socioeconômica, apoio familiar) influenciando ambas,
+  ou a relação pode ser inversa. Causalidade exige delineamento experimental com randomização,
+  não apenas um coeficiente alto. Regressão linear também <strong>não estabelece
+  causalidade</strong>: o nome "variável preditora" descreve a estrutura matemática, não uma
+  relação causal comprovada.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Correlação ou regressão?</h2>
+  <p>Os mesmos dados, duas perguntas distintas:</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Correlação</strong> responde "existe relação, quão forte, em que direção?" É
+    <em>simétrica</em>: correlacionar X com Y dá exatamente o mesmo resultado que Y com X.
+    Produz um coeficiente entre −1 e +1.</li>
+    <li><strong>Regressão</strong> responde "qual o valor esperado de Y para um dado X?" É
+    <em>assimétrica</em>: trocar preditora e desfecho muda a equação. Produz coeficientes com
+    unidade interpretável — "cada hora adicional de estudo associa-se a 0,42 ponto na nota".</li>
+  </ul>
+  <p>Se sua pergunta de pesquisa é "há relação entre A e B", use correlação. Se é "A explica B" ou
+  "quanto B muda quando A muda", use regressão. Reportar as duas é redundante em quase todos os
+  casos — escolha conforme o objetivo declarado.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Casos que exigem análise mais avançada</h2>
+  <p>Reconhecer o limite das ferramentas básicas é sinal de maturidade metodológica, não de
+  fraqueza. Procure orientação especializada se seu estudo envolve:</p>
+  <ul class="list-disc pl-6 space-y-1.5">
+    <li><strong>Duas ou mais variáveis independentes simultâneas</strong> → ANOVA fatorial, regressão múltipla</li>
+    <li><strong>Necessidade de controlar variáveis confundidoras</strong> → ANCOVA, regressão múltipla</li>
+    <li><strong>Desfecho binário com múltiplos preditores</strong> → regressão logística</li>
+    <li><strong>Tempo até um evento, com perdas de seguimento</strong> → Kaplan-Meier, Cox</li>
+    <li><strong>Dados aninhados</strong> (alunos dentro de turmas dentro de escolas) → modelos mistos</li>
+    <li><strong>Validação de instrumento</strong> → análise fatorial, alfa de Cronbach</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Roteiro prático</h2>
+  <ol class="list-decimal pl-6 space-y-2">
+    <li>Identifique e escreva explicitamente sua variável desfecho e seu tipo.</li>
+    <li>Formule a pergunta em uma frase: comparar, associar ou prever.</li>
+    <li>Conte os grupos e verifique se são pareados ou independentes.</li>
+    <li>Teste a normalidade <em>dentro de cada grupo</em> pelo Shapiro-Wilk.</li>
+    <li>Consulte a tabela acima e execute o teste.</li>
+    <li>Reporte estatística de teste, graus de liberdade, p-valor, <strong>tamanho de efeito</strong>
+    e intervalo de confiança.</li>
+    <li>Interprete a magnitude prática, não apenas a significância.</li>
+  </ol>
+
+  <div class="bg-slate-900 border border-blue-800/50 rounded-xl p-5 mt-8">
+    <p class="text-sm font-bold text-white mb-2">Próximo passo</p>
+    <p class="text-xs text-slate-400 mb-3">A <a href="/calculadora" class="text-blue-400 underline">calculadora
+    estatística</a> executa todo esse roteiro automaticamente: testa a normalidade, sugere o teste,
+    calcula com tamanho de efeito e IC 95%, gera a figura em 300 dpi e escreve o parágrafo em ABNT.</p>
+    <a href="/calculadora" class="inline-block bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-lg text-xs font-medium">Abrir calculadora</a>
+  </div>
+
+  <h2 class="text-xl font-bold text-white pt-8">Referências</h2>
+  <ul class="text-xs space-y-1 text-slate-400">
+    <li>COHEN, J. <strong>Statistical power analysis for the behavioral sciences</strong>. 2. ed. Hillsdale: Erlbaum, 1988.</li>
+    <li>FIELD, A. <strong>Discovering statistics using IBM SPSS Statistics</strong>. 5. ed. London: Sage, 2018.</li>
+    <li>ROYSTON, P. Remark AS R94: a remark on Algorithm AS 181. <strong>Applied Statistics</strong>, v. 44, n. 4, p. 547-551, 1995.</li>
+    <li>WASSERSTEIN, R. L.; LAZAR, N. A. The ASA statement on p-values. <strong>The American Statistician</strong>, v. 70, n. 2, p. 129-133, 2016.</li>
+  </ul>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<style>.sel{width:100%;padding:.55rem;background:#020617;border:1px solid #334155;border-radius:.5rem;font-size:.78rem;color:#e2e8f0;margin-top:.2rem}label{color:#cbd5e1;font-weight:500}</style>
+<script type="module">
+import { mountShell } from '/js/ui.js'; mountShell();
+const $ = id => document.getElementById(id);
+const D = {
+  t_ind:['Teste t de Student independente','Dois grupos independentes, desfecho numérico com distribuição normal. Verifique também a homogeneidade das variâncias pelo teste de Levene — se violada, use a correção de Welch.','Alternativa não paramétrica: Mann-Whitney.'],
+  t_par:['Teste t pareado','Mesmos participantes medidos em dois momentos, com as diferenças seguindo distribuição normal.','Alternativa não paramétrica: Wilcoxon.'],
+  mw:['Teste U de Mann-Whitney','Dois grupos independentes sem normalidade, ou variável ordinal. Compara distribuições por postos, sem exigir normalidade.','Reporte mediana e intervalo interquartil, não média e desvio-padrão.'],
+  wx:['Teste de Wilcoxon (postos sinalizados)','Dados pareados sem normalidade das diferenças, ou variável ordinal.','Reporte mediana e intervalo interquartil.'],
+  anova:['ANOVA one-way + pós-teste de Tukey','Três ou mais grupos independentes, desfecho numérico normal e variâncias homogêneas. O pós-teste identifica quais pares diferem.','Nunca substitua por testes t múltiplos: isso inflaciona o erro tipo I.'],
+  kw:['Kruskal-Wallis + pós-teste de Dunn','Três ou mais grupos sem normalidade, ou desfecho ordinal.','Equivalente não paramétrico da ANOVA one-way.'],
+  rm:['ANOVA de medidas repetidas','Três ou mais medidas nos mesmos participantes com normalidade. Verifique a esfericidade pelo teste de Mauchly.','Alternativa não paramétrica: teste de Friedman.'],
+  fr:['Teste de Friedman','Três ou mais medidas pareadas sem normalidade, ou desfecho ordinal.','Pós-teste: comparações de Nemenyi ou Wilcoxon com correção de Bonferroni.'],
+  pear:['Correlação de Pearson','Duas variáveis numéricas normais com relação aproximadamente linear. Inspecione o gráfico de dispersão antes: Pearson não detecta relações curvilíneas.','Reporte r, IC 95% e R². Correlação não implica causalidade.'],
+  spear:['Correlação de Spearman','Duas variáveis sem normalidade, ordinais, ou com relação monotônica não linear. Correlaciona os postos.','Robusta a valores extremos.'],
+  reg:['Regressão linear simples','Prever uma variável numérica a partir de outra. A normalidade exigida é a dos resíduos, não das variáveis originais.','Verifique também homocedasticidade e ausência de outliers influentes.'],
+  chi:['Chi-quadrado de independência','Duas variáveis categóricas em grupos independentes. Exige frequência esperada de ao menos 5 em cada célula.','Se alguma célula esperada for menor que 5, use o teste exato de Fisher.'],
+  mcn:['Teste de McNemar','Variável categórica medida duas vezes nos mesmos indivíduos (antes/depois).','Para três ou mais momentos: teste Q de Cochran.'],
+  logi:['Regressão logística','Desfecho categórico binário com uma ou mais variáveis preditoras. Produz razões de chance (odds ratio).','Requer software estatístico dedicado — R, SPSS ou Jamovi.']
+};
+function decide(){
+  const v = id => $(id).value;
+  const [t,o,g,p,n] = ['q1','q2','q3','q4','q5'].map(v);
+  $('w3').classList.toggle('hidden', o!=='comp');
+  $('w4').classList.toggle('hidden', o!=='comp');
+  $('w5').classList.toggle('hidden', t==='cat');
+  let k;
+  if(t==='cat'){ k = o==='comp' ? (p==='par'?'mcn':'chi') : o==='pred' ? 'logi' : 'chi'; }
+  else if(o==='assoc'){ k = (t==='ord'||n==='n') ? 'spear' : 'pear'; }
+  else if(o==='pred'){ k = 'reg'; }
+  else {
+    const np = (t==='ord'||n==='n');
+    if(g==='2') k = p==='par' ? (np?'wx':'t_par') : (np?'mw':'t_ind');
+    else k = p==='par' ? (np?'fr':'rm') : (np?'kw':'anova');
+  }
+  const [nm,why,alt] = D[k];
+  $('ansName').textContent = nm; $('ansWhy').textContent = why; $('ansAlt').textContent = alt;
+}
+['q1','q2','q3','q4','q5'].forEach(i=>$(i).onchange=decide);
+decide();
+</script>
+</body>
+</html>

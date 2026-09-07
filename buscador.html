@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Buscador de Artigos Científicos — Pesquise 150 Milhões de Publicações</title>
+<meta name="description" content="Busque artigos científicos por tema, autor ou revista na base Crossref. Filtre por ano, veja o resumo e gere a citação em ABNT, APA ou Vancouver com um clique.">
+<link rel="canonical" href="https://tcctools.com.br/buscador">
+<meta property="og:title" content="Buscador de Artigos Científicos">
+<meta property="og:description" content="150 milhões de publicações, com citação ABNT gerada na hora.">
+<meta property="og:type" content="website">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/css/tokens.css">
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="page page-wide">
+  <header>
+    <h1 class="h1">Buscador de Artigos Científicos</h1>
+    <p class="sub mt-2">Pesquise em mais de <strong>150 milhões de registros</strong> da base Crossref —
+    a mesma que alimenta o sistema de DOI. Filtre por ano e tipo, leia o resumo e
+    <strong>gere a referência em ABNT</strong> sem sair da página.</p>
+  </header>
+
+  <section class="card">
+    <div class="flex gap-2 mb-3">
+      <input id="q" class="inp" style="margin:0" placeholder="Ex.: qualidade de vida idosos · burnout docentes · machine learning education">
+      <button id="go" class="btn whitespace-nowrap">Buscar</button>
+    </div>
+    <div class="grid md:grid-cols-4 gap-3">
+      <label class="lbl" style="margin:0">A partir do ano
+        <input id="yFrom" type="number" placeholder="2019" min="1900" max="2030" class="sel"></label>
+      <label class="lbl" style="margin:0">Até o ano
+        <input id="yTo" type="number" placeholder="2026" min="1900" max="2030" class="sel"></label>
+      <label class="lbl" style="margin:0">Ordenar por
+        <select id="sort" class="sel">
+          <option value="relevance">Relevância</option>
+          <option value="published">Mais recentes</option>
+          <option value="is-referenced-by-count">Mais citados</option>
+        </select></label>
+      <label class="lbl" style="margin:0">Resultados por página
+        <select id="per" class="sel"><option>10</option><option selected>20</option><option>50</option></select></label>
+    </div>
+    <label class="lbl mt-3" style="margin:0">
+      <input id="onlyAbs" type="checkbox" style="width:auto;margin-right:.4rem">
+      Mostrar apenas registros com resumo disponível</label>
+  </section>
+
+  <p id="msg" class="hint"></p>
+  <div id="list" class="flex flex-col gap-3"></div>
+  <div id="pager" class="hidden flex justify-center items-center gap-3 py-4"></div>
+
+  <!-- MODAL CITAÇÃO -->
+  <div id="modal" class="hidden fixed inset-0 z-[200] bg-black/70 p-4 overflow-y-auto">
+    <div class="card max-w-2xl mx-auto mt-10">
+      <div class="flex justify-between items-start gap-4 mb-3">
+        <h2 class="card-t" style="margin:0">Referência formatada</h2>
+        <button id="mClose" class="btn-o">Fechar</button>
+      </div>
+      <div id="mBody" class="flex flex-col gap-3"></div>
+    </div>
+  </div>
+
+  <article class="prose border-t border-slate-800 pt-8">
+    <h2>Como fazer uma busca bibliográfica eficiente</h2>
+    <p>A revisão de literatura de um TCC costuma falhar por um motivo específico: buscas feitas com
+    a linguagem do dia a dia em vez da terminologia técnica indexada. "Idosos que se sentem sozinhos"
+    retorna pouco; "solidão em idosos" ou "loneliness elderly" retorna centenas de estudos
+    relevantes.</p>
+
+    <h3>Estratégias que funcionam</h3>
+    <ul>
+      <li><strong>Busque em inglês, mesmo escrevendo em português.</strong> Cerca de 90% da produção
+      científica indexada está em inglês. Você lê o resumo em inglês e cita normalmente — não há
+      qualquer problema em referenciar literatura estrangeira.</li>
+      <li><strong>Use descritores controlados.</strong> Consulte os DeCS (Descritores em Ciências da
+      Saúde) ou o MeSH para encontrar o termo padronizado da sua área. Eles existem justamente para
+      resolver a ambiguidade de vocabulário.</li>
+      <li><strong>Combine dois a quatro conceitos.</strong> Buscas com um termo só retornam volume
+      inútil; com muitos termos, retornam vazio. O ponto ótimo é a interseção de dois ou três
+      conceitos centrais.</li>
+      <li><strong>Comece pelos mais citados, refine pelos mais recentes.</strong> Os trabalhos mais
+      citados dão o mapa conceitual da área; os recentes mostram a fronteira atual e as lacunas que
+      você pode ocupar.</li>
+      <li><strong>Faça busca reversa nas referências.</strong> Encontrou um artigo central? Leia a
+      lista de referências dele — é a bibliografia curada por alguém que já fez o trabalho.</li>
+    </ul>
+
+    <h3>Sobre a base Crossref</h3>
+    <p>A Crossref é a agência que registra DOIs e concentra metadados depositados diretamente pelas
+    editoras. Cobre periódicos internacionais, brasileiros indexados, anais de congresso e alguns
+    livros. É extremamente confiável para <strong>metadados de citação</strong> — motivo pelo qual
+    usamos ela no gerador de referências.</p>
+    <p>Limitações que você deve conhecer: a Crossref não indexa teses e dissertações brasileiras
+    (use a BDTD do IBICT), não cobre livros nacionais sem DOI, e nem todo registro traz o resumo,
+    porque muitas editoras não o depositam. Não é substituto de uma busca em bases especializadas —
+    para saúde, complemente com PubMed e SciELO; para educação e ciências sociais, com SciELO,
+    ERIC e o Portal de Periódicos da CAPES, ao qual você provavelmente tem acesso pela sua
+    instituição.</p>
+
+    <h3>Fluxo recomendado</h3>
+    <ol>
+      <li>Defina dois ou três conceitos centrais da sua pergunta de pesquisa.</li>
+      <li>Busque aqui ordenando por "mais citados" para mapear a área.</li>
+      <li>Refaça a busca ordenando por "mais recentes", filtrando os últimos cinco anos.</li>
+      <li>Clique em "Citar" nos artigos relevantes e acumule a lista no
+      <a href="/citacao">gerador de referências</a>.</li>
+      <li>Exporte tudo em .doc ou .ris e importe no Zotero ou Mendeley.</li>
+    </ol>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module">
+import { abnt, apa7, vancouver, bibtex, riscsv } from '/js/cite.js';
+import { mountShell } from '/js/ui.js';
+mountShell();
+
+const MAILTO = 'contato@tcctools.com.br';
+const $ = id => document.getElementById(id);
+let page = 1, total = 0, items = [], lastQ = '';
+
+$('go').onclick = () => { page = 1; search(); };
+$('q').onkeydown = e => { if (e.key === 'Enter') { page = 1; search(); } };
+['sort', 'per', 'yFrom', 'yTo', 'onlyAbs'].forEach(id => $(id).onchange = () => { if (lastQ) { page = 1; search(); } });
+
+async function search() {
+  const q = $('q').value.trim();
+  if (!q) return alert('Digite um tema para buscar.');
+  lastQ = q;
+  const per = +$('per').value;
+  const offset = (page - 1) * per;
+  $('msg').textContent = 'Consultando a base Crossref...';
+  $('list').innerHTML = '';
+
+  const filters = ['type:journal-article'];
+  if ($('yFrom').value) filters.push(`from-pub-date:${$('yFrom').value}-01-01`);
+  if ($('yTo').value) filters.push(`until-pub-date:${$('yTo').value}-12-31`);
+  if ($('onlyAbs').checked) filters.push('has-abstract:true');
+
+  const url = `https://api.crossref.org/works`
+    + `?query.bibliographic=${encodeURIComponent(q)}`
+    + `&rows=${per}&offset=${offset}`
+    + `&filter=${filters.join(',')}`
+    + `&sort=${$('sort').value}&order=desc`
+    + `&select=DOI,title,author,issued,container-title,volume,issue,page,abstract,is-referenced-by-count,publisher,URL`
+    + `&mailto=${encodeURIComponent(MAILTO)}`;
+
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const m = (await r.json()).message;
+    total = m['total-results'];
+    items = m.items || [];
+    if (!items.length) { $('msg').textContent = 'Nenhum resultado. Tente termos mais amplos ou em inglês.'; $('pager').classList.add('hidden'); return; }
+    render();
+  } catch (e) {
+    $('msg').textContent = 'Erro na consulta: ' + e.message + '. Verifique sua conexão e tente novamente.';
+  }
+}
+
+function render() {
+  const per = +$('per').value;
+  const pages = Math.min(Math.ceil(total / per), 100);
+  $('msg').innerHTML = `<strong class="text-slate-300">${total.toLocaleString('pt-BR')}</strong> registros encontrados · página ${page} de ${pages}`;
+
+  $('list').innerHTML = items.map((it, i) => {
+    const y = it.issued?.['date-parts']?.[0]?.[0] || 's.d.';
+    const au = (it.author || []);
+    const auTxt = au.length ? au.slice(0, 4).map(a => `${a.given || ''} ${a.family || ''}`.trim()).join(', ')
+      + (au.length > 4 ? ' et al.' : '') : 'Autoria não informada';
+    const abs = (it.abstract || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const cit = it['is-referenced-by-count'] || 0;
+    return `<article class="card" style="padding:1rem">
+      <h3 class="text-sm font-bold text-slate-100 leading-snug">${(it.title || ['Sem título'])[0]}</h3>
+      <p class="hint" style="margin-top:.35rem">${auTxt}</p>
+      <p class="hint">${[(it['container-title'] || [])[0], y,
+        it.volume && 'v. ' + it.volume, it.page && 'p. ' + it.page].filter(Boolean).join(' · ')}</p>
+      ${abs ? `<p class="text-xs text-slate-400 mt-2 leading-relaxed">${abs.slice(0, 420)}${abs.length > 420 ? '…' : ''}</p>` : ''}
+      <div class="flex flex-wrap gap-2 items-center mt-3">
+        <button data-i="${i}" class="cite btn-g">Citar em ABNT</button>
+        <a href="https://doi.org/${it.DOI}" target="_blank" rel="noopener" class="btn-o" style="text-decoration:none">Abrir artigo ↗</a>
+        <a href="https://scholar.google.com/scholar?q=${encodeURIComponent((it.title || [''])[0])}" target="_blank" rel="noopener" class="btn-o" style="text-decoration:none">Buscar PDF ↗</a>
+        <span class="hint" style="margin:0">${cit} citações · DOI: ${it.DOI}</span>
+      </div></article>`;
+  }).join('');
+
+  document.querySelectorAll('.cite').forEach(b => b.onclick = () => openModal(items[+b.dataset.i]));
+
+  // paginação
+  const btn = (label, p, dis) => `<button class="btn-o ${dis ? 'opacity-40' : ''}" ${dis ? 'disabled' : `data-p="${p}"`}>${label}</button>`;
+  $('pager').innerHTML = btn('← Anterior', page - 1, page <= 1)
+    + `<span class="hint" style="margin:0">Página ${page} de ${pages}</span>`
+    + btn('Próxima →', page + 1, page >= pages);
+  $('pager').classList.remove('hidden');
+  $('pager').querySelectorAll('[data-p]').forEach(b => b.onclick = () => {
+    page = +b.dataset.p; search(); window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+function openModal(w) {
+  const fmts = [['ABNT NBR 6023:2018', abnt(w)], ['APA 7ª edição', apa7(w)], ['Vancouver', vancouver(w)]];
+  $('mBody').innerHTML = fmts.map(([n, t], i) => `
+    <div>
+      <div class="flex justify-between items-center mb-1">
+        <span class="metric-k">${n}</span>
+        <button data-c="${i}" class="cp btn-o">Copiar</button>
+      </div>
+      <p class="ref box">${t}</p>
+    </div>`).join('')
+    + `<div class="flex gap-2 pt-2">
+        <button id="mRis" class="btn-g">.ris</button>
+        <button id="mBib" class="btn-g">.bib</button>
+        <button id="mAdd" class="btn-o">Adicionar à minha lista</button>
+        <a href="/citacao" class="btn-o" style="text-decoration:none">Abrir gerador completo →</a>
+       </div>`;
+  $('modal').classList.remove('hidden');
+  document.querySelectorAll('.cp').forEach(b => b.onclick = () => {
+    navigator.clipboard.writeText(document.querySelectorAll('.ref')[+b.dataset.c].innerText);
+    b.textContent = 'Copiado!'; setTimeout(() => b.textContent = 'Copiar', 1500);
+  });
+  const dl = (txt, name, mime) => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['\uFEFF' + txt], { type: mime }));
+    a.download = name; a.click();
+  };
+  $('mRis').onclick = () => dl(riscsv(w), 'referencia.ris', 'application/x-research-info-systems');
+  $('mBib').onclick = () => dl(bibtex(w), 'referencia.bib', 'application/x-bibtex');
+  $('mAdd').onclick = e => {
+    const my = JSON.parse(localStorage.getItem('myRefs') || '[]');
+    if (my.some(x => x.DOI === w.DOI)) { e.target.textContent = 'Já está na lista'; return; }
+    my.push(w); localStorage.setItem('myRefs', JSON.stringify(my));
+    e.target.textContent = `Adicionado (${my.length})`;
+  };
+}
+$('mClose').onclick = () => $('modal').classList.add('hidden');
+$('modal').onclick = e => { if (e.target.id === 'modal') $('modal').classList.add('hidden'); };
+document.onkeydown = e => { if (e.key === 'Escape') $('modal').classList.add('hidden'); };
+</script>
+</body>
+</html>
