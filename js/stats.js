@@ -1,6 +1,9 @@
 // js/stats.js
 import { normCdf, normInv, normPdf, tTwoTailed, tInv, fPvalue, chi2Pvalue } from './dist.js';
 
+// >>> CORREÇÃO: re-exporta as primitivas de distribuição para as páginas que as consomem
+export { normCdf, normInv, normPdf, tTwoTailed, tInv, fPvalue, chi2Pvalue };
+
 // ================= utilitários =================
 export const clean = arr => arr
   .map(v => (typeof v === 'string' ? v.replace(',', '.').trim() : v))

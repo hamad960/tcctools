@@ -1,0 +1,22 @@
+{
+  "name": "TCC Tools — Calculadoras e Ferramentas para Pesquisa Acadêmica",
+  "short_name": "TCC Tools",
+  "description": "Calculadora estatística, teste de normalidade, tamanho de amostra e gerador de referências ABNT. Grátis e processado no seu navegador.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#020617",
+  "theme_color": "#2563eb",
+  "categories": ["education", "productivity", "utilities"],
+  "icons": [
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Calculadora estatística", "url": "/calculadora" },
+    { "name": "Teste de normalidade", "url": "/normalidade" },
+    { "name": "Tamanho de amostra", "url": "/amostra" },
+    { "name": "Gerador de referências", "url": "/citacao" }
+  ]
+}

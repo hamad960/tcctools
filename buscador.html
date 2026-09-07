@@ -9,7 +9,9 @@
 <meta property="og:title" content="Buscador de Artigos Científicos">
 <meta property="og:description" content="150 milhões de publicações, com citação ABNT gerada na hora.">
 <meta property="og:type" content="website">
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
 <link rel="stylesheet" href="/css/tokens.css">
 </head>
 <body class="bg-slate-950 text-slate-100">
@@ -29,17 +31,17 @@
       <button id="go" class="btn whitespace-nowrap">Buscar</button>
     </div>
     <div class="grid md:grid-cols-4 gap-3">
-      <label class="lbl" style="margin:0">A partir do ano
+      <label class="lbl lbl-flat">A partir do ano
         <input id="yFrom" type="number" placeholder="2019" min="1900" max="2030" class="sel"></label>
-      <label class="lbl" style="margin:0">Até o ano
+      <label class="lbl lbl-flat">Até o ano
         <input id="yTo" type="number" placeholder="2026" min="1900" max="2030" class="sel"></label>
-      <label class="lbl" style="margin:0">Ordenar por
+      <label class="lbl lbl-flat">Ordenar por
         <select id="sort" class="sel">
           <option value="relevance">Relevância</option>
           <option value="published">Mais recentes</option>
           <option value="is-referenced-by-count">Mais citados</option>
         </select></label>
-      <label class="lbl" style="margin:0">Resultados por página
+      <label class="lbl lbl-flat">Resultados por página
         <select id="per" class="sel"><option>10</option><option selected>20</option><option>50</option></select></label>
     </div>
     <label class="lbl mt-3" style="margin:0">

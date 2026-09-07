@@ -6,89 +6,165 @@
 <title>Calculadora Estatística para TCC — Teste t, ANOVA e Correlação com Texto ABNT</title>
 <meta name="description" content="Calcule teste t, ANOVA, Mann-Whitney, Pearson e regressão a partir do seu Excel. Gera p-valor, tamanho de efeito, gráfico em 300 dpi e o parágrafo pronto em normas ABNT.">
 <link rel="canonical" href="https://tcctools.com.br/calculadora">
+
 <meta property="og:title" content="Calculadora Estatística para TCC">
 <meta property="og:description" content="Do Excel ao parágrafo pronto do TCC em 30 segundos.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://tcctools.com.br/calculadora">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="/css/tokens.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calculadora Estatística para TCC",
+  "url": "https://tcctools.com.br/calculadora",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "pt-BR",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+  "description": "Teste t, ANOVA, Mann-Whitney, Pearson, Spearman e regressão linear com tamanho de efeito, intervalo de confiança, gráfico em 300 dpi e redação em normas ABNT."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Meus dados não seguem distribuição normal. Qual teste devo usar?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Utilize a alternativa não paramétrica correspondente: Mann-Whitney no lugar do teste t independente, Wilcoxon no lugar do teste t pareado e Kruskal-Wallis no lugar da ANOVA. A calculadora identifica a violação pelo teste de Shapiro-Wilk e sugere o teste adequado automaticamente." }
+    },
+    {
+      "@type": "Question",
+      "name": "Posso usar estes resultados no meu TCC?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sim. Os cálculos seguem as mesmas fórmulas implementadas no SPSS e no R. Recomenda-se, contudo, validar a escolha do teste com o orientador, pois a adequação depende do delineamento do estudo." }
+    },
+    {
+      "@type": "Question",
+      "name": "Meus dados são enviados para algum servidor?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Não. Todo o processamento ocorre no navegador, em JavaScript. A planilha não é transmitida nem armazenada em servidores." }
+    }
+  ]
+}
+</script>
 </head>
 
-<body class="bg-slate-950 text-slate-100">
+<body class="bg-slate-950 text-slate-100 antialiased">
 <div id="site-header"></div>
 
 <main class="max-w-4xl mx-auto p-6 space-y-8">
+
+  <nav aria-label="Trilha de navegação" class="text-[11px] text-slate-500">
+    <a href="/" class="hover:text-blue-400">Início</a>
+    <span class="mx-1">/</span>
+    <span class="text-slate-400">Calculadora estatística</span>
+  </nav>
+
   <header>
     <h1 class="text-2xl font-bold">Calculadora Estatística para TCC</h1>
     <p class="text-sm text-slate-400 mt-2">Importe seu Excel, escolha as variáveis e receba
-      <strong>p-valor, tamanho de efeito, intervalo de confiança, gráfico em 300 dpi</strong> e o
-      <strong>parágrafo pronto em ABNT</strong>. Tudo processado no seu navegador — nenhum dado é enviado a servidores.</p>
+      <strong class="text-slate-200">p-valor, tamanho de efeito, intervalo de confiança, gráfico em 300 dpi</strong> e o
+      <strong class="text-slate-200">parágrafo pronto em ABNT</strong>. Tudo processado no seu navegador — nenhum dado é enviado a servidores.</p>
   </header>
 
   <!-- ETAPA 1 -->
   <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
     <h2 class="text-sm font-bold text-blue-400">1. Seus dados</h2>
+
     <div class="flex flex-wrap gap-3 items-center">
       <input type="file" id="file" accept=".csv,.xlsx,.xls"
-        class="text-xs file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white bg-slate-950 p-2 rounded-lg border border-slate-700">
-      <button id="btnDemo" class="text-xs px-3 py-2 rounded-lg border border-slate-700 hover:bg-slate-800">Usar dados de exemplo</button>
-      <button id="btnPaste" class="text-xs px-3 py-2 rounded-lg border border-slate-700 hover:bg-slate-800">Colar do Excel</button>
+        class="text-xs file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white file:cursor-pointer bg-slate-950 p-2 rounded-lg border border-slate-700">
+      <button id="btnDemo" type="button" class="text-xs px-3 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition">Usar dados de exemplo</button>
+      <button id="btnPaste" type="button" class="text-xs px-3 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition">Colar do Excel</button>
     </div>
-    <textarea id="pasteArea" class="hidden w-full h-32 p-3 bg-slate-950 border border-slate-700 rounded-lg text-xs font-mono"
-      placeholder="Cole aqui (Ctrl+V) as colunas copiadas do Excel, com cabeçalho na primeira linha"></textarea>
+
+    <textarea id="pasteArea"
+      class="hidden w-full h-32 p-3 bg-slate-950 border border-slate-700 rounded-lg text-xs font-mono focus:border-blue-600 focus:outline-none"
+      placeholder="Cole aqui (Ctrl+V) as colunas copiadas do Excel, com o cabeçalho na primeira linha"></textarea>
+
     <div id="colBox" class="hidden grid md:grid-cols-2 gap-4">
-      <label class="text-xs space-y-1 block">Variável X (grupo ou preditora)
-        <select id="colX" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs"></select></label>
-      <label class="text-xs space-y-1 block">Variável Y (desfecho numérico)
-        <select id="colY" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs"></select></label>
+      <label class="text-xs space-y-1 block">
+        <span id="labX" class="text-slate-300">Variável X (grupo ou preditora)</span>
+        <select id="colX" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none"></select>
+      </label>
+      <label class="text-xs space-y-1 block">
+        <span id="labY" class="text-slate-300">Variável Y (desfecho numérico)</span>
+        <select id="colY" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none"></select>
+      </label>
     </div>
+
     <p id="preview" class="text-[11px] text-slate-500"></p>
   </section>
 
-  <!-- ETAPA 2: NORMALIDADE AUTOMÁTICA -->
+  <!-- ETAPA 2 -->
   <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
     <h2 class="text-sm font-bold text-blue-400">2. Pressupostos (verificados automaticamente)</h2>
-    <div id="assump" class="text-xs text-slate-400">Carregue os dados para testar normalidade (Shapiro-Wilk) e homocedasticidade (Levene).</div>
+    <div id="assump" class="text-xs text-slate-400 space-y-1">
+      Carregue os dados para testar normalidade (Shapiro-Wilk) e homogeneidade das variâncias (Levene).
+    </div>
   </section>
 
   <!-- ETAPA 3 -->
   <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
     <h2 class="text-sm font-bold text-blue-400">3. Objetivo da análise</h2>
+
     <div class="grid md:grid-cols-3 gap-4">
-      <label class="text-xs space-y-1 block">Objetivo
-        <select id="objective" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs">
+      <label class="text-xs space-y-1 block">
+        <span class="text-slate-300">Objetivo</span>
+        <select id="objective" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none">
           <option value="compare2">Comparar 2 grupos</option>
           <option value="compare3">Comparar 3 ou mais grupos</option>
           <option value="correlate" selected>Correlacionar variáveis</option>
-          <option value="regression">Prever / causa e efeito</option>
-        </select></label>
-      <label class="text-xs space-y-1 block">Pareamento
-        <select id="pairing" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs">
+          <option value="regression">Prever (regressão)</option>
+        </select>
+      </label>
+
+      <label class="text-xs space-y-1 block">
+        <span class="text-slate-300">Pareamento</span>
+        <select id="pairing" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none">
           <option value="unpaired">Independentes</option>
           <option value="paired">Pareados (mesmo grupo, pré/pós)</option>
-        </select></label>
-      <label class="text-xs space-y-1 block">Teste (auto-sugerido)
-        <select id="testSel" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs">
+        </select>
+      </label>
+
+      <label class="text-xs space-y-1 block">
+        <span class="text-slate-300">Teste (sugerido automaticamente)</span>
+        <select id="testSel" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none">
           <option value="t_indep">Teste t independente</option>
           <option value="t_paired">Teste t pareado</option>
           <option value="mann">Mann-Whitney (U)</option>
           <option value="wilcoxon">Wilcoxon</option>
-          <option value="anova">ANOVA one-way + pós-teste</option>
+          <option value="anova">ANOVA one-way</option>
           <option value="kruskal">Kruskal-Wallis</option>
           <option value="pearson">Correlação de Pearson</option>
           <option value="spearman">Correlação de Spearman</option>
           <option value="reg">Regressão linear simples</option>
-        </select></label>
+        </select>
+      </label>
     </div>
-    <button id="btnRun" class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 py-2.5 px-8 rounded-lg text-xs font-medium">Calcular</button>
+
+    <button id="btnRun" type="button"
+      class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 py-2.5 px-8 rounded-lg text-xs font-medium transition">Calcular</button>
   </section>
 
   <!-- RESULTADOS -->
   <section id="out" class="hidden space-y-6">
+
     <div class="flex flex-wrap gap-2 justify-end text-xs">
-      <button id="btnTheme" class="px-3 py-1.5 rounded border border-slate-700 hover:bg-slate-800">Tema claro (exportação)</button>
-      <button id="btnPng" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700">Baixar figura PNG 300 dpi</button>
-      <button id="btnDocx" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700">Baixar tabela .docx</button>
-      <button id="btnShare" class="px-3 py-1.5 rounded border border-slate-700 hover:bg-slate-800">Copiar link compartilhável</button>
+      <button id="btnTheme" type="button" class="px-3 py-1.5 rounded border border-slate-700 hover:bg-slate-800 transition">Tema claro (exportação)</button>
+      <button id="btnPng" type="button" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 transition">Baixar figura PNG 300 dpi</button>
+      <button id="btnDocx" type="button" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 transition">Baixar tabela .docx</button>
+      <button id="btnShare" type="button" class="px-3 py-1.5 rounded border border-slate-700 hover:bg-slate-800 transition">Copiar link compartilhável</button>
     </div>
 
     <div id="exportArea" class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-6">
@@ -100,41 +176,106 @@
     </div>
 
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
-      <div class="flex justify-between items-center">
-        <h3 class="text-xs font-bold text-blue-400">Resultados estatísticos</h3>
-      </div>
+      <h3 class="text-xs font-bold text-blue-400">Resultados estatísticos</h3>
       <div id="statsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs"></div>
     </div>
 
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center gap-3">
         <h3 class="text-xs font-bold text-blue-400">Parágrafo pronto (ABNT / APA)</h3>
-        <button id="btnCopyRep" class="text-xs px-3 py-1 rounded border border-slate-700 hover:bg-slate-800">Copiar</button>
+        <button id="btnCopyRep" type="button" class="text-xs px-3 py-1 rounded border border-slate-700 hover:bg-slate-800 transition shrink-0">Copiar</button>
       </div>
       <p id="reportBox" class="text-sm leading-relaxed text-slate-200 bg-slate-950 p-4 rounded-lg border border-slate-800"></p>
       <p class="text-[11px] text-slate-500">Revise sempre com seu orientador. Esta ferramenta não substitui julgamento estatístico profissional.</p>
     </div>
   </section>
 
-  <!-- CONTEÚDO SEO (essencial para AdSense) -->
-  <article class="prose-invert text-sm text-slate-300 space-y-4 border-t border-slate-800 pt-8">
+  <!-- CONTEÚDO EDITORIAL -->
+  <article class="text-sm text-slate-300 space-y-5 border-t border-slate-800 pt-8">
+
     <h2 class="text-lg font-bold text-white">Como escolher o teste estatístico correto</h2>
-    <p>A escolha do teste depende de três decisões: (1) o <strong>tipo de variável</strong> desfecho,
-      (2) a <strong>distribuição dos dados</strong> e (3) o <strong>desenho do estudo</strong>...</p>
-    <h3 class="font-bold text-white">Por que o tamanho de efeito importa mais que o p-valor</h3>
-    <p>O p-valor informa apenas a probabilidade de observar um resultado tão extremo sob a hipótese nula...</p>
-    <h3 class="font-bold text-white">Perguntas frequentes</h3>
-    <details class="border border-slate-800 rounded p-3"><summary class="cursor-pointer font-medium">Meus dados não são normais. E agora?</summary>
-      <p class="mt-2">Use a versão não paramétrica: Mann-Whitney no lugar do teste t...</p></details>
-    <details class="border border-slate-800 rounded p-3"><summary class="cursor-pointer font-medium">Posso usar este resultado no meu TCC?</summary>
-      <p class="mt-2">Sim. Os cálculos seguem as mesmas fórmulas do SPSS e do R...</p></details>
+    <p>A escolha do teste decorre de três decisões encadeadas: o <strong class="text-slate-100">tipo da variável desfecho</strong>
+      (contínua, ordinal ou categórica), a <strong class="text-slate-100">distribuição dos dados</strong>
+      (aderente ou não à normalidade) e o <strong class="text-slate-100">delineamento do estudo</strong>
+      (medidas independentes ou repetidas no mesmo participante).</p>
+    <p>Para desfecho contínuo e distribuição aproximadamente normal, comparações entre dois grupos independentes
+      empregam o teste t de Student; entre três ou mais, a ANOVA de uma via. Quando a normalidade é violada,
+      recorre-se a Mann-Whitney e Kruskal-Wallis, respectivamente. Em medidas repetidas, o teste t pareado
+      cede lugar ao teste de Wilcoxon nas mesmas condições.</p>
+
+    <div class="bg-slate-900/60 border border-slate-800 rounded-lg p-4 overflow-x-auto">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-3">Objetivo</th>
+            <th class="py-2 pr-3">Dados normais</th>
+            <th class="py-2">Dados não normais</th>
+          </tr>
+        </thead>
+        <tbody class="text-slate-300">
+          <tr class="border-b border-slate-800/60"><td class="py-2 pr-3">2 grupos independentes</td><td class="py-2 pr-3">Teste t independente</td><td class="py-2">Mann-Whitney</td></tr>
+          <tr class="border-b border-slate-800/60"><td class="py-2 pr-3">2 medidas no mesmo grupo</td><td class="py-2 pr-3">Teste t pareado</td><td class="py-2">Wilcoxon</td></tr>
+          <tr class="border-b border-slate-800/60"><td class="py-2 pr-3">3 ou mais grupos</td><td class="py-2 pr-3">ANOVA one-way</td><td class="py-2">Kruskal-Wallis</td></tr>
+          <tr><td class="py-2 pr-3">Associação entre variáveis</td><td class="py-2 pr-3">Pearson</td><td class="py-2">Spearman</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="font-bold text-white pt-2">Por que o tamanho de efeito importa mais que o p-valor</h3>
+    <p>O p-valor informa a probabilidade de observar um resultado tão ou mais extremo sob a hipótese nula —
+      e nada mais. Ele é fortemente dependente do tamanho amostral: com n suficientemente grande,
+      diferenças irrelevantes na prática tornam-se estatisticamente significativas. O tamanho de efeito
+      (d de Cohen, eta quadrado parcial, r) quantifica a <em>magnitude</em> do fenômeno, sendo
+      independente de n. Por essa razão, tanto a ABNT quanto o manual da APA (7ª edição) recomendam
+      reportar ambos, acompanhados do intervalo de confiança.</p>
+
+    <h3 class="font-bold text-white pt-2">Perguntas frequentes</h3>
+
+    <details class="border border-slate-800 rounded-lg p-3">
+      <summary class="cursor-pointer font-medium text-slate-200">Meus dados não são normais. E agora?</summary>
+      <p class="mt-2 text-slate-400">Utilize a alternativa não paramétrica correspondente: Mann-Whitney,
+        Wilcoxon ou Kruskal-Wallis. A calculadora detecta a violação pelo Shapiro-Wilk e ajusta a
+        sugestão de teste automaticamente. Nesses casos, reporte mediana e amplitude interquartílica
+        em lugar de média e desvio-padrão.</p>
+    </details>
+
+    <details class="border border-slate-800 rounded-lg p-3">
+      <summary class="cursor-pointer font-medium text-slate-200">Posso usar este resultado no meu TCC?</summary>
+      <p class="mt-2 text-slate-400">Sim. Os cálculos seguem as mesmas fórmulas implementadas no SPSS e no R.
+        Ainda assim, valide a escolha do teste com o orientador — a adequação depende do delineamento
+        do estudo, informação que nenhuma ferramenta automática consegue inferir da planilha.</p>
+    </details>
+
+    <details class="border border-slate-800 rounded-lg p-3">
+      <summary class="cursor-pointer font-medium text-slate-200">Meus dados são enviados para algum servidor?</summary>
+      <p class="mt-2 text-slate-400">Não. Todo o processamento ocorre no seu navegador, em JavaScript.
+        A planilha nunca é transmitida nem armazenada. Você pode inclusive desconectar da internet
+        após carregar a página — a calculadora continua funcionando.</p>
+    </details>
+
+    <details class="border border-slate-800 rounded-lg p-3">
+      <summary class="cursor-pointer font-medium text-slate-200">Como faço um teste pareado (pré e pós)?</summary>
+      <p class="mt-2 text-slate-400">Organize a planilha com <strong>duas colunas numéricas</strong> —
+        por exemplo <code class="text-blue-400">Pre</code> e <code class="text-blue-400">Pos</code> —
+        mantendo os valores do mesmo participante na mesma linha. Selecione "Pareados" no campo
+        Pareamento e indique cada coluna em seu respectivo momento. O alinhamento linha a linha
+        é o que garante a validade do pareamento.</p>
+    </details>
+
+    <p class="text-xs text-slate-500 pt-3 border-t border-slate-800">
+      Veja também:
+      <a href="/guias/qual-teste-estatistico-usar" class="text-blue-400 hover:underline">Qual teste estatístico usar</a> ·
+      <a href="/normalidade" class="text-blue-400 hover:underline">Teste de normalidade</a> ·
+      <a href="/amostra" class="text-blue-400 hover:underline">Cálculo de tamanho de amostra</a> ·
+      <a href="/guias/como-reportar-resultados-abnt" class="text-blue-400 hover:underline">Como reportar resultados em ABNT</a>
+    </p>
   </article>
 </main>
 
 <div id="site-footer"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script type="module" src="/js/calculadora.js"></script>
 </body>
 </html>

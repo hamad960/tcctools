@@ -1,3 +1,33 @@
 User-agent: *
 Allow: /
-Sitemap: https://r-latex-generator.vercel.app/sitemap.xml
+
+# Bots de IA/scraping sem valor de tráfego
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Anúncios (obrigatório permitir)
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+Sitemap: https://tcctools.com.br/sitemap.xml

@@ -9,8 +9,14 @@
 <meta property="og:title" content="Teste de Normalidade Online — Shapiro-Wilk">
 <meta property="og:description" content="Shapiro-Wilk, Q-Q plot e histograma em segundos, direto do seu Excel.">
 <meta property="og:type" content="website">
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="/css/tokens.css">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"O que significa p maior que 0,05 no teste de Shapiro-Wilk?","acceptedAnswer":{"@type":"Answer","text":"Significa que a hipótese de normalidade não foi rejeitada, ou seja, seus dados são compatíveis com uma distribuição normal e você pode usar testes paramétricos como o teste t e a ANOVA."}},
@@ -187,10 +193,15 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+
+<!-- Shell isolado: se stats.js falhar, o site continua navegável -->
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+
 <script type="module">
 import { shapiroWilk, qqPlotData, describe, clean, br, fmtP, normPdf } from '/js/stats.js';
-import { mountShell } from '/js/ui.js';
-mountShell();
 
 const $ = id => document.getElementById(id);
 let rows = [], cQQ = null, cH = null;
