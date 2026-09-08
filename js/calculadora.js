@@ -11,7 +11,7 @@ mountShell();
 let rows = [], chart = null, light = false, last = null, discarded = 0;
 const $ = id => document.getElementById(id);
 const isPaired = () => $('pairing')?.value === 'paired';
-const num = v => Number(String(v ?? '').trim().replace(/\./g, '#').replace(',', '.').replace(/#/g, ''));
+const num = v => S.toNumber(v);
 
 /* ============ plugin de barras de erro ============ */
 const errorBarPlugin = {
@@ -290,17 +290,14 @@ function run() {
           + 'Com 2 grupos, use teste t ou Mann-Whitney.');
       res = t === 't_indep' ? S.tTestIndependent(arr[0], arr[1])
           : t === 'mann' ? S.mannWhitney(arr[0], arr[1])
-          : t === 'anova' ? S.anovaOneWay(arr)
-          : S.kruskalWallis(arr);
+          : t === 'anova' ? S.anovaOneWay(arr, names)
+          : S.kruskalWallis(arr,names);
       res._groups = g;
     }
   } catch (e) {
     console.error(e);
     return alert('Erro no cálculo: ' + e.message);
   }
-
-  // 🔧 CORREÇÃO 1: normaliza p-valor (ANOVA retorna pF)
-  if (res.p === undefined && res.pF !== undefined) res.p = res.pF;
 
   last = { res, labels, t };
   render();
@@ -508,14 +505,37 @@ $('btnPng').onclick = async () => {
   chartToPNG(chart, 'figura1.png', 300);
 };
 
-$('btnDocx').onclick = () => {
-  if (!last?.table) return alert('Execute uma análise antes de exportar.');
-  tableToDocx({
-    title: 'Tabela 1 — Estatística descritiva e inferencial',
-    headers: last.table.head, rows: last.table.body,
-    note: last.table.note, reportText: $('reportBox').textContent
-  });
+$('btnDocx').onclick = async () => {
+  if (!last?.table) {
+    alert('Execute uma análise antes de exportar.');
+    return;
+  }
+
+  const button = $('btnDocx');
+  const originalText = button.textContent;
+
+  try {
+    button.disabled = true;
+    button.textContent = 'Gerando DOCX...';
+
+    await tableToDocx({
+      title: 'Tabela 1 — Estatística descritiva e inferencial',
+      headers: last.table.head,
+      rows: last.table.body,
+      note: last.table.note,
+      reportText: $('reportBox').textContent
+    });
+
+  } catch (error) {
+    console.error('Erro ao gerar DOCX:', error);
+    alert(`Não foi possível gerar o arquivo DOCX: ${error.message}`);
+
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
 };
+
 
 // 🔧 CORREÇÃO 5: limite de tamanho + estado completo
 $('btnShare').onclick = e => {
@@ -545,3 +565,4 @@ if (st?.data?.length) {
   relabel();
   setTimeout(run, 250);
 }
+
