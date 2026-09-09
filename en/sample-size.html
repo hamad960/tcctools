@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sample Size Calculator for Research — Surveys, Means, Proportions &amp; Power</title>
+<meta name="description" content="Calculate the sample size for your study: finite population surveys, comparing two means or proportions, correlations and statistical power. Free, with a ready-made methodological justification.">
+<link rel="canonical" href="https://tcctools.com.br/en/sample-size">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/amostra">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/sample-size">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/sample-size">
+<meta property="og:title" content="Sample Size Calculator">
+<meta property="og:description" content="Find out how many participants your study needs — with the methodological justification written for you.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tcctools.com.br/en/sample-size">
+<meta property="og:locale" content="en_US">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{
+    ad_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied',
+    analytics_storage:'denied',
+    wait_for_update:500
+  });
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137" crossorigin="anonymous"></script><link rel="stylesheet" href="/css/tw.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I calculate the sample size for a study?","acceptedAnswer":{"@type":"Answer","text":"If your study is a survey of a known population, use the formula for estimating a proportion with the finite population correction, supplying the population size, the desired margin of error and the confidence level. If your study compares groups, the calculation must start from the expected effect size, the statistical power and the significance level."}},
+{"@type":"Question","name":"What margin of error should I use?","acceptedAnswer":{"@type":"Answer","text":"The most widely accepted convention in academic work is a 5% margin of error with 95% confidence. A 3% margin requires a much larger sample, and margins of 10% are usually considered weak by reviewers."}},
+{"@type":"Question","name":"What does 80% statistical power mean?","acceptedAnswer":{"@type":"Answer","text":"Power of 80% means that if the effect really exists in the population at the assumed magnitude, the study has an 80% probability of detecting it as statistically significant. It is the minimum standard recommended by Cohen."}}]}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-4xl mx-auto px-6 py-8 space-y-8">
+  <header class="space-y-2">
+    <h1 class="text-2xl font-bold">Sample Size Calculator</h1>
+    <p class="text-sm text-slate-400">Find out <strong>how many participants</strong> your study needs —
+    and get the <strong>methodological justification</strong> ready to paste into your Methods
+    section. Four scenarios cover practically every student project.</p>
+  </header>
+
+  <!-- SCENARIO SELECTOR -->
+  <nav class="flex flex-wrap gap-2">
+    <button data-mode="survey"  class="mode-btn px-3 py-2 rounded-lg text-xs font-medium bg-blue-600 text-white">Survey / questionnaire</button>
+    <button data-mode="means"   class="mode-btn px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700">Compare 2 means</button>
+    <button data-mode="props"   class="mode-btn px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700">Compare 2 proportions</button>
+    <button data-mode="corr"    class="mode-btn px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700">Correlation</button>
+    <button data-mode="power"   class="mode-btn px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700">Observed power (post hoc)</button>
+  </nav>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- FORMS -->
+    <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+      <h2 id="modeTitle" class="text-sm font-bold text-blue-400">Survey with a finite population</h2>
+      <p id="modeHelp" class="text-xs text-slate-400"></p>
+
+      <!-- survey -->
+      <div class="mode-form" data-form="survey">
+        <label class="block text-xs space-y-1 mb-3">Population size (N)
+          <input id="sN" type="number" value="1000" min="1" class="inp">
+          <span class="hint">Total number of eligible individuals. Leave blank if unknown or very large.</span></label>
+        <label class="block text-xs space-y-1 mb-3">Expected proportion (p)
+          <input id="sP" type="number" value="0.5" step="0.05" min="0.01" max="0.99" class="inp">
+          <span class="hint">Use 0.5 if you have no prior estimate — it is the most conservative scenario.</span></label>
+        <label class="block text-xs space-y-1 mb-3">Margin of error (e)
+          <select id="sE" class="inp">
+            <option value="0.03">3% (very precise, large sample)</option>
+            <option value="0.05" selected>5% (academic standard)</option>
+            <option value="0.07">7%</option>
+            <option value="0.10">10% (exploratory)</option>
+          </select></label>
+        <label class="block text-xs space-y-1">Confidence level
+          <select id="sC" class="inp">
+            <option value="0.90">90%</option>
+            <option value="0.95" selected>95% (standard)</option>
+            <option value="0.99">99%</option>
+          </select></label>
+      </div>
+
+      <!-- means -->
+      <div class="mode-form hidden" data-form="means">
+        <label class="block text-xs space-y-1 mb-3">Expected effect size (Cohen's d)
+          <select id="mD" class="inp">
+            <option value="0.2">0.2 — small</option>
+            <option value="0.5" selected>0.5 — medium</option>
+            <option value="0.8">0.8 — large</option>
+            <option value="custom">Enter manually</option>
+          </select></label>
+        <label class="block text-xs space-y-1 mb-3 hidden" id="mDcustomWrap">Custom d
+          <input id="mDcustom" type="number" step="0.05" value="0.5" class="inp"></label>
+        <label class="block text-xs space-y-1 mb-3">Statistical power (1 − β)
+          <select id="mPow" class="inp">
+            <option value="0.80" selected>80% (recommended minimum)</option>
+            <option value="0.90">90%</option>
+            <option value="0.95">95%</option>
+          </select></label>
+        <label class="block text-xs space-y-1 mb-3">Significance level (α)
+          <select id="mA" class="inp"><option value="0.05" selected>.05</option><option value="0.01">.01</option></select></label>
+        <label class="block text-xs space-y-1">Allocation ratio (n1 : n2)
+          <select id="mR" class="inp">
+            <option value="1" selected>1:1 (equal groups)</option>
+            <option value="2">2:1</option><option value="3">3:1</option>
+          </select></label>
+        <p class="hint mt-2">Don't know d? Estimate it from a pilot study or the literature:
+        d = (mean₁ − mean₂) ÷ pooled standard deviation.</p>
+      </div>
+
+      <!-- props -->
+      <div class="mode-form hidden" data-form="props">
+        <label class="block text-xs space-y-1 mb-3">Proportion in group 1 (p₁)
+          <input id="pP1" type="number" value="0.50" step="0.01" min="0.01" max="0.99" class="inp"></label>
+        <label class="block text-xs space-y-1 mb-3">Proportion in group 2 (p₂)
+          <input id="pP2" type="number" value="0.70" step="0.01" min="0.01" max="0.99" class="inp"></label>
+        <label class="block text-xs space-y-1 mb-3">Power (1 − β)
+          <select id="pPow" class="inp"><option value="0.80" selected>80%</option><option value="0.90">90%</option></select></label>
+        <label class="block text-xs space-y-1">Significance (α)
+          <select id="pA" class="inp"><option value="0.05" selected>.05</option><option value="0.01">.01</option></select></label>
+      </div>
+
+      <!-- corr -->
+      <div class="mode-form hidden" data-form="corr">
+        <label class="block text-xs space-y-1 mb-3">Smallest correlation to detect (r)
+          <input id="cR" type="number" value="0.30" step="0.05" min="0.05" max="0.95" class="inp">
+          <span class="hint">0.10 = small · 0.30 = moderate · 0.50 = strong</span></label>
+        <label class="block text-xs space-y-1 mb-3">Power (1 − β)
+          <select id="cPow" class="inp"><option value="0.80" selected>80%</option><option value="0.90">90%</option></select></label>
+        <label class="block text-xs space-y-1">Significance (α)
+          <select id="cA" class="inp"><option value="0.05" selected>.05</option><option value="0.01">.01</option></select></label>
+      </div>
+
+      <!-- power -->
+      <div class="mode-form hidden" data-form="power">
+        <label class="block text-xs space-y-1 mb-3">n per group (already collected)
+          <input id="wN" type="number" value="30" min="2" class="inp"></label>
+        <label class="block text-xs space-y-1 mb-3">Observed effect size (d)
+          <input id="wD" type="number" value="0.5" step="0.05" class="inp"></label>
+        <label class="block text-xs space-y-1">Significance (α)
+          <select id="wA" class="inp"><option value="0.05" selected>.05</option><option value="0.01">.01</option></select></label>
+        <p class="hint mt-2">Useful when data collection is finished and a reviewer asks whether the sample was adequate.</p>
+      </div>
+
+      <button id="btnCalc" class="w-full bg-blue-600 hover:bg-blue-700 py-2.5 rounded-lg text-xs font-medium mt-2">Calculate</button>
+    </section>
+
+    <!-- RESULT -->
+    <section class="space-y-4">
+      <div id="resultCard" class="bg-slate-900 border border-slate-800 rounded-xl p-5 text-center">
+        <p class="text-[10px] uppercase tracking-wider text-slate-500">Required sample</p>
+        <p id="bigN" class="text-5xl font-bold text-emerald-400 my-2">—</p>
+        <p id="bigSub" class="text-xs text-slate-400">Fill in the parameters and click Calculate.</p>
+      </div>
+
+      <div id="detailCard" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2 text-xs">
+        <h3 class="font-bold text-blue-400 mb-1">Breakdown</h3>
+        <div id="detailList" class="space-y-1"></div>
+      </div>
+
+      <div id="sensCard" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5">
+        <h3 class="text-xs font-bold text-blue-400 mb-3">Sensitivity analysis</h3>
+        <table class="w-full text-xs"><tbody id="sensBody"></tbody></table>
+        <p class="hint mt-2">Compare scenarios before you finalise your design.</p>
+      </div>
+
+      <div id="justCard" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xs font-bold text-blue-400">Justification for your Methods section</h3>
+          <button id="btnCopy" class="text-xs px-3 py-1 rounded border border-slate-700 hover:bg-slate-800">Copy</button>
+        </div>
+        <p id="justText" class="text-xs leading-relaxed bg-slate-950 border border-slate-800 rounded-lg p-3 text-slate-200"></p>
+      </div>
+    </section>
+  </div>
+
+  <!-- SEO CONTENT -->
+  <article class="text-sm text-slate-300 space-y-5 border-t border-slate-800 pt-8 leading-relaxed">
+    <h2 class="text-xl font-bold text-white">How to decide your sample size</h2>
+    <p>Few methodological decisions generate as much anxiety — or as many reviewer questions — as the
+    number of participants. The most common mistake is to pick a round number ("I'll interview 100
+    people") and then hunt for a formula that justifies it. The correct path runs the other way: you
+    define the parameters of the study and the mathematics returns the number.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">First, identify the type of question</h3>
+    <p>There are two completely different logics of sample size, and confusing them is the root of
+    nearly every error:</p>
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>Estimating a parameter (survey).</strong> You want to know what proportion of a
+      population thinks or does something. "What percentage of undergraduates exercise regularly?"
+      Here what matters is <em>precision</em>: how narrow you want the confidence interval around your
+      estimate.</li>
+      <li><strong>Testing a hypothesis (comparison).</strong> You want to know whether two groups
+      differ, or whether two variables are associated. "Does the training improve performance?" Here
+      what matters is <em>power</em>: the probability of detecting an effect that genuinely exists.</li>
+    </ul>
+
+    <h3 class="text-lg font-bold text-white pt-2">The four parameters you have to decide</h3>
+    <p><strong>Confidence level (1 − α).</strong> The academic convention is 95%, corresponding to
+    α = .05. It means accepting a 5% risk of concluding an effect exists when it does not (Type I
+    error). Raising it to 99% increases the required sample by roughly 75%.</p>
+
+    <p><strong>Margin of error (e).</strong> Specific to surveys. If you find 60% approval with a 5%
+    margin, the population value lies between 55% and 65%. Five per cent is the defensible standard;
+    below that the sample grows quadratically — halving the error quadruples the sample.</p>
+
+    <p><strong>Statistical power (1 − β).</strong> Specific to hypothesis testing. Cohen proposed 80%
+    as the acceptable floor: if the effect exists, you have an 80% chance of finding it and a 20% risk
+    of wrongly concluding there is no effect (Type II error). Studies with power below 80% are commonly
+    criticised as <em>underpowered</em> — a null result in such a study does not license the conclusion
+    that no effect exists.</p>
+
+    <p><strong>Expected effect size.</strong> The hardest and most important parameter. It is not
+    calculated, it is <em>estimated</em>, from (a) comparable prior studies, (b) a pilot study, or
+    (c) failing both, Cohen's conventions — d = 0.2 small, 0.5 medium, 0.8 large. The smaller the
+    effect you want to detect, the larger the sample required, and the relationship is unforgiving:
+    detecting a small effect (d = 0.2) takes about 394 participants per group, against just 64 for a
+    medium effect.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">The finite population correction</h3>
+    <p>This is the detail most tutorials skip. If your population is small and known — the 340 students
+    on a course, the 80 employees at a company — you do not need the sample computed for an infinite
+    population. The correction reduces the number substantially:</p>
+    <p class="bg-slate-900 border border-slate-800 rounded-lg p-3 font-mono text-xs">
+    n = n₀ ÷ [1 + (n₀ − 1) ÷ N]</p>
+    <p>Where n₀ is the sample for an infinite population and N the actual population. For N = 1,000 at
+    a 5% margin, the sample drops from 384 to 278 participants. For N = 100, it drops to just 80. Using
+    the correction where it applies is a sign of rigour, not of cutting corners.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Don't forget the attrition rate</h3>
+    <p>The number you compute is the count of <strong>valid cases at the end of analysis</strong>, not
+    the number of invitations sent. Online questionnaires typically see response rates between 10% and
+    30%. Longitudinal studies lose participants to follow-up. The recommended practice is to inflate
+    the planned sample:</p>
+    <p class="bg-slate-900 border border-slate-800 rounded-lg p-3 font-mono text-xs">
+    n_recruit = n_calculated ÷ (1 − expected attrition rate)</p>
+    <p>With 20% expected attrition and a calculated n of 128, plan to recruit 160 participants.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Frequently asked questions</h3>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">My sample came out smaller than calculated. Is my study ruined?</summary>
+      <p class="mt-2">No, but it demands methodological honesty. Use this calculator's "observed power"
+      mode, report the power you achieved, and address the limitation explicitly in your limitations
+      section. A sentence such as "the observed power of 62% indicates that small-magnitude effects may
+      have gone undetected" is received far better than omitting the problem.</p>
+    </details>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">Can I use a convenience sample?</summary>
+      <p class="mt-2">Yes, and it is the most common approach in student research. But note: sample size
+      calculation presupposes probability sampling. With a convenience sample, the computed number
+      serves as a statistical power reference, and you must declare the sampling technique as
+      non-probabilistic, acknowledging the limits on generalisability.</p>
+    </details>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">Does qualitative research need a sample size calculation?</summary>
+      <p class="mt-2">No. In qualitative research the criterion is <em>theoretical saturation</em> — you
+      collect until new interviews stop producing new categories. Typically between 12 and 30
+      participants, depending on how homogeneous the group is. Statistical sample size calculation does
+      not apply, and using it inappropriately signals a paradigm confusion.</p>
+    </details>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">How do I cite the calculation method?</summary>
+      <p class="mt-2">Cite the source of the formula, not the tool. For surveys: Cochran, W. G. (1977).
+      <em>Sampling Techniques</em> (3rd ed.). Wiley. For hypothesis tests: Cohen, J. (1988).
+      <em>Statistical Power Analysis for the Behavioral Sciences</em> (2nd ed.). Erlbaum. The
+      justification generated above is already written in the expected style — adapt it and check with
+      your advisor.</p>
+    </details>
+
+    <h3 class="text-lg font-bold text-white pt-2">Next steps</h3>
+    <p>Once the sample is defined and collection is complete, the next step is to check your assumptions
+    and run the appropriate test. Use the <a class="text-blue-400 underline" href="/en/normality">normality
+    test</a> to decide between a parametric and a non-parametric approach, then the
+    <a class="text-blue-400 underline" href="/en/calculator">statistics calculator</a>, which returns
+    the result with the APA paragraph already drafted.</p>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+
+<style>
+  .inp{width:100%;padding:.6rem;background:#020617;border:1px solid #334155;border-radius:.5rem;
+       font-size:.8rem;color:#e2e8f0;margin-top:.25rem}
+  .hint{display:block;font-size:.68rem;color:#64748b;margin-top:.2rem;font-weight:400}
+  label{color:#cbd5e1;font-weight:500}
+</style>
+
+<script type="module">
+import { sampleSize, br } from '/js/stats.js';
+import { mountShell } from '/js/ui.js';
+mountShell();
+
+const $ = id => document.getElementById(id);
+let mode = 'survey';
+
+const META = {
+  survey: ['Survey with a finite population',
+    'For questionnaires and opinion polls. Estimates a proportion with controlled precision.'],
+  means: ['Comparison of two independent means',
+    'For studies comparing two groups on a numeric variable (t-test).'],
+  props: ['Comparison of two proportions',
+    'For binary outcomes: happened or did not happen, passed or did not pass (chi-square).'],
+  corr: ['Correlation between two variables',
+    'For correlational studies with two numeric variables (Pearson).'],
+  power: ['Observed statistical power',
+    'Collection already finished? Compute retrospectively the power your sample achieved.']
+};
+
+document.querySelectorAll('.mode-btn').forEach(b => b.onclick = () => {
+  mode = b.dataset.mode;
+  document.querySelectorAll('.mode-btn').forEach(x => x.className =
+    'mode-btn px-3 py-2 rounded-lg text-xs font-medium ' + (x === b
+      ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'));
+  document.querySelectorAll('.mode-form').forEach(f =>
+    f.classList.toggle('hidden', f.dataset.form !== mode));
+  $('modeTitle').textContent = META[mode][0];
+  $('modeHelp').textContent = META[mode][1];
+});
+$('modeHelp').textContent = META.survey[1];
+
+$('mD').onchange = e => $('mDcustomWrap').classList.toggle('hidden', e.target.value !== 'custom');
+
+$('btnCalc').onclick = calc;
+
+function calc() {
+  let n, sub, details = [], sens = [], just = '';
+  const num = id => parseFloat($(id).value);
+
+  if (mode === 'survey') {
+    const N = $('sN').value.trim() ? num('sN') : Infinity;
+    const p = num('sP'), e = num('sE'), conf = num('sC');
+    const r = sampleSize.survey({ N, p, e, conf });
+    n = r.n; sub = `participants${Number.isFinite(N) ? ` from a population of ${N}` : ''}`;
+    details = [
+      ['Uncorrected sample (n₀)', r.n0],
+      ['Corrected sample (n)', r.n],
+      ['Critical value z', br(r.z, 3)],
+      ['Margin of error', (e * 100).toFixed(0) + '%'],
+      ['Confidence level', (conf * 100).toFixed(0) + '%'],
+      ['Recruit with 20% attrition', Math.ceil(r.n / 0.8)]
+    ];
+    sens = [0.03, 0.05, 0.07, 0.10].map(ee =>
+      [`${(ee * 100).toFixed(0)}% margin of error`, sampleSize.survey({ N, p, e: ee, conf }).n]);
+    just = `Sample size was calculated assuming ${Number.isFinite(N) ? `a finite population of ${N} individuals` : 'an infinite population'}, `
+      + `an expected proportion of ${br(p * 100, 0)}%, a margin of error of ${(e * 100).toFixed(0)}% and a confidence level of ${(conf * 100).toFixed(0)}% `
+      + `(z = ${br(r.z, 2)}), following the formula for estimating proportions with the finite population correction (Cochran, 1977). `
+      + `The procedure yielded a minimum sample of ${r.n} participants. `
+      + `Anticipating an attrition rate of 20%, recruitment of ${Math.ceil(r.n / 0.8)} participants was planned.`;
+
+  } else if (mode === 'means') {
+    const d = $('mD').value === 'custom' ? num('mDcustom') : num('mD');
+    const power = num('mPow'), alpha = num('mA'), ratio = num('mR');
+    const r = sampleSize.twoMeans({ d, alpha, power, ratio });
+    n = r.total; sub = `participants in total (${r.perGroup} + ${r.group2})`;
+    details = [
+      ['Group 1', r.perGroup], ['Group 2', r.group2], ['Total', r.total],
+      ["Effect size (d)", br(d, 2)],
+      ['Power', (power * 100).toFixed(0) + '%'],
+      ['Significance (α)', br(alpha, 2)],
+      ['Recruit with 20% attrition', Math.ceil(r.total / 0.8)]
+    ];
+    sens = [[0.2, 'small'], [0.5, 'medium'], [0.8, 'large']].map(([dd, lab]) =>
+      [`${lab} effect (d = ${br(dd, 1)})`, sampleSize.twoMeans({ d: dd, alpha, power, ratio }).total + ' total']);
+    just = `Sample size was determined to detect a ${d <= 0.2 ? 'small' : d < 0.8 ? 'medium' : 'large'} effect `
+      + `(Cohen's d = ${br(d, 2)}) in the comparison between two independent groups, adopting a statistical power of ${(power * 100).toFixed(0)}% `
+      + `(1 − β = ${br(power, 2)}) and a two-tailed significance level of ${br(alpha, 2)}, following Cohen (1988). `
+      + `The calculation indicated a requirement of ${r.perGroup} participants in group 1 and ${r.group2} in group 2, `
+      + `totalling ${r.total} participants. Allowing for a possible 20% loss to follow-up, recruitment of ${Math.ceil(r.total / 0.8)} participants was planned.`;
+
+  } else if (mode === 'props') {
+    const p1 = num('pP1'), p2 = num('pP2'), power = num('pPow'), alpha = num('pA');
+    if (p1 === p2) return alert('The two proportions must differ.');
+    const r = sampleSize.twoProps({ p1, p2, alpha, power });
+    n = r.total; sub = `participants (${r.perGroup} per group)`;
+    details = [
+      ['Per group', r.perGroup], ['Total', r.total],
+      ['p₁', br(p1 * 100, 0) + '%'], ['p₂', br(p2 * 100, 0) + '%'],
+      ['Absolute difference', br(Math.abs(p1 - p2) * 100, 1) + ' percentage points'],
+      ['Power', (power * 100).toFixed(0) + '%'],
+      ['Recruit with 20% attrition', Math.ceil(r.total / 0.8)]
+    ];
+    just = `To detect a difference between proportions of ${br(p1 * 100, 0)}% and ${br(p2 * 100, 0)}% `
+      + `(a difference of ${br(Math.abs(p1 - p2) * 100, 1)} percentage points), with ${(power * 100).toFixed(0)}% power `
+      + `and α = ${br(alpha, 2)}, the normal approximation indicated ${r.perGroup} participants per group, `
+      + `totalling ${r.total} participants.`;
+
+  } else if (mode === 'corr') {
+    const rr = num('cR'), power = num('cPow'), alpha = num('cA');
+    const r = sampleSize.correlation({ r: rr, alpha, power });
+    n = r.n; sub = 'paired observations';
+    details = [
+      ['Minimum sample (n)', r.n],
+      ['Correlation to detect (r)', br(rr, 2)],
+      ['Corresponding R²', br(rr * rr, 3)],
+      ['Power', (power * 100).toFixed(0) + '%'],
+      ['Recruit with 20% attrition', Math.ceil(r.n / 0.8)]
+    ];
+    sens = [0.1, 0.2, 0.3, 0.5].map(x =>
+      [`r = ${br(x, 1)}`, sampleSize.correlation({ r: x, alpha, power }).n]);
+    just = `Sample size was calculated to detect a correlation of magnitude r = ${br(rr, 2)} `
+      + `as statistically significant, adopting ${(power * 100).toFixed(0)}% power and α = ${br(alpha, 2)} `
+      + `based on Fisher's z transformation. The procedure indicated a minimum requirement of ${r.n} paired observations.`;
+
+  } else {
+    const nn = num('wN'), d = num('wD'), alpha = num('wA');
+    const pw = sampleSize.powerTwoMeans({ n: nn, d, alpha });
+    n = (pw * 100).toFixed(1) + '%'; sub = 'observed statistical power';
+    const need = sampleSize.twoMeans({ d, alpha, power: 0.8 });
+    details = [
+      ['Observed power', (pw * 100).toFixed(1) + '%'],
+      ['Type II error risk (β)', ((1 - pw) * 100).toFixed(1) + '%'],
+      ['n per group used', nn],
+      ['n needed for 80% power', need.perGroup],
+      ['Status', pw >= 0.8 ? 'Adequate ✓' : 'Underpowered ⚠']
+    ];
+    just = `A post hoc power analysis, with n = ${nn} per group, an observed effect size of `
+      + `d = ${br(d, 2)} and α = ${br(alpha, 2)}, indicated a statistical power of ${(pw * 100).toFixed(1)}%. `
+      + (pw >= 0.8
+        ? `This meets the 80% threshold recommended by Cohen (1988), suggesting adequate sensitivity to detect the effect under investigation.`
+        : `This falls below the 80% threshold recommended by Cohen (1988) and constitutes a limitation of the study: `
+          + `smaller effects may have gone undetected, and non-significant results should be interpreted with caution, `
+          + `as the absence of an effect cannot be asserted. Reaching 80% power would require ${need.perGroup} participants per group.`);
+  }
+
+  $('bigN').textContent = n;
+  $('bigSub').textContent = sub;
+  $('detailList').innerHTML = details.map(([k, v]) =>
+    `<div class="flex justify-between border-b border-slate-800 py-1"><span class="text-slate-400">${k}</span><span class="font-mono font-bold text-slate-100">${v}</span></div>`).join('');
+  $('detailCard').classList.remove('hidden');
+
+  if (sens.length) {
+    $('sensBody').innerHTML = sens.map(([k, v]) =>
+      `<tr class="border-b border-slate-800"><td class="py-1.5 text-slate-400">${k}</td><td class="py-1.5 text-right font-mono font-bold text-slate-100">${v}</td></tr>`).join('');
+    $('sensCard').classList.remove('hidden');
+  } else $('sensCard').classList.add('hidden');
+
+  $('justText').textContent = just;
+  $('justCard').classList.remove('hidden');
+}
+
+$('btnCopy').onclick = e => navigator.clipboard.writeText($('justText').textContent)
+  .then(() => { e.target.textContent = 'Copied!'; setTimeout(() => e.target.textContent = 'Copy', 1500); });
+</script>
+</body>
+</html>

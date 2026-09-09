@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',
+ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
+</script>
+<title>How to Interpret summary(lm) in R — Line by Line Guide</title>
+<meta name="description" content="Understand every line of R regression output: coefficients, standard error, t value, Pr(>|t|), R-squared, adjusted R-squared, F-statistic and residuals. With APA reporting examples.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://tcctools.com.br/en/guides/interpreting-summary-lm-r">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/interpretar-summary-lm-r">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/interpreting-summary-lm-r">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/interpreting-summary-lm-r">
+<meta property="og:title" content="How to interpret summary(lm) in R, line by line">
+<meta property="og:description" content="Every block of R regression output explained, with a ready-to-adapt APA paragraph.">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="/css/tw.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+"headline":"How to interpret summary(lm) in R, line by line",
+"description":"A block-by-block explanation of R linear regression output, with reporting templates.",
+"inLanguage":"en","datePublished":"2026-09-08",
+"author":{"@type":"Organization","name":"TCC Tools"},
+"publisher":{"@type":"Organization","name":"TCC Tools"}}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4"><a href="/en/" class="hover:text-blue-400">Home</a> › Guides › summary(lm)</nav>
+  <h1 class="text-3xl font-bold leading-tight mb-3">How to interpret summary(lm) in R, line by line</h1>
+  <p class="text-sm text-slate-400 mb-8">Updated 8 September 2026 · 14 min read</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+  <p class="text-base text-slate-200">The output of <code class="text-emerald-400">summary(lm)</code> is
+  probably the most intimidating block of text a student meets when using R for the first time. Twenty
+  lines of numbers with no friendly labels, abbreviations and scientific notation. The good news: this
+  output has a fixed structure, and every element answers one specific question. Once you understand the
+  logic, you can read any regression in thirty seconds.</p>
+
+  <p>Let's dissect a complete example. Suppose a study investigating whether age and income predict a
+  quality-of-life score:</p>
+
+  <pre class="bg-slate-900 border border-slate-800 rounded-lg p-4 text-xs overflow-x-auto text-emerald-400 leading-relaxed">Call:
+lm(formula = quality_of_life ~ age + income, data = mydata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.4531  -3.2104   0.1876   3.4522  11.9087 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  42.35601    4.51203   9.388  &lt; 2e-16 ***
+age           0.81230    0.12450   6.524 4.56e-09 ***
+income       -0.14560    0.08920  -1.632    0.105    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.124 on 147 degrees of freedom
+Multiple R-squared:  0.4231,	Adjusted R-squared:  0.4152 
+F-statistic: 53.89 on 2 and 147 DF,  p-value: &lt; 2.2e-16</pre>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Block 1 — Call</h2>
+  <p>Reproduces exactly the model that was fitted. It looks trivial, but it is your main protection
+  against the most costly error in an analysis: <strong>reporting results from a model different from
+  the one you think you ran</strong>. After twenty attempts at specification, it is easy to lose track.
+  Always check the Call before copying numbers into your text.</p>
+  <p>The notation <code>y ~ x1 + x2</code> reads "y explained by x1 and x2". The tilde separates the
+  outcome from the predictors.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Block 2 — Residuals</h2>
+  <p>A residual is the model's error for each observation: the observed value minus the predicted value.
+  R shows the five-number summary of that distribution.</p>
+  <p>What you should check here is <strong>symmetry</strong>. In a well-fitted model the median sits close
+  to zero, and the minimum and maximum have similar magnitudes. In the example: median of 0.19 (close to
+  zero), minimum of −12.45 and maximum of 11.91 — reasonably symmetric, with the first and third
+  quartiles nearly mirrored. A sign that the assumption of normally distributed residuals is
+  plausible.</p>
+  <p><strong>Warning signs:</strong> a median far from zero indicates skewness; one extreme three or four
+  times larger than the other suggests influential outliers or a non-linear relationship the linear model
+  fails to capture. In those cases investigate with
+  <code class="text-emerald-400">plot(model)</code>, which produces the four standard diagnostic
+  plots.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Block 3 — Coefficients (the heart of the analysis)</h2>
+  <p>This is where almost everything you will report comes from. Each row is a variable, each column a
+  different piece of information about it.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">The Estimate column</h3>
+  <p>The estimated coefficient, in the original units of the variables. It is the most interpretable
+  number in the whole output, and the one you should highlight.</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>(Intercept) = 42.356</strong> — the predicted quality-of-life value when <em>all</em>
+    predictors equal zero. Careful: this often has no substantive meaning. A person aged zero with zero
+    income does not exist. The intercept is mathematically necessary but rarely interpretable on its own.
+    If you want it to mean something, centre your predictors on their means — the intercept then becomes
+    the predicted value for the average individual.</li>
+    <li><strong>age = 0.812</strong> — each additional year of age is associated with a 0.812-point
+    increase in the quality-of-life score, <strong>holding income constant</strong>. That final clause is
+    what distinguishes multiple regression from separate correlations: the coefficient is the
+    <em>partial</em> effect, already net of the influence of the other predictors.</li>
+    <li><strong>income = −0.146</strong> — the negative sign indicates an inverse direction, but check
+    the p-value column before interpreting: this coefficient is not significant. Interpreting the
+    direction of a non-significant coefficient is a common error — the estimate is indistinguishable from
+    zero.</li>
+  </ul>
+
+  <h3 class="text-lg font-bold text-white pt-2">The Std. Error column</h3>
+  <p>The standard error of the coefficient: the uncertainty of the estimate. The smaller it is relative
+  to the Estimate, the more precise the estimate. It is used to build the 95% confidence interval, which
+  is approximately the coefficient plus or minus twice the standard error. For age:
+  0.812 ± 2 × 0.124, roughly 0.56 to 1.06. In R, get the exact value with
+  <code class="text-emerald-400">confint(model)</code>.</p>
+  <p><strong>Useful rule of thumb:</strong> if the confidence interval contains zero, the coefficient is
+  not significant at 5%. It is the same information as the p-value, expressed more informatively — and
+  good journals prefer confidence intervals to isolated p-values.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">The t value column</h3>
+  <p>Simply the Estimate divided by the Std. Error. It is the test statistic that generates the p-value.
+  As a mental benchmark: t values with absolute magnitude above roughly 2 correspond to p below .05 in
+  samples of reasonable size. For age, t = 6.524 — well above the threshold. For income, t = −1.632 —
+  below it.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">The Pr(&gt;|t|) column</h3>
+  <p>The two-tailed p-value. It tests the null hypothesis that the coefficient equals zero, that is,
+  that the variable contributes nothing to explaining the outcome once the others are controlled for.</p>
+  <p>Two notations confuse beginners:</p>
+  <ul class="list-disc pl-6 space-y-1.5">
+    <li><code>4.56e-09</code> is scientific notation: 0.00000000456. Report it as
+    <strong>p &lt; .001</strong>.</li>
+    <li><code>&lt; 2e-16</code> is R's limit of numerical precision — the p-value is so small it cannot
+    be represented. Report it as <strong>p &lt; .001</strong> as well. Never write "p = .000", which is
+    mathematically impossible and signals inexperience.</li>
+  </ul>
+  <p>Note the APA convention here: p-values are written <strong>without a leading zero</strong>, because
+  a p-value can never exceed 1. The same applies to r, R² and β when standardised.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Asterisks and Signif. codes</h3>
+  <p>A visual marker of significance: three asterisks for p &lt; .001, two for p &lt; .01, one for
+  p &lt; .05, a dot for p &lt; .1. Useful for scanning the output, but
+  <strong>do not reproduce them in running text</strong> — report the numeric p-value. In tables,
+  asterisks are acceptable provided the note explains the convention.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Block 4 — Residual standard error</h2>
+  <p>The standard deviation of the residuals: the model's typical prediction error, in the units of the
+  outcome. Here, 5.124 points. It means the model's predictions are off by about 5 points on the
+  quality-of-life score on average.</p>
+  <p>This number is only interpretable relative to the scale of the variable. If the score ranges from 0
+  to 100, being off by 5 points is good. If it ranges from 0 to 10, the model is practically useless.
+  Always compare it with the raw standard deviation of the outcome — if the residual error is close to
+  the unconditional SD, the model is adding no explanatory power.</p>
+  <p>The <strong>147 degrees of freedom</strong> equal n minus the number of estimated parameters. With
+  three parameters (intercept and two predictors), the sample had 150 valid observations. This is useful
+  for checking whether R silently dropped cases with missing data — one of the most frequent silent
+  errors in practice.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Block 5 — R² and adjusted R²</h2>
+  <p><strong>Multiple R-squared: 0.4231.</strong> The model explains 42.31% of the variance in the
+  outcome. It ranges from 0 to 1, and higher means better fit.</p>
+  <p><strong>Adjusted R-squared: 0.4152.</strong> The same indicator, penalised for the number of
+  predictors. This exists because R² <em>always</em> increases when you add variables — even purely
+  random ones with no relationship to the outcome. Adjusted R² only increases if the added variable
+  contributes real explanatory power. <strong>In multiple regression, report the adjusted value</strong>
+  — it is the honest indicator.</p>
+  <p>How much is "good"? It depends radically on the field. In physics or engineering an R² of .95 is
+  expected. In the social sciences, psychology and education, R² between .20 and .40 is common and
+  publishable, because human behaviour has many unmeasured sources of variation. Do not chase a high R²
+  by including predictors with no theoretical justification — that is <em>overfitting</em>, and the model
+  will not generalise to new data.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Block 6 — F-statistic</h2>
+  <p>Tests the <strong>global</strong> significance of the model: the null hypothesis that all predictor
+  coefficients are simultaneously zero, that is, that the whole model explains nothing beyond what the
+  outcome's mean would explain.</p>
+  <p>In the example, F = 53.89 with 2 and 147 degrees of freedom, p &lt; 2.2 × 10⁻¹⁶. The model is
+  globally significant.</p>
+  <p>This is the <strong>first number you should look at</strong>, before the individual coefficients. If
+  the global F is not significant, examining coefficients individually is problematic — you would be
+  making multiple comparisons with no protection against false positives.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">How to write this up</h2>
+  <div class="bg-slate-900 border border-slate-800 rounded-lg p-5 text-slate-200 leading-relaxed">
+  <p>"The multiple linear regression model was statistically significant,
+  <em>F</em>(2, 147) = 53.89, <em>p</em> &lt; .001, explaining 41.5% of the variance in quality of life
+  (adjusted <em>R</em>² = .415). Age was positively and significantly associated with the outcome,
+  <em>B</em> = 0.81, <em>SE</em> = 0.12, <em>t</em> = 6.52, <em>p</em> &lt; .001, 95% CI [0.57, 1.06],
+  indicating a mean increase of 0.81 points in the score per additional year of age, controlling for
+  income. Income did not contribute significantly to the model, <em>B</em> = −0.15, <em>SE</em> = 0.09,
+  <em>t</em> = −1.63, <em>p</em> = .105. The residual standard error was 5.12 points."</p>
+  </div>
+  <p>Note the structure: first the global model, then the explanatory power, then each predictor with its
+  estimate, precision and significance, and finally the substantive interpretation in the original units.
+  That is the sequence reviewers expect.</p>
+  <p>One notation detail that costs marks: APA reserves <em>B</em> (italic capital) for unstandardised
+  coefficients and <em>β</em> (beta) for standardised ones. The Estimate column of
+  <code class="text-emerald-400">summary(lm)</code> gives you <strong>unstandardised</strong>
+  coefficients, so <em>B</em> is the correct symbol. Writing β for these values is technically wrong and
+  a frequent slip.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Assumptions the summary does not show</h2>
+  <p>A tidy output does not guarantee a valid model. Always check, using
+  <code class="text-emerald-400">plot(model)</code>:</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Linearity</strong> — the "Residuals vs Fitted" plot. Points should scatter randomly
+    around the horizontal line. A curved pattern indicates a non-linear relationship.</li>
+    <li><strong>Normality of residuals</strong> — the "Normal Q-Q" plot. Points should follow the
+    diagonal. Note: the normality required is <em>of the residuals</em>, not of the original variables —
+    a very common misconception.</li>
+    <li><strong>Homoscedasticity</strong> — the "Scale-Location" plot. Spread should be constant across
+    fitted values. A cone shape indicates heteroscedasticity.</li>
+    <li><strong>Influential observations</strong> — the "Residuals vs Leverage" plot. Points with Cook's
+    distance above 1 warrant individual investigation.</li>
+    <li><strong>Multicollinearity</strong> — does not appear in the plots. Use
+    <code class="text-emerald-400">car::vif(model)</code>. VIF values above 5 indicate predictors that
+    are redundant with each other, which inflates standard errors and destabilises the
+    coefficients.</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Frequent errors</h2>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Writing "p = .000".</strong> Impossible. Use "p &lt; .001".</li>
+    <li><strong>Interpreting a non-significant coefficient.</strong> If p = .105, the estimate is
+    indistinguishable from zero — do not claim "there was a trend towards a decrease".</li>
+    <li><strong>Interpreting a meaningless intercept.</strong> State that it is merely a model parameter,
+    or centre your predictors.</li>
+    <li><strong>Claiming causality.</strong> "Predictor" is a technical term about mathematical
+    structure. Regression on observational data does not establish cause.</li>
+    <li><strong>Reporting R² instead of adjusted R²</strong> in a multiple model.</li>
+    <li><strong>Adding a leading zero to p, r or R².</strong> APA omits it for quantities that cannot
+    exceed 1.</li>
+    <li><strong>Forgetting to check the degrees of freedom.</strong> If the model's n is smaller than
+    expected, R silently dropped cases with missing data.</li>
+  </ul>
+
+  <div class="bg-slate-900 border border-blue-800/50 rounded-xl p-5 mt-8">
+    <p class="text-sm font-bold text-white mb-2">Related tools</p>
+    <p class="text-xs text-slate-400 mb-3">Paste your R output into the
+    <a href="/en/r-to-latex" class="text-blue-400 underline">R → LaTeX converter</a> to generate the
+    coefficients table formatted with booktabs. If you would rather not use R, the
+    <a href="/en/calculator" class="text-blue-400 underline">statistics calculator</a> runs simple
+    regression straight from Excel, with the APA paragraph already drafted.</p>
+  </div>
+
+  <h2 class="text-xl font-bold text-white pt-8">References</h2>
+  <ul class="text-xs space-y-1 text-slate-400">
+    <li>American Psychological Association. (2020). <em>Publication manual of the American Psychological Association</em> (7th ed.).</li>
+    <li>Fox, J., &amp; Weisberg, S. (2019). <em>An R companion to applied regression</em> (3rd ed.). Sage.</li>
+    <li>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). <em>An introduction to statistical learning</em> (2nd ed.). Springer.</li>
+    <li>Kutner, M. H., Nachtsheim, C. J., Neter, J., &amp; Li, W. (2005). <em>Applied linear statistical models</em> (5th ed.). McGraw-Hill.</li>
+  </ul>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">import{mountShell}from'/js/ui.js';mountShell();</script>
+</body>
+</html>

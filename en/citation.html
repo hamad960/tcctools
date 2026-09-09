@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Citation Generator from DOI — APA 7, MLA 9, Chicago, Vancouver &amp; BibTeX</title>
+<meta name="description" content="Paste a DOI, title or article link and get the reference formatted in APA 7, MLA 9, Chicago, Vancouver, BibTeX and RIS. Free, no sign-up, metadata straight from Crossref.">
+<link rel="canonical" href="https://tcctools.com.br/en/citation">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/citacao">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/citation">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/citation">
+<meta property="og:title" content="Citation Generator — APA, MLA, Chicago, Vancouver">
+<meta property="og:description" content="From DOI to a formatted reference in two seconds.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tcctools.com.br/en/citation">
+<meta property="og:locale" content="en_US">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{
+    ad_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied',
+    analytics_storage:'denied',
+    wait_for_update:500
+  });
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/tw.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I cite a journal article in APA 7?","acceptedAnswer":{"@type":"Answer","text":"Author, A. A., & Author, B. B. (Year). Title of the article in sentence case. Journal Name, volume(issue), pages. https://doi.org/10.xxxx/xxxxx. The journal name and volume are italicised; no access date is required."}},
+{"@type":"Question","name":"What is a DOI and where do I find it?","acceptedAnswer":{"@type":"Answer","text":"A DOI (Digital Object Identifier) is the permanent code of a scholarly document, in the format 10.xxxx/xxxxx. It appears on the first page of the PDF, on the article page at the publisher's site, or in Google Scholar search results."}},
+{"@type":"Question","name":"What is the difference between APA, MLA, Chicago and Vancouver?","acceptedAnswer":{"@type":"Answer","text":"APA is standard in psychology, education and the social sciences. MLA dominates the humanities and literary studies. Chicago is common in history and publishing, in both author-date and notes-bibliography forms. Vancouver is the standard in medicine and health sciences, with references numbered in order of citation."}}]}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-4xl mx-auto px-6 py-8 space-y-8">
+  <header class="space-y-2">
+    <h1 class="text-2xl font-bold">Citation Generator</h1>
+    <p class="text-sm text-slate-400">Paste the <strong>DOI, link or title</strong> of an article and get
+    the reference ready in <strong>APA 7, MLA 9, Chicago, Vancouver, BibTeX and RIS</strong>.
+    Metadata comes straight from Crossref, with over 150 million records.</p>
+  </header>
+
+  <!-- SEARCH -->
+  <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+    <div class="flex gap-2">
+      <input id="q" placeholder="10.1038/nature12373  ·  or  ·  article title  ·  or  ·  https://doi.org/..."
+        class="flex-1 p-3 bg-slate-950 border border-slate-700 rounded-lg text-sm text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      <button id="btnGo" class="bg-blue-600 hover:bg-blue-700 px-6 rounded-lg text-xs font-medium whitespace-nowrap">Generate reference</button>
+    </div>
+    <div class="flex flex-wrap gap-2 items-center text-xs">
+      <span class="text-slate-500">Examples:</span>
+      <button class="ex px-2 py-1 rounded border border-slate-700 hover:bg-slate-800 text-slate-300">10.1038/nature12373</button>
+      <button class="ex px-2 py-1 rounded border border-slate-700 hover:bg-slate-800 text-slate-300">10.1037/0003-066X.59.1.29</button>
+      <button class="ex px-2 py-1 rounded border border-slate-700 hover:bg-slate-800 text-slate-300">machine learning education</button>
+    </div>
+    <p id="status" class="text-xs text-slate-500"></p>
+  </section>
+
+  <!-- LIST -->
+  <section id="listBox" class="hidden space-y-2">
+    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Select the correct article</h2>
+    <div id="list" class="space-y-2"></div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="out" class="hidden space-y-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
+      <h2 id="wTitle" class="font-bold text-white text-sm"></h2>
+      <p id="wMeta" class="text-xs text-slate-400 mt-1"></p>
+    </div>
+
+    <div id="cards" class="space-y-3"></div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
+      <h3 class="text-xs font-bold text-blue-400">In-text citation</h3>
+      <div id="inText" class="space-y-2 text-xs"></div>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <button id="btnRis" class="text-xs bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg">Download .ris (Zotero / Mendeley)</button>
+      <button id="btnBib" class="text-xs bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg">Download .bib (LaTeX)</button>
+      <button id="btnAdd" class="text-xs border border-slate-700 hover:bg-slate-800 px-4 py-2 rounded-lg">Add to my list</button>
+    </div>
+  </section>
+
+  <!-- SAVED LIST -->
+  <section id="myBox" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
+    <div class="flex justify-between items-center">
+      <h2 class="text-xs font-bold text-blue-400">My references (<span id="myCount">0</span>)</h2>
+      <div class="flex gap-2">
+        <select id="myFmt" class="text-xs bg-slate-950 border border-slate-700 rounded px-2 py-1">
+          <option value="apa">APA 7</option><option value="mla">MLA 9</option>
+          <option value="chi">Chicago</option><option value="van">Vancouver</option>
+        </select>
+        <button id="btnCopyAll" class="text-xs border border-slate-700 px-3 py-1 rounded hover:bg-slate-800">Copy all</button>
+        <button id="btnDocAll" class="text-xs bg-emerald-600 px-3 py-1 rounded hover:bg-emerald-700">Download .doc</button>
+        <button id="btnClear" class="text-xs border border-slate-700 px-3 py-1 rounded hover:bg-slate-800">Clear</button>
+      </div>
+    </div>
+    <ol id="myList" class="space-y-2 text-xs list-decimal pl-5"></ol>
+    <p class="text-[11px] text-slate-500">Saved locally in your browser. APA, MLA and Chicago lists are
+    sorted alphabetically; Vancouver keeps insertion order.</p>
+  </section>
+
+  <!-- SEO -->
+  <article class="text-sm text-slate-300 space-y-5 border-t border-slate-800 pt-8 leading-relaxed">
+    <h2 class="text-xl font-bold text-white">How to reference journal articles correctly</h2>
+    <p>Malformed references are the most frequent source of correction requests — and the most
+    avoidable. The problem is not competence, it is volume: a thesis with sixty manually formatted
+    references accumulates comma, italic and field-order errors that a reviewer will inevitably find.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">APA 7th edition</h3>
+    <p>The dominant standard in psychology, education and the social sciences. Structure for a journal
+    article:</p>
+    <p class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono">
+    Author, A. A., &amp; Author, B. B. (2023). Title of the article in sentence case.
+    <em>Journal Name, 12</em>(3), 45–58. https://doi.org/10.xxxx/xxxxx</p>
+    <p>Points where nearly everyone slips:</p>
+    <ul class="list-disc pl-6 space-y-1.5">
+      <li>The <strong>article title uses sentence case</strong> — only the first word, proper nouns and
+      the word after a colon are capitalised. The journal name, by contrast, keeps title case.</li>
+      <li><strong>Italics fall on the journal name and the volume number</strong>, not on the issue
+      number and not on the article title.</li>
+      <li>The last author is preceded by an <strong>ampersand</strong> (&amp;), not the word "and".</li>
+      <li>Since the 7th edition you list <strong>up to 20 authors</strong> before using an ellipsis;
+      the old "et al. after seven" rule is obsolete.</li>
+      <li>The DOI appears as a <strong>full URL</strong>, with no "Retrieved from" and
+      <strong>no access date</strong> for stable published content.</li>
+      <li>Page ranges use an <strong>en dash</strong> (45–58), not a hyphen.</li>
+    </ul>
+
+    <h3 class="text-lg font-bold text-white pt-2">MLA 9th edition</h3>
+    <p>Standard across the humanities and literary studies. The article title goes in quotation marks
+    and title case, the journal is italicised, and the structure runs
+    <em>vol.</em> / <em>no.</em> / year / <em>pp.</em> Unlike APA, MLA spells out author given names in
+    full rather than reducing them to initials, and it uses the phrase "et al." after three or more
+    authors.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Chicago</h3>
+    <p>Common in history, area studies and book publishing. It comes in two flavours: the
+    <strong>author-date</strong> system, close to APA, and the <strong>notes-bibliography</strong>
+    system, which places full citations in footnotes. This tool generates the author-date form. Note
+    that Chicago places the year immediately after the authors and separates volume, issue and pages
+    with a colon.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Vancouver</h3>
+    <p>Dominant in medicine and the health sciences. References are <strong>numbered in the order they
+    appear in the text</strong>, and in-text citations use that number rather than author-date. Given
+    names are reduced to initials without periods, up to six authors are listed before "et al", there
+    is no typographic emphasis, and journal titles use standardised Index Medicus abbreviations.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Where to find the DOI</h3>
+    <p>The DOI is the document's permanent identifier, in the format <code>10.xxxx/yyyyy</code>. Look on
+    the first page of the PDF (usually the header or footer); on the article page at the publisher's
+    site; in Google Scholar results; or on PubMed. Articles published before 2000 and most book
+    chapters have no DOI — in those cases formatting must be manual.</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Why you should always check the output</h3>
+    <p>This tool reads the metadata that <strong>the publisher itself deposited</strong> with Crossref.
+    If the record is incomplete or wrong at source — a truncated author name, missing page numbers, a
+    title in all caps — the generated reference will reflect that. Always verify against the original
+    PDF, especially the spelling of names, the page range, and the publication year (which can differ
+    from the year of advance online publication).</p>
+
+    <h3 class="text-lg font-bold text-white pt-2">Frequently asked questions</h3>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">The article has no DOI. What now?</summary>
+      <p class="mt-2">Search by title in this tool — Crossref indexes many records that are retrievable
+      by title alone. If nothing turns up, formatting will be manual: use the structure shown above and
+      replace the DOI with the access URL.</p>
+    </details>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">Do I need an access date in APA?</summary>
+      <p class="mt-2">Generally no. APA 7 requires a retrieval date only for content designed to change
+      over time, such as a wiki entry or an unarchived webpage. Published journal articles with a DOI
+      never need one.</p>
+    </details>
+    <details class="border border-slate-800 rounded-lg p-3 bg-slate-900/50">
+      <summary class="cursor-pointer font-medium text-white">Does it work for books and theses?</summary>
+      <p class="mt-2">Partially. Crossref centres on journal articles and conference proceedings. Books
+      with a registered DOI are retrieved; most books and dissertations are not. Those require manual
+      formatting.</p>
+    </details>
+
+    <h3 class="text-lg font-bold text-white pt-2">Recommended workflow</h3>
+    <p>Find the literature with the <a class="text-blue-400 underline" href="/en/search">paper search</a>,
+    generate the references here and accumulate everything under "My references" to export in one go.
+    Then, with your data collected, move on to the
+    <a class="text-blue-400 underline" href="/en/calculator">statistics calculator</a>.</p>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module">
+import { fetchWork, apa7, mla9, chicago, vancouver, bibtex, riscsv } from '/js/cite.js';
+import { mountShell } from '/js/ui.js';
+mountShell();
+
+const $ = id => document.getElementById(id);
+const MAILTO = 'contato@tcctools.com.br';
+let current = null;
+let my = JSON.parse(localStorage.getItem('myRefs') || '[]');
+
+document.querySelectorAll('.ex').forEach(b => b.onclick = () => { $('q').value = b.textContent; go(); });
+$('btnGo').onclick = go;
+$('q').onkeydown = e => { if (e.key === 'Enter') go(); };
+
+async function go() {
+  const v = $('q').value.trim();
+  if (!v) return;
+  $('status').textContent = 'Querying Crossref...';
+  $('out').classList.add('hidden'); $('listBox').classList.add('hidden');
+
+  const isDoi = /10\.\d{4,9}\//.test(v);
+  try {
+    if (isDoi) {
+      current = await fetchWork(v);
+      show(current);
+      $('status').textContent = '';
+    } else {
+      const r = await fetch(`https://api.crossref.org/works?query.bibliographic=${encodeURIComponent(v)}&rows=8&mailto=${MAILTO}`
+        + `&select=DOI,title,author,issued,container-title,volume,issue,page,publisher`);
+      const items = (await r.json()).message.items || [];
+      if (!items.length) { $('status').textContent = 'No records found. Try the DOI instead.'; return; }
+      $('status').textContent = `${items.length} records found.`;
+      $('list').innerHTML = items.map((it, i) => `
+        <button data-i="${i}" class="pick w-full text-left bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg p-3 transition">
+          <p class="text-xs font-bold text-slate-100">${(it.title || ['—'])[0]}</p>
+          <p class="text-[11px] text-slate-400 mt-1">${(it.author || []).slice(0, 3).map(a => `${a.given || ''} ${a.family || ''}`).join(', ')}
+            ${(it.author || []).length > 3 ? ' et al.' : ''} · ${(it['container-title'] || [''])[0]}
+            · ${it.issued?.['date-parts']?.[0]?.[0] || 'n.d.'}</p>
+        </button>`).join('');
+      $('listBox').classList.remove('hidden');
+      document.querySelectorAll('.pick').forEach(b => b.onclick = () => {
+        current = items[+b.dataset.i]; show(current); $('listBox').classList.add('hidden');
+      });
+    }
+  } catch (e) { $('status').textContent = 'Error: ' + e.message + '. Check the DOI.'; }
+}
+
+function show(w) {
+  $('wTitle').textContent = (w.title || ['—'])[0];
+  $('wMeta').textContent = [(w['container-title'] || [])[0], w.issued?.['date-parts']?.[0]?.[0],
+    w.volume && 'vol. ' + w.volume, w.page && 'pp. ' + w.page, 'DOI: ' + w.DOI].filter(Boolean).join(' · ');
+
+  const fmts = [['APA 7th edition', apa7(w)], ['MLA 9th edition', mla9(w)],
+                ['Chicago (author-date)', chicago(w)], ['Vancouver', vancouver(w)]];
+  $('cards').innerHTML = fmts.map(([name, txt], i) => `
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
+      <div class="flex justify-between items-center">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-blue-400">${name}</span>
+        <button data-c="${i}" class="cp text-xs border border-slate-700 px-3 py-1 rounded hover:bg-slate-800">Copy</button>
+      </div>
+      <p class="ref text-xs leading-relaxed text-slate-200 bg-slate-950 p-3 rounded-lg border border-slate-800">${txt}</p>
+    </div>`).join('');
+  document.querySelectorAll('.cp').forEach(b => b.onclick = () => {
+    navigator.clipboard.writeText(document.querySelectorAll('.ref')[+b.dataset.c].innerText);
+    b.textContent = 'Copied!'; setTimeout(() => b.textContent = 'Copy', 1500);
+  });
+
+  const a = w.author || [], y = w.issued?.['date-parts']?.[0]?.[0] || 'n.d.';
+  const apaIn = a.length === 0 ? `(${y})` : a.length === 1 ? `(${a[0].family}, ${y})`
+    : a.length === 2 ? `(${a[0].family} & ${a[1].family}, ${y})` : `(${a[0].family} et al., ${y})`;
+  const mlaIn = a.length === 0 ? '' : a.length === 1 ? `(${a[0].family} ${w.page ? w.page.split('-')[0] : ''})`.trim()
+    : `(${a[0].family} et al.)`;
+  $('inText').innerHTML = [
+    ['APA — parenthetical', apaIn],
+    ['APA — narrative', `${a[0]?.family || 'Author'} ${a.length > 2 ? 'et al.' : a.length === 2 ? 'and ' + a[1].family : ''} (${y})`.replace(/\s+/g, ' ')],
+    ['MLA — parenthetical', mlaIn || '(Author page)'],
+    ['Chicago — author-date', apaIn.replace(',', '')],
+    ['Vancouver', 'Use the reference number, e.g. ¹ or (1)']
+  ].map(([k, v]) => `<div class="flex justify-between gap-3 border-b border-slate-800 py-1.5">
+    <span class="text-slate-400">${k}</span><span class="font-mono text-slate-100">${v}</span></div>`).join('');
+
+  $('out').classList.remove('hidden');
+}
+
+const dl = (txt, name, mime) => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF' + txt], { type: mime }));
+  a.download = name; a.click();
+};
+$('btnRis').onclick = () => current && dl(riscsv(current), 'reference.ris', 'application/x-research-info-systems');
+$('btnBib').onclick = () => current && dl(bibtex(current), 'reference.bib', 'application/x-bibtex');
+
+$('btnAdd').onclick = () => {
+  if (!current) return;
+  if (my.some(w => w.DOI === current.DOI)) return alert('This reference is already in your list.');
+  my.push(current); persist();
+};
+$('btnClear').onclick = () => { if (confirm('Clear all saved references?')) { my = []; persist(); } };
+$('myFmt').onchange = persist;
+
+function persist() {
+  localStorage.setItem('myRefs', JSON.stringify(my));
+  $('myCount').textContent = my.length;
+  $('myBox').classList.toggle('hidden', my.length === 0);
+  const f = $('myFmt').value;
+  const fn = f === 'apa' ? apa7 : f === 'mla' ? mla9 : f === 'chi' ? chicago : vancouver;
+  let list = my.map(w => ({ w, txt: fn(w) }));
+  if (f !== 'van') list.sort((a, b) => a.txt.localeCompare(b.txt, 'en-US'));
+  $('myList').innerHTML = list.map(({ w, txt }) => `<li class="leading-relaxed text-slate-200">
+    ${txt} <button data-d="${w.DOI}" class="rm text-red-400 ml-1 hover:underline">remove</button></li>`).join('');
+  document.querySelectorAll('.rm').forEach(b => b.onclick = () => {
+    my = my.filter(w => w.DOI !== b.dataset.d); persist();
+  });
+}
+
+$('btnCopyAll').onclick = e => {
+  navigator.clipboard.writeText([...document.querySelectorAll('#myList li')]
+    .map(li => li.innerText.replace(/\s*remove$/, '')).join('\n\n'));
+  e.target.textContent = 'Copied!'; setTimeout(() => e.target.textContent = 'Copy all', 1500);
+};
+$('btnDocAll').onclick = () => {
+  const refs = [...document.querySelectorAll('#myList li')].map(li => li.innerText.replace(/\s*remove$/, ''));
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>
+<w:p><w:r><w:rPr><w:b/><w:rFonts w:ascii="Times New Roman"/><w:sz w:val="24"/></w:rPr><w:t>REFERENCES</w:t></w:r></w:p>
+${refs.map(r => `<w:p><w:pPr><w:spacing w:after="240" w:line="240" w:lineRule="auto"/></w:pPr>
+<w:r><w:rPr><w:rFonts w:ascii="Times New Roman"/><w:sz w:val="24"/></w:rPr><w:t xml:space="preserve">${esc(r)}</w:t></w:r></w:p>`).join('')}
+</w:body></w:document>`;
+  dl(xml, 'references.doc', 'application/vnd.ms-word');
+};
+
+persist();
+</script>
+</body>
+</html>

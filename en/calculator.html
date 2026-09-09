@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Statistical Test Calculator — t-Test, ANOVA &amp; Correlation with APA Output</title>
+<meta name="description" content="Run t-tests, ANOVA, Mann-Whitney, Pearson correlation and regression from your Excel file. Get p-values, effect sizes, 300 dpi figures and an APA 7 results paragraph. Free, no upload.">
+
+<link rel="canonical" href="https://tcctools.com.br/en/calculator">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/calculadora">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/calculator">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/calculator">
+
+<meta property="og:title" content="Statistical Test Calculator with APA Output">
+<meta property="og:description" content="From Excel to an APA-formatted paragraph in 30 seconds.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tcctools.com.br/en/calculator">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{
+    ad_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied',
+    analytics_storage:'denied',
+    wait_for_update:500
+  });
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/tw.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication",
+"name":"Statistical Test Calculator",
+"url":"https://tcctools.com.br/en/calculator",
+"applicationCategory":"EducationalApplication",
+"operatingSystem":"Web","inLanguage":"en",
+"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+"description":"Independent and paired t-tests, ANOVA, Mann-Whitney, Pearson, Spearman and simple linear regression with effect sizes, confidence intervals, 300 dpi figures and APA 7 write-up."}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"My data are not normally distributed. Which test should I use?",
+ "acceptedAnswer":{"@type":"Answer","text":"Use the corresponding non-parametric alternative: Mann-Whitney U instead of the independent-samples t-test, Wilcoxon signed-rank instead of the paired t-test, and Kruskal-Wallis instead of one-way ANOVA. The calculator detects the violation through the Shapiro-Wilk test and switches its recommendation automatically."}},
+{"@type":"Question","name":"Can I use these results in my thesis or manuscript?",
+ "acceptedAnswer":{"@type":"Answer","text":"Yes. The computations follow the same formulas implemented in SPSS and R and are validated against R output. You should still confirm the choice of test with your advisor, since appropriateness depends on study design."}},
+{"@type":"Question","name":"Is my data uploaded to a server?",
+ "acceptedAnswer":{"@type":"Answer","text":"No. All processing happens in your browser using JavaScript. The spreadsheet is never transmitted or stored. You can disconnect from the internet after the page loads and the calculator keeps working."}}]}
+</script>
+</head>
+
+<body class="bg-slate-950 text-slate-100 antialiased">
+<div id="site-header"></div>
+
+<main class="max-w-4xl mx-auto p-6 space-y-8">
+
+  <nav aria-label="Breadcrumb" class="text-[11px] text-slate-500">
+    <a href="/en/" class="hover:text-blue-400">Home</a>
+    <span class="mx-1">/</span>
+    <span class="text-slate-400">Statistics calculator</span>
+  </nav>
+
+  <header>
+    <h1 class="text-2xl font-bold">Statistical Test Calculator</h1>
+    <p class="text-sm text-slate-400 mt-2">Import your Excel file, pick your variables and get
+      <strong class="text-slate-200">p-values, effect sizes, confidence intervals and a 300 dpi figure</strong>,
+      plus a <strong class="text-slate-200">ready-to-paste APA 7 paragraph</strong>. Everything runs in
+      your browser — no data is sent to any server.</p>
+  </header>
+
+  <!-- STEP 1 -->
+  <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
+    <h2 class="text-sm font-bold text-blue-400" data-i18n="step1">1. Your data</h2>
+
+    <div class="flex flex-wrap gap-3 items-center">
+      <label for="file"
+        class="inline-block cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+        data-i18n="btnFile">Choose file</label>
+      <input id="file" type="file" accept=".xlsx,.xls,.csv" class="sr-only">
+      <span id="fileName" class="text-sm text-slate-400" data-i18n="noFile">No file selected</span>
+      <button id="btnDemo" type="button" class="text-xs px-3 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition" data-i18n="btnDemo">Load sample data</button>
+      <button id="btnPaste" type="button" class="text-xs px-3 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition" data-i18n="btnPaste">Paste from Excel</button>
+    </div>
+
+    <textarea id="pasteArea"
+      class="hidden w-full h-32 p-3 bg-slate-950 border border-slate-700 rounded-lg text-xs font-mono focus:border-blue-600 focus:outline-none"
+      data-i18n-ph="pastePlaceholder"
+      placeholder="Paste (Ctrl+V) the columns copied from Excel, with the header in the first row"></textarea>
+
+    <div id="colBox" class="hidden grid md:grid-cols-2 gap-4">
+      <label class="text-xs space-y-1 block">
+        <span id="labX" class="text-slate-300">Variable X (group or predictor)</span>
+        <select id="colX" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none"></select>
+      </label>
+      <label class="text-xs space-y-1 block">
+        <span id="labY" class="text-slate-300">Variable Y (numeric outcome)</span>
+        <select id="colY" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none"></select>
+      </label>
+    </div>
+    <p id="preview" class="text-[11px] text-slate-500"></p>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
+    <h2 class="text-sm font-bold text-blue-400" data-i18n="step2">2. Assumptions (checked automatically)</h2>
+    <div id="assump" class="text-xs text-slate-400 space-y-1" data-i18n="assumpHint">
+      Load your data to test normality (Shapiro-Wilk) and homogeneity of variance (Levene).
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+    <h2 class="text-sm font-bold text-blue-400" data-i18n="step3">3. Analysis goal</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <label class="text-xs space-y-1 block">
+        <span class="text-slate-300" data-i18n="goalLabel">Goal</span>
+        <select id="objective" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none">
+          <option value="compare2" data-i18n="objCompare2">Compare 2 groups</option>
+          <option value="compare3" data-i18n="objCompare3">Compare 3 or more groups</option>
+          <option value="correlate" selected data-i18n="objCorrelate">Correlate two variables</option>
+          <option value="regression" data-i18n="objRegression">Predict (regression)</option>
+        </select>
+      </label>
+      <label class="text-xs space-y-1 block">
+        <span class="text-slate-300" data-i18n="pairingLabel">Design</span>
+        <select id="pairing" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none">
+          <option value="unpaired" data-i18n="pairIndep">Independent samples</option>
+          <option value="paired" data-i18n="pairPaired">Paired / repeated measures (pre–post)</option>
+        </select>
+      </label>
+      <label class="text-xs space-y-1 block">
+        <span class="text-slate-300" data-i18n="testLabel">Test (auto-suggested)</span>
+        <select id="testSel" class="w-full p-2 bg-slate-950 border border-slate-700 rounded-lg text-xs focus:border-blue-600 focus:outline-none">
+          <option value="t_indep" data-i18n="optTIndep">Independent-samples t-test</option>
+          <option value="t_paired" data-i18n="optTPaired">Paired-samples t-test</option>
+          <option value="mann" data-i18n="optMann">Mann-Whitney U</option>
+          <option value="wilcoxon" data-i18n="optWilcoxon">Wilcoxon signed-rank</option>
+          <option value="anova" data-i18n="optAnova">One-way ANOVA</option>
+          <option value="kruskal" data-i18n="optKruskal">Kruskal-Wallis H</option>
+          <option value="pearson" data-i18n="optPearson">Pearson correlation</option>
+          <option value="spearman" data-i18n="optSpearman">Spearman correlation</option>
+          <option value="reg" data-i18n="optReg">Simple linear regression</option>
+        </select>
+      </label>
+    </div>
+    <button id="btnRun" type="button"
+      class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 py-2.5 px-8 rounded-lg text-xs font-medium transition"
+      data-i18n="btnRun">Calculate</button>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="out" class="hidden space-y-6">
+    <div class="flex flex-wrap gap-2 justify-end text-xs">
+      <button id="btnTheme" type="button" class="px-3 py-1.5 rounded border border-slate-700 hover:bg-slate-800 transition" data-i18n="btnTheme">Light theme (for export)</button>
+      <button id="btnPng" type="button" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 transition" data-i18n="btnPng">Download 300 dpi PNG</button>
+      <button id="btnDocx" type="button" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 transition" data-i18n="btnDocx">Download .docx table</button>
+      <button id="btnShare" type="button" class="px-3 py-1.5 rounded border border-slate-700 hover:bg-slate-800 transition" data-i18n="btnShare">Copy shareable link</button>
+    </div>
+
+    <div id="exportArea" class="bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-6">
+      <div>
+        <p id="figTitle" class="text-xs font-semibold mb-2" data-i18n="figTitleDefault">Figure 1 — Analysis output</p>
+        <div class="h-72"><canvas id="chart"></canvas></div>
+      </div>
+      <div id="tableWrap" class="overflow-x-auto"></div>
+    </div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
+      <h3 class="text-xs font-bold text-blue-400" data-i18n="statsTitle">Statistical results</h3>
+      <div id="statsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs"></div>
+    </div>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-2">
+      <div class="flex justify-between items-center gap-3">
+        <h3 class="text-xs font-bold text-blue-400" data-i18n="repTitle">Ready-to-paste paragraph (APA 7)</h3>
+        <button id="btnCopyRep" type="button" class="text-xs px-3 py-1 rounded border border-slate-700 hover:bg-slate-800 transition shrink-0" data-i18n="btnCopyRep">Copy</button>
+      </div>
+      <p id="reportBox" class="text-sm leading-relaxed text-slate-200 bg-slate-950 p-4 rounded-lg border border-slate-800"></p>
+      <p class="text-[11px] text-slate-500" data-i18n="disclaimer">Always review with your advisor. This tool does not replace professional statistical judgement.</p>
+    </div>
+  </section>
+
+  <!-- EDITORIAL CONTENT -->
+  <article class="text-sm text-slate-300 space-y-5 border-t border-slate-800 pt-8">
+
+    <h2 class="text-lg font-bold text-white">How to choose the right statistical test</h2>
+    <p>Test selection follows from three linked decisions: the <strong class="text-slate-100">type of your
+      outcome variable</strong> (continuous, ordinal or categorical), the
+      <strong class="text-slate-100">distribution of the data</strong> (whether the normality assumption
+      holds), and the <strong class="text-slate-100">study design</strong> (independent observations versus
+      repeated measures on the same participants).</p>
+    <p>With a continuous outcome that is approximately normally distributed, comparing two independent
+      groups calls for an independent-samples <em>t</em> test; three or more groups call for a one-way
+      ANOVA. When normality is violated, the Mann-Whitney <em>U</em> and Kruskal-Wallis <em>H</em> tests
+      are the respective alternatives. For repeated measures, the paired-samples <em>t</em> test gives way
+      to the Wilcoxon signed-rank test under the same conditions.</p>
+
+    <div class="bg-slate-900/60 border border-slate-800 rounded-lg p-4 overflow-x-auto">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-3">Goal</th>
+            <th class="py-2 pr-3">Normally distributed</th>
+            <th class="py-2">Not normally distributed</th>
+          </tr>
+        </thead>
+        <tbody class="text-slate-300">
+          <tr class="border-b border-slate-800/60"><td class="py-2 pr-3">Two independent groups</td><td class="py-2 pr-3">Independent-samples t test</td><td class="py-2">Mann-Whitney U</td></tr>
+          <tr class="border-b border-slate-800/60"><td class="py-2 pr-3">Two measures, same participants</td><td class="py-2 pr-3">Paired-samples t test</td><td class="py-2">Wilcoxon signed-rank</td></tr>
+          <tr class="border-b border-slate-800/60"><td class="py-2 pr-3">Three or more groups</td><td class="py-2 pr-3">One-way ANOVA</td><td class="py-2">Kruskal-Wallis H</td></tr>
+          <tr><td class="py-2 pr-3">Association between variables</td><td class="py-2 pr-3">Pearson r</td><td class="py-2">Spearman rho</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="font-bold text-white pt-2">Why effect size matters more than the p value</h3>
+    <p>A <em>p</em> value tells you the probability of observing a result at least as extreme as yours if
+      the null hypothesis were true — and nothing more. It depends heavily on sample size: with a large
+      enough <em>n</em>, differences of no practical consequence become statistically significant. Effect
+      sizes (Cohen's <em>d</em>, eta squared, <em>r</em>) quantify the <em>magnitude</em> of the phenomenon
+      and are independent of <em>n</em>. This is why the APA Publication Manual (7th edition) requires
+      reporting both, together with a confidence interval around the effect.</p>
+
+    <h3 class="font-bold text-white pt-2">What this calculator reports, and in APA format</h3>
+    <p>Every analysis returns the test statistic with its degrees of freedom, the exact <em>p</em> value
+      (rendered as <em>p</em> &lt; .001 when appropriate, per APA convention), the effect size with a
+      verbal magnitude label, and a 95% confidence interval. The write-up panel produces a paragraph that
+      follows APA 7 style conventions — italicised statistical symbols, no leading zero before decimals
+      for bounded statistics, and the comparative direction stated explicitly — so you can paste it
+      straight into your Results section and edit only the substantive wording.</p>
+
+    <h3 class="font-bold text-white pt-2">Assumption checks</h3>
+    <p>Normality is assessed with the Shapiro-Wilk test, applied within each group for independent designs
+      and to the difference scores for paired designs. Homogeneity of variance is assessed with Levene's
+      test. When variances are unequal, the calculator applies the Welch-Satterthwaite correction rather
+      than the pooled-variance <em>t</em> test. When normality fails, it recommends the rank-based
+      alternative. These recommendations are heuristics, not verdicts: with n &lt; 30 the Shapiro-Wilk test
+      is underpowered, and with very large samples it flags trivial departures from normality.</p>
+
+    <h3 class="font-bold text-white pt-2">Frequently asked questions</h3>
+
+    <details class="border border-slate-800 rounded-lg p-3">
+      <summary class="cursor-pointer font-medium text-slate-200">My data are not normal. What now?</summary>
+      <p class="mt-2 text-slate-400">Use the corresponding non-parametric test: Mann-Whitney U, Wilcoxon
+        signed-rank or Kruskal-Wallis H. The calculator detects the violation via Shapiro-Wilk and adjusts
+        its recommendation automatically. In these cases, report the median and interquartile range rather
+        than the mean and standard deviation.</p>
+    </details>
+
+    <details class="border border-slate-800 rounded-lg p-3">
+      <summary class="cursor-pointer font-medium text-slate-200">Can I use these results in my thesis or manuscript?</summary>
+      <p class="mt-2 text-slate-400">Yes. The computations follow the same formulas implemented in SPSS
+        and R. You should still confirm the choice of test with your advisor, because appropriateness
+        depends on the study design — information no automated tool can infer from a spreadsheet.</p>
+    </details>
+
+    <details class="border border-slate-800 rounded-lg p-3">
+      <summary class="cursor-pointer font-medium text-slate-200">Is my data uploaded to a server?</summary>
+      <p class="mt-2 text-slate-400">No. All processing happens in your browser in JavaScript. The
+        spreadsheet is never transmitted or stored. You can disconnect from the internet after the page
+        loads and the calculator keeps working.</p>
+    </details>
+
+    <details class="border border-slate-800 rounded-lg p-3">
+      <summary class="cursor-pointer font-medium text-slate-200">How do I run a paired (pre–post) test?</summary>
+      <p class="mt-2 text-slate-400">Lay out your spreadsheet with <strong>two numeric columns</strong> —
+        for example <code class="text-blue-400">Pre</code> and <code class="text-blue-400">Post</code> —
+        keeping each participant's values on the same row. Select "Paired / repeated measures" under
+        Design and assign each column to its time point. Row-by-row alignment is what makes the pairing
+        valid.</p>
+    </details>
+
+    <p class="text-xs text-slate-500 pt-3 border-t border-slate-800">
+      See also:
+      <a href="/en/guides/which-statistical-test" class="text-blue-400 hover:underline">Which statistical test to use</a> ·
+      <a href="/en/normality" class="text-blue-400 hover:underline">Normality test</a> ·
+      <a href="/en/sample-size" class="text-blue-400 hover:underline">Sample size calculator</a>
+    </p>
+  </article>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="module" src="/js/calculadora.js"></script>
+</body>
+</html>

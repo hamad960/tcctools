@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Academic Paper Search — Search 150 Million Scholarly Publications</title>
+<meta name="description" content="Search scholarly articles by topic, author or journal in the Crossref database. Filter by year and document type, read the abstract and generate the citation in APA, MLA or Vancouver in one click.">
+<link rel="canonical" href="https://tcctools.com.br/en/search">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/buscador">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/search">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/search">
+<meta property="og:title" content="Academic Paper Search">
+<meta property="og:description" content="150 million publications, with the citation generated on the spot.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tcctools.com.br/en/search">
+<meta property="og:locale" content="en_US">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{
+    ad_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied',
+    analytics_storage:'denied',
+    wait_for_update:500
+  });
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137" crossorigin="anonymous"></script><link rel="stylesheet" href="/css/tw.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<link rel="stylesheet" href="/css/tokens.css">
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="page page-wide">
+  <header>
+    <h1 class="h1">Academic Paper Search</h1>
+    <p class="sub mt-2">Search more than <strong>150 million records</strong> in Crossref — the same
+    database behind the DOI system. Filter by year and document type, read the abstract and
+    <strong>generate the reference</strong> without leaving the page.</p>
+  </header>
+
+  <section class="card">
+    <div class="flex gap-2 mb-3">
+      <input id="q" class="inp" style="margin:0" placeholder="e.g. quality of life older adults · teacher burnout · machine learning education">
+      <button id="go" class="btn whitespace-nowrap">Search</button>
+    </div>
+    <div class="grid md:grid-cols-4 gap-3">
+      <label class="lbl lbl-flat">From year
+        <input id="yFrom" type="number" placeholder="2019" min="1900" max="2030" class="sel"></label>
+      <label class="lbl lbl-flat">To year
+        <input id="yTo" type="number" placeholder="2026" min="1900" max="2030" class="sel"></label>
+      <label class="lbl lbl-flat">Sort by
+        <select id="sort" class="sel">
+          <option value="relevance">Relevance</option>
+          <option value="published">Most recent</option>
+          <option value="is-referenced-by-count">Most cited</option>
+        </select></label>
+      <label class="lbl lbl-flat">Results per page
+        <select id="per" class="sel"><option>10</option><option selected>20</option><option>50</option></select></label>
+    </div>
+    <div class="grid md:grid-cols-2 gap-3 mt-3">
+      <label class="lbl lbl-flat">Document type
+        <select id="dtype" class="sel">
+          <option value="journal-article">Journal article</option>
+          <option value="">All types</option>
+          <option value="proceedings-article">Conference paper</option>
+          <option value="book-chapter">Book chapter</option>
+          <option value="posted-content">Preprint</option>
+          <option value="dissertation">Thesis / dissertation</option>
+          <option value="report">Technical report</option>
+        </select></label>
+      <label class="lbl lbl-flat">Study design keyword
+        <select id="stype" class="sel">
+          <option value="">None</option>
+          <option value="systematic review">Systematic review</option>
+          <option value="meta-analysis">Meta-analysis</option>
+          <option value="randomized controlled trial">Randomised controlled trial</option>
+          <option value="scoping review">Scoping review</option>
+          <option value="cohort study">Cohort study</option>
+          <option value="qualitative study">Qualitative study</option>
+        </select></label>
+    </div>
+    <label class="lbl mt-3" style="margin:0">
+      <input id="onlyAbs" type="checkbox" style="width:auto;margin-right:.4rem">
+      Show only records with an abstract</label>
+    <p class="hint mt-2">The study design keyword is appended to the text query. Crossref does not
+    formally classify study design — for that, use PubMed's native publication type filters.</p>
+  </section>
+
+  <p id="msg" class="hint"></p>
+  <div id="list" class="flex flex-col gap-3"></div>
+  <div id="pager" class="hidden flex justify-center items-center gap-3 py-4"></div>
+
+  <!-- CITATION MODAL -->
+  <div id="modal" class="hidden fixed inset-0 z-[200] bg-black/70 p-4 overflow-y-auto">
+    <div class="card max-w-2xl mx-auto mt-10">
+      <div class="flex justify-between items-start gap-4 mb-3">
+        <h2 class="card-t" style="margin:0">Formatted reference</h2>
+        <button id="mClose" class="btn-o">Close</button>
+      </div>
+      <div id="mBody" class="flex flex-col gap-3"></div>
+    </div>
+  </div>
+
+  <article class="prose border-t border-slate-800 pt-8">
+    <h2>How to run an efficient literature search</h2>
+    <p>Literature reviews usually fail for one specific reason: searches written in everyday language
+    instead of indexed technical terminology. "Older people who feel lonely" returns very little;
+    "loneliness older adults" returns hundreds of relevant studies.</p>
+
+    <h3>Strategies that work</h3>
+    <ul>
+      <li><strong>Use controlled vocabulary.</strong> Consult MeSH (for health) or the thesaurus of your
+      field to find the standardised term. These systems exist precisely to resolve vocabulary
+      ambiguity.</li>
+      <li><strong>Combine two to four concepts.</strong> A single term returns useless volume; too many
+      terms return nothing. The sweet spot is the intersection of two or three core concepts.</li>
+      <li><strong>Start with the most cited, refine with the most recent.</strong> Highly cited work
+      gives you the conceptual map of the field; recent work shows the current frontier and the gaps you
+      can occupy.</li>
+      <li><strong>Do backward citation searching.</strong> Found a central paper? Read its reference
+      list — it is a bibliography curated by someone who already did the work.</li>
+      <li><strong>Then do forward searching.</strong> Look up who has cited that paper since. This is
+      how you catch the recent literature that keyword searches miss.</li>
+    </ul>
+
+    <h3>About the Crossref database</h3>
+    <p>Crossref is the agency that registers DOIs and aggregates metadata deposited directly by
+    publishers. It covers international journals, conference proceedings and some books. It is
+    extremely reliable for <strong>citation metadata</strong> — which is why we use it for the
+    reference generator.</p>
+    <p>Limitations worth knowing: Crossref does not index most theses and dissertations, does not cover
+    books without a DOI, and not every record carries an abstract, because many publishers do not
+    deposit one. It is not a substitute for a search in specialised databases — for health, complement
+    with PubMed; for the social sciences and education, with ERIC, PsycINFO or Scopus, to which your
+    institution likely has access.</p>
+
+    <h3>Recommended workflow</h3>
+    <ol>
+      <li>Define two or three core concepts from your research question.</li>
+      <li>Search here sorted by "most cited" to map the field.</li>
+      <li>Repeat sorted by "most recent", filtering to the last five years.</li>
+      <li>Click "Cite" on the relevant articles and build your list in the
+      <a href="/en/citation">citation generator</a>.</li>
+      <li>Export everything as .doc or .ris and import into Zotero or Mendeley.</li>
+    </ol>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module">
+import { apa7, mla9, chicago, vancouver, bibtex, riscsv } from '/js/cite.js';
+import { mountShell } from '/js/ui.js';
+mountShell();
+
+const MAILTO = 'contato@tcctools.com.br';
+const $ = id => document.getElementById(id);
+let page = 1, total = 0, items = [], lastQ = '';
+
+$('go').onclick = () => { page = 1; search(); };
+$('q').onkeydown = e => { if (e.key === 'Enter') { page = 1; search(); } };
+['sort','per','yFrom','yTo','onlyAbs','dtype','stype'].forEach(id =>
+  $(id).onchange = () => { if (lastQ) { page = 1; search(); } });
+
+async function search() {
+  const q = $('q').value.trim();
+  if (!q) return alert('Enter a topic to search.');
+  lastQ = q;
+  const per = +$('per').value;
+  const offset = (page - 1) * per;
+  $('msg').textContent = 'Querying Crossref...';
+  $('list').innerHTML = '';
+
+  const filters = [];
+  if ($('dtype').value) filters.push(`type:${$('dtype').value}`);
+  if ($('yFrom').value) filters.push(`from-pub-date:${$('yFrom').value}-01-01`);
+  if ($('yTo').value) filters.push(`until-pub-date:${$('yTo').value}-12-31`);
+  if ($('onlyAbs').checked) filters.push('has-abstract:true');
+
+  const term = [q, $('stype').value].filter(Boolean).join(' ');
+
+  const url = `https://api.crossref.org/works`
+    + `?query.bibliographic=${encodeURIComponent(term)}`
+    + `&rows=${per}&offset=${offset}`
+    + (filters.length ? `&filter=${filters.join(',')}` : '')
+    + `&sort=${$('sort').value}&order=desc`
+    + `&select=DOI,title,author,issued,container-title,volume,issue,page,abstract,is-referenced-by-count,publisher,URL`
+    + `&mailto=${encodeURIComponent(MAILTO)}`;
+
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const m = (await r.json()).message;
+    total = m['total-results'];
+    items = m.items || [];
+    if (!items.length) { $('msg').textContent = 'No results. Try broader terms.'; $('pager').classList.add('hidden'); return; }
+    render();
+  } catch (e) {
+    $('msg').textContent = 'Query failed: ' + e.message + '. Check your connection and try again.';
+  }
+}
+
+function render() {
+  const per = +$('per').value;
+  const pages = Math.min(Math.ceil(total / per), 100);
+  $('msg').innerHTML = `<strong class="text-slate-300">${total.toLocaleString('en-US')}</strong> records found · page ${page} of ${pages}`;
+
+  $('list').innerHTML = items.map((it, i) => {
+    const y = it.issued?.['date-parts']?.[0]?.[0] || 'n.d.';
+    const au = (it.author || []);
+    const auTxt = au.length ? au.slice(0, 4).map(a => `${a.given || ''} ${a.family || ''}`.trim()).join(', ')
+      + (au.length > 4 ? ' et al.' : '') : 'No author listed';
+    const abs = (it.abstract || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const cit = it['is-referenced-by-count'] || 0;
+    return `<article class="card" style="padding:1rem">
+      <h3 class="text-sm font-bold text-slate-100 leading-snug">${(it.title || ['Untitled'])[0]}</h3>
+      <p class="hint" style="margin-top:.35rem">${auTxt}</p>
+      <p class="hint">${[(it['container-title'] || [])[0], y,
+        it.volume && 'vol. ' + it.volume, it.page && 'pp. ' + it.page].filter(Boolean).join(' · ')}</p>
+      ${abs ? `<p class="text-xs text-slate-400 mt-2 leading-relaxed">${abs.slice(0, 420)}${abs.length > 420 ? '…' : ''}</p>` : ''}
+      <div class="flex flex-wrap gap-2 items-center mt-3">
+        <button data-i="${i}" class="cite btn-g">Cite</button>
+        <a href="https://doi.org/${it.DOI}" target="_blank" rel="noopener" class="btn-o" style="text-decoration:none">Open article ↗</a>
+        <button data-pdf="${it.DOI}" class="oa btn-o">Find free PDF ↗</button>
+        <span class="hint" style="margin:0">${cit} citations · DOI: ${it.DOI}</span>
+      </div></article>`;
+  }).join('');
+
+  document.querySelectorAll('.cite').forEach(b => b.onclick = () => openModal(items[+b.dataset.i]));
+
+  document.querySelectorAll('.oa').forEach(b => b.onclick = async () => {
+    const doi = b.dataset.pdf, old = b.textContent;
+    b.textContent = 'Searching...'; b.disabled = true;
+    try {
+      const r = await fetch(`https://api.openalex.org/works/doi:${encodeURIComponent(doi)}`
+        + `?select=best_oa_location,open_access&mailto=${encodeURIComponent(MAILTO)}`);
+      const d = await r.json();
+      const url = d.best_oa_location?.pdf_url || d.best_oa_location?.landing_page_url
+               || d.open_access?.oa_url;
+      if (url) { window.open(url, '_blank', 'noopener'); b.textContent = old; }
+      else { b.textContent = 'No free version'; b.classList.add('opacity-50'); }
+    } catch { b.textContent = 'Lookup failed'; }
+    b.disabled = false;
+  });
+
+  const btn = (label, p, dis) => `<button class="btn-o ${dis ? 'opacity-40' : ''}" ${dis ? 'disabled' : `data-p="${p}"`}>${label}</button>`;
+  $('pager').innerHTML = btn('← Previous', page - 1, page <= 1)
+    + `<span class="hint" style="margin:0">Page ${page} of ${pages}</span>`
+    + btn('Next →', page + 1, page >= pages);
+  $('pager').classList.remove('hidden');
+  $('pager').querySelectorAll('[data-p]').forEach(b => b.onclick = () => {
+    page = +b.dataset.p; search(); window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+function openModal(w) {
+  const fmts = [['APA 7th edition', apa7(w)], ['MLA 9th edition', mla9(w)],
+                ['Chicago (author-date)', chicago(w)], ['Vancouver', vancouver(w)]];
+  $('mBody').innerHTML = fmts.map(([n, t], i) => `
+    <div>
+      <div class="flex justify-between items-center mb-1">
+        <span class="metric-k">${n}</span>
+        <button data-c="${i}" class="cp btn-o">Copy</button>
+      </div>
+      <p class="ref box">${t}</p>
+    </div>`).join('')
+    + `<div class="flex gap-2 pt-2">
+        <button id="mRis" class="btn-g">.ris</button>
+        <button id="mBib" class="btn-g">.bib</button>
+        <button id="mAdd" class="btn-o">Add to my list</button>
+        <a href="/en/citation" class="btn-o" style="text-decoration:none">Open full generator →</a>
+       </div>`;
+  $('modal').classList.remove('hidden');
+  document.querySelectorAll('.cp').forEach(b => b.onclick = () => {
+    navigator.clipboard.writeText(document.querySelectorAll('.ref')[+b.dataset.c].innerText);
+    b.textContent = 'Copied!'; setTimeout(() => b.textContent = 'Copy', 1500);
+  });
+  const dl = (txt, name, mime) => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['\uFEFF' + txt], { type: mime }));
+    a.download = name; a.click();
+  };
+  $('mRis').onclick = () => dl(riscsv(w), 'reference.ris', 'application/x-research-info-systems');
+  $('mBib').onclick = () => dl(bibtex(w), 'reference.bib', 'application/x-bibtex');
+  $('mAdd').onclick = e => {
+    const my = JSON.parse(localStorage.getItem('myRefs') || '[]');
+    if (my.some(x => x.DOI === w.DOI)) { e.target.textContent = 'Already in list'; return; }
+    my.push(w); localStorage.setItem('myRefs', JSON.stringify(my));
+    e.target.textContent = `Added (${my.length})`;
+  };
+}
+$('mClose').onclick = () => $('modal').classList.add('hidden');
+$('modal').onclick = e => { if (e.target.id === 'modal') $('modal').classList.add('hidden'); };
+document.onkeydown = e => { if (e.key === 'Escape') $('modal').classList.add('hidden'); };
+</script>
+</body>
+</html>

@@ -1,17 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://tcctools.com.br/</loc><priority>1.0</priority></url>
-  <url><loc>https://tcctools.com.br/calculadora</loc><priority>0.9</priority></url>
-  <url><loc>https://tcctools.com.br/normalidade</loc><priority>0.9</priority></url>
-  <url><loc>https://tcctools.com.br/amostra</loc><priority>0.9</priority></url>
-  <url><loc>https://tcctools.com.br/citacao</loc><priority>0.9</priority></url>
-  <url><loc>https://tcctools.com.br/buscador</loc><priority>0.8</priority></url>
-  <url><loc>https://tcctools.com.br/r-latex</loc><priority>0.8</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url><loc>https://tcctools.com.br/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/calculadora</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/calculadora"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/calculator"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/calculator</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/calculadora"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/calculator"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/normalidade</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/normalidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/normality"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/normality"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/normality</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/normalidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/normality"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/normality"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/amostra</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/amostra"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/sample-size"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/sample-size"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/sample-size</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/amostra"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/sample-size"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/sample-size"/>
+  </url>
+
+    <url><loc>https://tcctools.com.br/citacao</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/citacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/citation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/citation"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/citation</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/citacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/citation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/citation"/>
+  </url>
+  <url><loc>https://tcctools.com.br/buscador</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/buscador"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/search"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/search"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/search</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/buscador"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/search"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/search"/>
+  </url>
+  <url><loc>https://tcctools.com.br/r-latex</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/r-latex"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/r-to-latex"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/r-to-latex"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/r-to-latex</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/r-latex"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/r-to-latex"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/r-to-latex"/>
+  </url>
+  <url><loc>https://tcctools.com.br/sobre</loc><priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/sobre"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/about"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/about</loc><priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/sobre"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/about"/>
+  </url>
+
+    <url><loc>https://tcctools.com.br/privacidade</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/privacidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/privacy"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/privacy</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/privacidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/privacy"/>
+  </url>
+  <url><loc>https://tcctools.com.br/termos</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/termos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/terms"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/terms</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/termos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/terms"/>
+  </url>
+  <url><loc>https://tcctools.com.br/contato</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/contato"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/contact"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/contact</loc><priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/contato"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/contact"/>
+  </url>
+
+  <!-- PT-only pages -->
+  
   <url><loc>https://tcctools.com.br/guias/qual-teste-estatistico-usar</loc><priority>0.9</priority></url>
   <url><loc>https://tcctools.com.br/guias/interpretar-summary-lm-r</loc><priority>0.9</priority></url>
   <url><loc>https://tcctools.com.br/guias/como-reportar-resultados-abnt</loc><priority>0.9</priority></url>
-  <url><loc>https://tcctools.com.br/sobre</loc><priority>0.5</priority></url>
-  <url><loc>https://tcctools.com.br/contato</loc><priority>0.4</priority></url>
-  <url><loc>https://tcctools.com.br/privacidade</loc><priority>0.3</priority></url>
-  <url><loc>https://tcctools.com.br/termos</loc><priority>0.3</priority></url>
 </urlset>

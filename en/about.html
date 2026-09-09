@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About &amp; Methodology — TCC Tools</title>
+<meta name="description" content="Who we are, how the statistical procedures are implemented, which references we follow and how results are validated against R.">
+<link rel="canonical" href="https://tcctools.com.br/en/about">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/sobre">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/about">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/about">
+<meta property="og:title" content="About & Methodology">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tcctools.com.br/en/about">
+<meta property="og:locale" content="en_US">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{
+    ad_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied',
+    analytics_storage:'denied',
+    wait_for_update:500
+  });
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137" crossorigin="anonymous"></script><link rel="stylesheet" href="/css/tw.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+</head>
+<body class="bg-slate-950 text-slate-300">
+<div id="site-header"></div>
+<main class="max-w-3xl mx-auto px-6 py-10 space-y-6 text-sm leading-relaxed">
+  <h1 class="text-2xl font-bold text-white">About this project</h1>
+
+  <p><strong>TCC Tools</strong> grew out of a concrete and very common problem: students finish
+  collecting data for a thesis or dissertation and stall at the analysis stage. Not for lack of effort,
+  but because the established statistical package costs more than a student budget allows, has a steep
+  learning curve, and returns raw output that still has to be translated into the formatted prose a
+  reviewer expects.</p>
+
+  <p>Our aim is to close exactly that gap: you bring the spreadsheet, the site checks the assumptions,
+  runs the appropriate test, produces a publication-resolution figure, builds the table to editorial
+  standard and writes the results paragraph already formatted in APA style. From raw data to
+  review-ready text in a few clicks.</p>
+
+  <h2 class="text-lg font-bold text-white pt-4">Principles</h2>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Privacy by architecture.</strong> All processing happens in your browser. Your
+    spreadsheet never leaves your computer — this is not a policy promise, it is a technical property
+    of the system. You can even disconnect from the internet after the page loads and the calculators
+    keep working.</li>
+    <li><strong>Genuinely free.</strong> No sign-up, no usage limit, no premium tier. Costs are covered
+    by unobtrusive advertising.</li>
+    <li><strong>Methodological transparency.</strong> We state which algorithm and which reference
+    underpin every calculation, so that you can cite and defend the method.</li>
+    <li><strong>Educate, not just compute.</strong> Every result comes with an effect size and a
+    confidence interval, not only a p value — because statistical significance is not the same thing as
+    practical relevance.</li>
+  </ul>
+
+  <h2 class="text-lg font-bold text-white pt-4">Methods and references</h2>
+  <p>Procedures are implemented from the consolidated statistical literature:</p>
+  <ul class="list-disc pl-6 space-y-1">
+    <li><strong>Normality test:</strong> Shapiro-Wilk using Royston's (1995) AS R94 algorithm,
+    including the p-value approximation via normalising transformation.</li>
+    <li><strong>Homogeneity of variance:</strong> Levene's test centred on the mean.</li>
+    <li><strong>Comparison of means:</strong> Student's t test and the Welch-Satterthwaite correction
+    for unequal variances.</li>
+    <li><strong>Non-parametric tests:</strong> Mann-Whitney and Wilcoxon with normal approximation and
+    tie correction.</li>
+    <li><strong>ANOVA:</strong> classical sum-of-squares decomposition, with multiple comparisons
+    adjusted by Bonferroni.</li>
+    <li><strong>Correlation:</strong> Pearson with confidence intervals via Fisher's z transformation;
+    Spearman by rank correlation.</li>
+    <li><strong>Effect size:</strong> Cohen's d, eta squared, epsilon squared and Cramér's V, with
+    interpretive ranges following Cohen (1988).</li>
+    <li><strong>Sample size:</strong> normal-approximation formulas with the finite population
+    correction, following Cochran (1977).</li>
+    <li><strong>Probability distributions:</strong> the regularised incomplete beta function via Lentz's
+    continued fraction, and Acklam's algorithm for the normal quantile.</li>
+  </ul>
+
+  <h2 class="text-lg font-bold text-white pt-4">Validation</h2>
+  <p>Every procedure is checked against <strong>R</strong> output (<code>t.test</code>,
+  <code>aov</code>, <code>shapiro.test</code>, <code>cor.test</code>, <code>wilcox.test</code>) using
+  reference datasets. Test statistics and p values agree to the third decimal place. Even so, and as a
+  matter of principle, we recommend verifying critical results in reference software before final
+  submission — guidance that also appears in our
+  <a class="text-blue-400 underline" href="/en/terms">Terms of Use</a>.</p>
+
+  <h2 class="text-lg font-bold text-white pt-4">Found an error?</h2>
+  <p>Discrepant results, unexpected behaviour or a suggestion for a new tool: get in touch through the
+  <a class="text-blue-400 underline" href="/en/contact">contact page</a>. Calculation corrections are
+  treated as top priority.</p>
+</main>
+<div id="site-footer"></div>
+<script type="module">import{mountShell}from'/js/ui.js';mountShell();</script>
+</body>
+</html>

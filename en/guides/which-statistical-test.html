@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Which Statistical Test Should I Use? Complete Decision Tree</title>
+<meta name="description" content="Choose between t-test, ANOVA, Mann-Whitney, Kruskal-Wallis, Pearson, Spearman, regression and chi-square. Interactive decision tree with APA reporting examples.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://tcctools.com.br/en/guides/which-statistical-test">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/qual-teste-estatistico-usar">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/which-statistical-test">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/which-statistical-test">
+<meta property="og:title" content="Which statistical test should I use? Complete decision tree">
+<meta property="og:description" content="Answer 4 questions and find the right test for your research.">
+<meta property="og:type" content="article">
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',
+ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
+</script>
+<link rel="stylesheet" href="/css/tw.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article",
+"headline":"Which statistical test should I use? Complete decision tree",
+"description":"How to choose the correct statistical test based on variable type, data distribution and study design.",
+"inLanguage":"en","datePublished":"2026-09-08",
+"author":{"@type":"Organization","name":"TCC Tools"},
+"publisher":{"@type":"Organization","name":"TCC Tools"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I choose the correct statistical test?","acceptedAnswer":{"@type":"Answer","text":"The choice depends on four factors: the type of your outcome variable (numeric or categorical), the goal of the analysis (comparing groups, measuring association or predicting), the number of groups compared, and whether the data meet the normality assumption. Once these four points are settled, the test is determined almost uniquely."}},
+{"@type":"Question","name":"When should I use a t-test and when should I use Mann-Whitney?","acceptedAnswer":{"@type":"Answer","text":"Use a t-test when the data are numeric and approximately normally distributed within each group, as checked by the Shapiro-Wilk test. Use Mann-Whitney when normality is violated, when the sample is small, or when the variable is ordinal, such as a single Likert item."}},
+{"@type":"Question","name":"What is the difference between correlation and regression?","acceptedAnswer":{"@type":"Answer","text":"Correlation measures the strength and direction of the association between two variables without distinguishing cause from effect, and it is symmetric. Regression assumes a predictor and an outcome, produces an equation that allows prediction, and is not symmetric."}}]}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4"><a href="/en/" class="hover:text-blue-400">Home</a> ›
+    Guides › Which test to use</nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Which statistical test should I use? Complete decision tree</h1>
+  <p class="text-sm text-slate-400 mb-8">Updated 8 September 2026 · 12 min read</p>
+
+  <!-- INTERACTIVE TREE -->
+  <section class="bg-slate-900 border border-blue-800/50 rounded-xl p-6 mb-10 space-y-4">
+    <h2 class="text-sm font-bold text-blue-400">Find out in 4 questions</h2>
+    <div class="space-y-3 text-xs">
+      <label class="block space-y-1">1. Your outcome variable (what you measured) is:
+        <select id="q1" class="sel">
+          <option value="num">Numeric — weight, age, score, time</option>
+          <option value="cat">Categorical — yes/no, pass/fail, type</option>
+          <option value="ord">Ordinal — Likert, stage, ranking</option>
+        </select></label>
+      <label class="block space-y-1">2. Your goal is to:
+        <select id="q2" class="sel">
+          <option value="comp">Compare groups with each other</option>
+          <option value="assoc">Measure association between two variables</option>
+          <option value="pred">Predict one variable from another</option>
+        </select></label>
+      <label class="block space-y-1" id="w3">3. How many groups are you comparing?
+        <select id="q3" class="sel">
+          <option value="2">Two groups</option>
+          <option value="3">Three or more groups</option>
+        </select></label>
+      <label class="block space-y-1" id="w4">4. The groups are:
+        <select id="q4" class="sel">
+          <option value="ind">Independent — different people in each group</option>
+          <option value="par">Paired — same people at two time points (pre/post)</option>
+        </select></label>
+      <label class="block space-y-1" id="w5">5. Did the data pass the normality test?
+        <select id="q5" class="sel">
+          <option value="s">Yes — p &gt; .05 on Shapiro-Wilk</option>
+          <option value="n">No, or I don't know / small sample</option>
+        </select></label>
+    </div>
+    <div id="ans" class="bg-slate-950 border border-slate-800 rounded-lg p-4 space-y-2">
+      <p class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold">Recommended test</p>
+      <p id="ansName" class="text-lg font-bold text-white"></p>
+      <p id="ansWhy" class="text-xs text-slate-400"></p>
+      <p id="ansAlt" class="text-xs text-slate-500"></p>
+      <a href="/en/calculator" class="inline-block bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-xs font-medium mt-1">Calculate now →</a>
+    </div>
+  </section>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+
+  <p class="text-base text-slate-200">If you arrived here with your spreadsheet ready and the feeling
+  that any choice you make might be wrong, here is the good news: <strong>choosing a statistical test
+  is not a matter of opinion or of your supervisor's preference</strong>. It is a decision determined
+  by four objective features of your study. Once you identify them, the test almost picks itself.</p>
+
+  <p>What usually causes confusion is the order in which people attack the problem. The typical mistake
+  is to start by asking "which test is best?" — as if there were a quality ranking. There isn't. The
+  t-test is not superior to Mann-Whitney; they answer the same question under different assumptions.
+  Running a t-test on data that violate normality is not using a better tool: it is using the wrong
+  tool.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">The four decision criteria</h2>
+
+  <h3 class="text-lg font-bold text-white pt-2">Criterion 1 — The type of your outcome variable</h3>
+  <p>The outcome (or dependent) variable is what you <em>measured as a result</em>. If you want to know
+  whether training improves performance, the outcome is performance, not training.</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Numeric, continuous or discrete:</strong> weight in kilograms, time in seconds, a score
+    from 0 to 10, number of correct answers, serum concentration. Means and standard deviations are
+    meaningfully interpretable.</li>
+    <li><strong>Categorical nominal:</strong> pass or fail, symptom present or absent, type of treatment
+    chosen. Only counts and proportions apply — computing a mean here is meaningless.</li>
+    <li><strong>Ordinal:</strong> Likert scales from 1 to 5, disease stages, socioeconomic
+    classification. Order exists, but the intervals between categories are not necessarily equal — the
+    distance between "agree" and "strongly agree" is not the same as between "disagree" and
+    "neutral".</li>
+  </ul>
+  <p>The ordinal case generates the most frequent debate. The prevailing practice in health and social
+  sciences is to treat <strong>single Likert items as ordinal</strong> (using non-parametric tests) and
+  <strong>summed scores from multiple items as numeric</strong> — for example, the total of the 21 items
+  of the Beck Depression Inventory can legitimately be treated as a continuous variable, even though
+  each item is ordinal. If your committee is conservative on this point, the safe route is the
+  non-parametric test.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Criterion 2 — The goal of the analysis</h3>
+  <p>Three goals cover almost every undergraduate and master's project:</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Compare.</strong> "Does the group that trained perform differently from the control
+    group?" You have one variable that <em>splits</em> the sample and one that <em>measures</em> the
+    result.</li>
+    <li><strong>Associate.</strong> "The more hours studied, the higher the grade?" Two variables
+    measured in the same individuals, with no group split and no causal claim.</li>
+    <li><strong>Predict.</strong> "How much does the grade increase per additional hour of study?"
+    You want an equation, not merely evidence that a relationship exists.</li>
+  </ul>
+  <p>Note that "associate" and "predict" use the same data but answer different questions and produce
+  different results. We will return to this.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Criterion 3 — Number of groups and pairing</h3>
+  <p>Comparing two groups and comparing three groups are not the same operation with a larger number.
+  <strong>Running three t-tests across three groups is one of the most serious and most common
+  errors</strong> in student research. The reason is the accumulation of Type I error: with α of 5% per
+  comparison, the chance of at least one false positive across three tests rises to roughly 14%. With
+  six comparisons it reaches 26%. That is why ANOVA exists — it tests the global hypothesis with a
+  single α, and only then, if significant, do you apply a post hoc test corrected for multiple
+  comparisons.</p>
+  <p>Pairing is the second axis. Groups are <strong>paired</strong> when observations correspond one to
+  one: the same participants measured before and after an intervention, twins, the right and left eye of
+  the same patient, cases and controls matched on age and sex. They are <strong>independent</strong>
+  when different people make up each group. Paired tests are substantially more powerful because they
+  remove between-subject variability — using an independent test on paired data wastes information and
+  reduces your chance of detecting a real effect.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Criterion 4 — Normality</h3>
+  <p>Parametric tests assume the data follow an approximately normal distribution. This is formally
+  checked with the <strong>Shapiro-Wilk test</strong>, complemented by visual inspection of the Q-Q
+  plot. The logic of the result is counterintuitive and worth memorising:</p>
+  <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 space-y-1">
+    <p><strong class="text-emerald-400">p &gt; .05</strong> → normality was <strong>not</strong>
+    rejected → a parametric test is acceptable</p>
+    <p><strong class="text-amber-400">p &lt; .05</strong> → normality was rejected →
+    use a non-parametric test</p>
+  </div>
+  <p>Here the "good" p-value is the high one — the opposite of what you want in your main test. The null
+  hypothesis of Shapiro-Wilk is "the data come from a normal distribution"; rejecting it means the
+  assumption is violated.</p>
+  <p>Two important caveats. First: test normality <strong>within each group</strong>, not on the pooled
+  sample — two groups with different means produce a bimodal distribution that fails the test even when
+  each group is perfectly normal. Second: with very large samples (n above 300) Shapiro-Wilk becomes
+  hypersensitive and rejects normality for trivial deviations with no practical consequence. In those
+  cases the Q-Q plot, skewness and kurtosis are more reliable guides than the p-value. Check this on the
+  <a href="/en/normality" class="text-blue-400 underline">normality test page</a>.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">The decision table</h2>
+  <div class="overflow-x-auto">
+  <table class="w-full text-xs border-collapse">
+    <thead><tr class="border-t-2 border-b border-slate-600 text-slate-100 font-bold">
+      <th class="py-2 px-2 text-left">Situation</th>
+      <th class="py-2 px-2 text-left">Normal</th>
+      <th class="py-2 px-2 text-left">Not normal</th></tr></thead>
+    <tbody class="text-slate-300">
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">2 independent groups</td>
+        <td class="py-2 px-2">Independent-samples t-test</td><td class="py-2 px-2">Mann-Whitney U</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">2 paired groups (pre/post)</td>
+        <td class="py-2 px-2">Paired-samples t-test</td><td class="py-2 px-2">Wilcoxon signed-rank</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">3+ independent groups</td>
+        <td class="py-2 px-2">One-way ANOVA + Tukey</td><td class="py-2 px-2">Kruskal-Wallis + Dunn</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">3+ repeated measures</td>
+        <td class="py-2 px-2">Repeated-measures ANOVA</td><td class="py-2 px-2">Friedman</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">Association (2 numeric)</td>
+        <td class="py-2 px-2">Pearson correlation</td><td class="py-2 px-2">Spearman correlation</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">Prediction (2 numeric)</td>
+        <td class="py-2 px-2" colspan="2">Simple linear regression (normality required of the <em>residuals</em>)</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">2 categorical variables</td>
+        <td class="py-2 px-2" colspan="2">Chi-square; Fisher's exact if expected &lt; 5</td></tr>
+      <tr class="border-b border-slate-800"><td class="py-2 px-2">Paired categorical (before/after)</td>
+        <td class="py-2 px-2" colspan="2">McNemar's test</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="text-2xl font-bold text-white pt-6">The errors reviewers flag most often</h2>
+
+  <h3 class="text-lg font-bold text-white pt-2">Multiple t-tests instead of ANOVA</h3>
+  <p>Detailed above. If you compared three or more groups with pairwise t-tests and no correction, the
+  work has a real statistical problem — not a stylistic one. The fix is to rerun with ANOVA (or
+  Kruskal-Wallis) and apply the post hoc test only if the global result is significant.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Confusing paired with independent</h3>
+  <p>A pre/post study with the same twenty participants has <strong>twenty participants, not
+  forty</strong>. Treating the forty measurements as independent artificially inflates n, violates the
+  independence assumption and produces optimistic, invalid p-values.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Testing normality on the pooled sample</h3>
+  <p>If you have two groups with different means, the pooled distribution will be bimodal and fail
+  Shapiro-Wilk even when each group is normal. Always test separately.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Reporting the p-value alone</h3>
+  <p>This is the most universal error and the easiest to fix. The p-value tells you whether an effect is
+  <em>detectable</em>, not whether it is <em>meaningful</em>. With a large enough sample, clinically
+  irrelevant differences reach p &lt; .001. Always report the <strong>effect size</strong> (Cohen's d,
+  eta squared, r) and the <strong>confidence interval</strong>. APA 7 requires effect sizes, and
+  reviewers increasingly ask for them.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Concluding "there is no difference" from p &gt; .05</h3>
+  <p>Absence of evidence is not evidence of absence. A non-significant result may reflect a genuine
+  absence of effect <em>or</em> a sample too small to detect it. The correct wording is "no
+  statistically significant difference was observed", accompanied by a discussion of statistical power.
+  Check this on the <a href="/en/sample-size" class="text-blue-400 underline">power calculator</a>.</p>
+
+  <h3 class="text-lg font-bold text-white pt-2">Claiming causality from correlation</h3>
+  <p>An r of .80 between hours studied and grades does not prove that studying causes high grades — a
+  confounding variable (motivation, socioeconomic status, family support) may influence both, or the
+  relationship may run the other way. Causality requires an experimental design with randomisation, not
+  merely a high coefficient. Linear regression <strong>does not establish causality</strong> either: the
+  term "predictor variable" describes the mathematical structure, not a demonstrated causal
+  relationship.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Correlation or regression?</h2>
+  <p>The same data, two distinct questions:</p>
+  <ul class="list-disc pl-6 space-y-2">
+    <li><strong>Correlation</strong> answers "is there a relationship, how strong, in which direction?"
+    It is <em>symmetric</em>: correlating X with Y gives exactly the same result as Y with X. It
+    produces a coefficient between −1 and +1.</li>
+    <li><strong>Regression</strong> answers "what is the expected value of Y for a given X?" It is
+    <em>asymmetric</em>: swapping predictor and outcome changes the equation. It produces coefficients
+    in interpretable units — "each additional hour of study is associated with 0.42 points on the
+    grade".</li>
+  </ul>
+  <p>If your research question is "is there a relationship between A and B", use correlation. If it is
+  "A explains B" or "how much does B change when A changes", use regression. Reporting both is redundant
+  in almost every case — choose according to your stated objective.</p>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Cases that require more advanced analysis</h2>
+  <p>Recognising the limits of basic tools is a sign of methodological maturity, not weakness. Seek
+  specialist guidance if your study involves:</p>
+  <ul class="list-disc pl-6 space-y-1.5">
+    <li><strong>Two or more simultaneous independent variables</strong> → factorial ANOVA, multiple regression</li>
+    <li><strong>The need to control for confounders</strong> → ANCOVA, multiple regression</li>
+    <li><strong>A binary outcome with multiple predictors</strong> → logistic regression</li>
+    <li><strong>Time to event, with loss to follow-up</strong> → Kaplan-Meier, Cox regression</li>
+    <li><strong>Nested data</strong> (students within classes within schools) → mixed-effects models</li>
+    <li><strong>Instrument validation</strong> → factor analysis, Cronbach's alpha</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-white pt-6">Practical checklist</h2>
+  <ol class="list-decimal pl-6 space-y-2">
+    <li>Identify and write down your outcome variable and its type explicitly.</li>
+    <li>State the question in one sentence: compare, associate or predict.</li>
+    <li>Count the groups and check whether they are paired or independent.</li>
+    <li>Test normality <em>within each group</em> using Shapiro-Wilk.</li>
+    <li>Consult the table above and run the test.</li>
+    <li>Report the test statistic, degrees of freedom, p-value, <strong>effect size</strong> and
+    confidence interval.</li>
+    <li>Interpret practical magnitude, not only statistical significance.</li>
+  </ol>
+
+  <div class="bg-slate-900 border border-blue-800/50 rounded-xl p-5 mt-8">
+    <p class="text-sm font-bold text-white mb-2">Next step</p>
+    <p class="text-xs text-slate-400 mb-3">The <a href="/en/calculator" class="text-blue-400 underline">statistics
+    calculator</a> runs this whole checklist automatically: it tests normality, suggests the test,
+    computes effect size and 95% CI, exports the figure at 300 dpi and drafts the APA paragraph.</p>
+    <a href="/en/calculator" class="inline-block bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-lg text-xs font-medium">Open calculator</a>
+  </div>
+
+  <h2 class="text-xl font-bold text-white pt-8">References</h2>
+  <ul class="text-xs space-y-1 text-slate-400">
+    <li>American Psychological Association. (2020). <em>Publication manual of the American Psychological Association</em> (7th ed.).</li>
+    <li>Cohen, J. (1988). <em>Statistical power analysis for the behavioral sciences</em> (2nd ed.). Erlbaum.</li>
+    <li>Field, A. (2018). <em>Discovering statistics using IBM SPSS Statistics</em> (5th ed.). Sage.</li>
+    <li>Royston, P. (1995). Remark AS R94: A remark on Algorithm AS 181. <em>Applied Statistics, 44</em>(4), 547–551.</li>
+    <li>Wasserstein, R. L., &amp; Lazar, N. A. (2016). The ASA statement on p-values. <em>The American Statistician, 70</em>(2), 129–133.</li>
+  </ul>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<style>.sel{width:100%;padding:.55rem;background:#020617;border:1px solid #334155;border-radius:.5rem;font-size:.78rem;color:#e2e8f0;margin-top:.2rem}label{color:#cbd5e1;font-weight:500}</style>
+<script type="module">
+import { mountShell } from '/js/ui.js'; mountShell();
+const $ = id => document.getElementById(id);
+const D = {
+  t_ind:['Independent-samples t-test','Two independent groups, numeric outcome with a normal distribution. Also check homogeneity of variances with Levene\u2019s test — if violated, use Welch\u2019s correction.','Non-parametric alternative: Mann-Whitney U.'],
+  t_par:['Paired-samples t-test','The same participants measured at two time points, with the differences normally distributed.','Non-parametric alternative: Wilcoxon signed-rank.'],
+  mw:['Mann-Whitney U test','Two independent groups without normality, or an ordinal variable. Compares distributions by ranks, requiring no normality.','Report median and interquartile range, not mean and SD.'],
+  wx:['Wilcoxon signed-rank test','Paired data without normality of the differences, or an ordinal variable.','Report median and interquartile range.'],
+  anova:['One-way ANOVA + Tukey post hoc','Three or more independent groups, normal numeric outcome and homogeneous variances. The post hoc test identifies which pairs differ.','Never replace this with multiple t-tests: that inflates Type I error.'],
+  kw:['Kruskal-Wallis + Dunn post hoc','Three or more groups without normality, or an ordinal outcome.','Non-parametric equivalent of one-way ANOVA.'],
+  rm:['Repeated-measures ANOVA','Three or more measurements on the same participants, with normality. Check sphericity with Mauchly\u2019s test.','Non-parametric alternative: Friedman test.'],
+  fr:['Friedman test','Three or more paired measurements without normality, or an ordinal outcome.','Post hoc: Nemenyi comparisons or Wilcoxon with Bonferroni correction.'],
+  pear:['Pearson correlation','Two normally distributed numeric variables with an approximately linear relationship. Inspect the scatterplot first: Pearson does not detect curvilinear relationships.','Report r, 95% CI and R². Correlation does not imply causation.'],
+  spear:['Spearman correlation','Two variables without normality, ordinal, or with a non-linear monotonic relationship. Correlates the ranks.','Robust to extreme values.'],
+  reg:['Simple linear regression','Predicting one numeric variable from another. The normality required is that of the residuals, not of the original variables.','Also check homoscedasticity and the absence of influential outliers.'],
+  chi:['Chi-square test of independence','Two categorical variables in independent groups. Requires an expected frequency of at least 5 in every cell.','If any expected cell count is below 5, use Fisher\u2019s exact test.'],
+  mcn:['McNemar\u2019s test','A categorical variable measured twice in the same individuals (before/after).','For three or more time points: Cochran\u2019s Q test.'],
+  logi:['Logistic regression','A binary categorical outcome with one or more predictor variables. Produces odds ratios.','Requires dedicated statistical software — R, SPSS or Jamovi.']
+};
+function decide(){
+  const v = id => $(id).value;
+  const [t,o,g,p,n] = ['q1','q2','q3','q4','q5'].map(v);
+  $('w3').classList.toggle('hidden', o!=='comp');
+  $('w4').classList.toggle('hidden', o!=='comp');
+  $('w5').classList.toggle('hidden', t==='cat');
+  let k;
+  if(t==='cat'){ k = o==='comp' ? (p==='par'?'mcn':'chi') : o==='pred' ? 'logi' : 'chi'; }
+  else if(o==='assoc'){ k = (t==='ord'||n==='n') ? 'spear' : 'pear'; }
+  else if(o==='pred'){ k = 'reg'; }
+  else {
+    const np = (t==='ord'||n==='n');
+    if(g==='2') k = p==='par' ? (np?'wx':'t_par') : (np?'mw':'t_ind');
+    else k = p==='par' ? (np?'fr':'rm') : (np?'kw':'anova');
+  }
+  const [nm,why,alt] = D[k];
+  $('ansName').textContent = nm; $('ansWhy').textContent = why; $('ansAlt').textContent = alt;
+}
+['q1','q2','q3','q4','q5'].forEach(i=>$(i).onchange=decide);
+decide();
+</script>
+</body>
+</html>

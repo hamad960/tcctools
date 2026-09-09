@@ -1,33 +1,41 @@
 User-agent: *
 Allow: /
 
-# Bots de IA/scraping sem valor de tráfego
+# Search-enabled AI assistants: enviam tráfego qualificado. Liberar.
 User-agent: GPTBot
-Disallow: /
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
 
+# Scrapers sem retorno de tráfego
 User-agent: CCBot
 Disallow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
 User-agent: Bytespider
 Disallow: /
-
 User-agent: MJ12bot
 Disallow: /
 
 User-agent: AhrefsBot
 Crawl-delay: 10
-
 User-agent: SemrushBot
 Crawl-delay: 10
 
-# Anúncios (obrigatório permitir)
 User-agent: Mediapartners-Google
 Allow: /
-
 User-agent: AdsBot-Google
 Allow: /
+
+Disallow: /obrigado
+Disallow: /en/thanks
 
 Sitemap: https://tcctools.com.br/sitemap.xml

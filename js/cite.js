@@ -39,6 +39,37 @@ export function vancouver(w) {
   return `${aut}. ${title(w)}. ${journal(w)}. ${year(w)}${w.volume ? ';' + w.volume : ''}${w.issue ? '(' + w.issue + ')' : ''}${w.page ? ':' + w.page : ''}. doi:${w.DOI}`;
 }
 
+const yr = w => w.issued?.['date-parts']?.[0]?.[0] || 'n.d.';
+const jn = w => (w['container-title'] || [''])[0] || '';
+const tt = w => (w.title || [''])[0] || '';
+const pg = w => (w.page || '').replace('-', '–');
+
+export function mla9(w) {
+  const a = w.author || [];
+  let au = '';
+  if (a.length === 1) au = `${a[0].family}, ${a[0].given}.`;
+  else if (a.length === 2) au = `${a[0].family}, ${a[0].given}, and ${a[1].given} ${a[1].family}.`;
+  else if (a.length > 2) au = `${a[0].family}, ${a[0].given}, et al.`;
+  return [au, `"${tt(w)}."`, `${jn(w)},`,
+    w.volume ? `vol. ${w.volume},` : '', w.issue ? `no. ${w.issue},` : '',
+    `${yr(w)},`, pg(w) ? `pp. ${pg(w)}.` : '',
+    w.DOI ? `https://doi.org/${w.DOI}.` : ''].filter(Boolean).join(' ');
+}
+
+export function chicago(w) {
+  const a = w.author || [];
+  let au = '';
+  if (a.length === 1) au = `${a[0].family}, ${a[0].given}.`;
+  else if (a.length <= 3) au = `${a[0].family}, ${a[0].given}, `
+    + a.slice(1).map(x => `${x.given} ${x.family}`).join(', and ') + '.';
+  else if (a.length > 3) au = `${a[0].family}, ${a[0].given}, et al.`;
+  return [au, `${yr(w)}.`, `"${tt(w)}."`, jn(w),
+    w.volume ? `${w.volume}` : '', w.issue ? `(${w.issue})` : '',
+    pg(w) ? `: ${pg(w)}.` : '.',
+    w.DOI ? `https://doi.org/${w.DOI}.` : ''].filter(Boolean).join(' ')
+    .replace(/\s+:/, ':');
+}
+
 export function bibtex(w) {
   const key = `${(authors(w)[0]?.family || 'ref').toLowerCase()}${year(w)}`;
   return `@article{${key},

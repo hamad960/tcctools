@@ -5,8 +5,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Gerador de Referências ABNT, APA e Vancouver a partir do DOI</title>
 <meta name="description" content="Cole o DOI, o título ou o link do artigo e receba a referência formatada em ABNT NBR 6023, APA 7ª edição, Vancouver, BibTeX e RIS. Grátis, sem cadastro.">
-<link rel="canonical" href="https://estatistica-tcc.vercel.app/citacao">
-<meta property="og:title" content="Gerador de Referências ABNT, APA e Vancouver">
+<link rel="canonical" href="https://tcctools.com.br/citacao">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/privacidade">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/privacy">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/privacy">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{
+    ad_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied',
+    analytics_storage:'denied',
+    wait_for_update:500
+  });
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137" crossorigin="anonymous"></script><link rel="stylesheet" href="/css/tokens.css"><meta property="og:title" content="Gerador de Referências ABNT, APA e Vancouver">
 <meta property="og:description" content="Do DOI à referência formatada em 2 segundos.">
 <script src="https://cdn.tailwindcss.com"></script><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.json">
@@ -182,7 +197,7 @@ import { mountShell } from '/js/ui.js';
 mountShell();
 
 const $ = id => document.getElementById(id);
-const MAILTO = 'seuemail@gmail.com'; // <-- troque pelo seu
+const MAILTO = 'contato@tcctools.com.br';
 let current = null;
 let my = JSON.parse(localStorage.getItem('myRefs') || '[]');
 

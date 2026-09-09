@@ -1,6 +1,6 @@
 // js/stats.js — TCC Tools (versão corrigida)
 import { normCdf, normInv, normPdf, tTwoTailed, tInv, fPvalue, chi2Pvalue } from './dist.js';
-
+import { IS_EN } from './i18n.js';
 export { normCdf, normInv, normPdf, tTwoTailed, tInv, fPvalue, chi2Pvalue };
 
 // ================= utilitários =================
@@ -603,19 +603,19 @@ const effectR = r => r < 0.1 ? 'desprezível' : r < 0.3 ? 'pequeno'
 const effectEta = e => e < 0.01 ? 'desprezível' : e < 0.06 ? 'pequeno'
   : e < 0.14 ? 'médio' : 'grande';
 
-// 🔧 CORREÇÃO 7: formatadores à prova de NaN
-export const fmtP = p => {
-  if (!Number.isFinite(p)) return 'p não estimável';
-  if (p < 0.001) return 'p < 0,001';
-  if (p > 0.999) return 'p > 0,999';
-  return `p = ${p.toFixed(3).replace('.', ',')}`;
-};
+const LOC = document.documentElement.lang.toLowerCase().startsWith('pt') ? 'pt-BR' : 'en-US';
 
-export const br = (v, dec = 2) => {
-  const n = Number(v);
-  if (!Number.isFinite(n)) return '—';
-  return n.toFixed(dec).replace('.', ',');
-};
+export const br = (v, d = 2) =>
+  Number(v).toLocaleString(LOC, { minimumFractionDigits: d, maximumFractionDigits: d });
+
+export const fmtP = p =>
+  p < 0.001
+    ? (LOC === 'pt-BR' ? 'p < 0,001' : 'p < .001')
+    : 'p = ' + (LOC === 'pt-BR'
+        ? br(p, 3)
+        : br(p, 3).replace(/^0/, ''));
+
+
 
 // ================= RELATÓRIO ABNT/APA =================
 export function report(res, labels = {}) {
@@ -722,3 +722,5 @@ export function report(res, labels = {}) {
       return '';
   }
 }
+
+export { reportEn } from './report-en.js';

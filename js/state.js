@@ -1,4 +1,6 @@
-// js/state.js — estado na URL (hash) para links compartilháveis
+// js/state.js
+import { T } from './i18n.js';
+
 const b64u = s => s.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 const unb64u = s => s.replace(/-/g, '+').replace(/_/g, '/');
 
@@ -39,7 +41,7 @@ export async function copyShareLink(obj, btn) {
 
   try {
     await navigator.clipboard.writeText(url);
-    feedback('Link copiado!');
+    feedback(T.linkCopied);
   } catch {
     // fallback para contextos sem permissão de clipboard
     const ta = document.createElement('textarea');
@@ -48,8 +50,8 @@ export async function copyShareLink(obj, btn) {
     ta.style.opacity = '0';
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); feedback('Link copiado!'); }
-    catch { prompt('Copie o link:', url); }
+    try { document.execCommand('copy'); feedback(T.linkCopied); }
+    catch { prompt(T.promptCopy, url); }
     ta.remove();
   }
 }

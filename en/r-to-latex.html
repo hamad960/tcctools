@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>R to LaTeX Converter — summary(lm) to a Booktabs Table</title>
+<meta name="description" content="Paste R's summary(lm), anova or t.test output and get a LaTeX booktabs table, Markdown, HTML or Word, plus the results paragraph in APA 7 style.">
+<link rel="canonical" href="https://tcctools.com.br/en/r-to-latex">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/r-latex">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/r-to-latex">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/r-to-latex">
+<meta property="og:title" content="R → LaTeX Converter">
+<meta property="og:description" content="From raw R output to a publication-ready booktabs table.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tcctools.com.br/en/r-to-latex">
+<meta property="og:locale" content="en_US">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{
+    ad_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied',
+    analytics_storage:'denied',
+    wait_for_update:500
+  });
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137" crossorigin="anonymous"></script><link rel="stylesheet" href="/css/tw.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<link rel="stylesheet" href="/css/tokens.css">
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="page page-wide">
+  <header>
+    <h1 class="h1">R → LaTeX, Markdown and Word Converter</h1>
+    <p class="sub mt-2">Paste raw output from <code class="text-emerald-400">summary(lm)</code>,
+    <code class="text-emerald-400">anova()</code> or <code class="text-emerald-400">t.test()</code> and get a
+    <strong>booktabs-formatted table</strong>, plus Markdown, HTML, CSV and the
+    <strong>results paragraph in APA style</strong>.</p>
+  </header>
+
+  <div class="grid2">
+    <section class="card">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="card-t" style="margin:0">1. Paste your R output</h2>
+        <button id="btnDemo" class="btn-o">Load example</button>
+      </div>
+      <textarea id="src" rows="18" class="inp" style="font-family:ui-monospace;font-size:.72rem;line-height:1.5"
+        placeholder="Paste the full console output from R, including the Coefficients block..."></textarea>
+      <div class="grid md:grid-cols-2 gap-3 mt-3">
+        <label class="lbl" style="margin:0">Decimal places
+          <select id="dec" class="sel"><option>2</option><option selected>3</option><option>4</option></select></label>
+        <label class="lbl" style="margin:0">Significance notation
+          <select id="sig" class="sel">
+            <option value="star">Asterisks (***)</option>
+            <option value="num" selected>Numeric p value</option>
+            <option value="both">Both</option>
+          </select></label>
+      </div>
+      <label class="lbl mt-2" style="margin:0">
+        <input id="ci" type="checkbox" style="width:auto;margin-right:.4rem">
+        Include a 95% CI column (estimated as β ± 1.96·SE)</label>
+      <button id="btnConv" class="btn mt-3">Convert</button>
+      <p id="msg" class="hint mt-2"></p>
+    </section>
+
+    <section id="out" class="hidden flex flex-col gap-4">
+      <div class="card">
+        <h2 class="card-t">Detected</h2>
+        <div id="info" class="flex flex-col gap-1"></div>
+      </div>
+      <div class="card">
+        <h2 class="card-t">Preview</h2>
+        <div id="prev" class="overflow-x-auto"></div>
+      </div>
+    </section>
+  </div>
+
+  <section id="fmts" class="hidden card">
+    <div class="tabs mb-3">
+      <button class="tab on" data-f="latex">LaTeX (booktabs)</button>
+      <button class="tab" data-f="md">Markdown</button>
+      <button class="tab" data-f="html">HTML</button>
+      <button class="tab" data-f="csv">CSV / Excel</button>
+      <button class="tab" data-f="apa">APA paragraph</button>
+    </div>
+    <div class="flex justify-end gap-2 mb-2">
+      <button id="btnCopyOut" class="btn-o">Copy</button>
+      <button id="btnDlOut" class="btn-g">Download file</button>
+    </div>
+    <pre id="code" class="box" style="white-space:pre-wrap;font-family:ui-monospace;font-size:.72rem;max-height:28rem;overflow:auto"></pre>
+    <p id="tip" class="hint mt-2"></p>
+  </section>
+
+  <article class="prose border-t border-slate-800 pt-8">
+    <h2>Why you shouldn't paste R output straight into Word</h2>
+    <p>Dropping the console block into your document is the fastest route to a revision request. R's
+    output uses a monospaced font, space-based alignment, unreadable scientific notation such as
+    <code>4.56e-09</code>, and column headers written for the console rather than for a reader
+    (<em>Pr(&gt;|t|)</em> is not a table heading).</p>
+    <p>A proper scientific table has readable headers, three horizontal rules and no vertical ones, a
+    uniform number of decimals per column, a title above and an explanatory note below. That is exactly
+    what this tool produces.</p>
+
+    <h3>What booktabs is</h3>
+    <p>It is the LaTeX package that implements the typographic standard for scientific tables, through
+    the commands <code>\toprule</code>, <code>\midrule</code> and <code>\bottomrule</code>. It exists
+    because fully gridded tables — the Excel default — are considered visually noisy and make numeric
+    data harder to read. Add this to your preamble:</p>
+    <pre class="box" style="font-family:ui-monospace;font-size:.75rem">\usepackage{booktabs}
+\usepackage{siunitx}   % decimal-aligned columns (optional)</pre>
+
+    <h3>Which format to use where</h3>
+    <ul>
+      <li><strong>LaTeX</strong> — for Overleaf or any LaTeX thesis class.</li>
+      <li><strong>Markdown</strong> — for R Markdown, Quarto, Notion or Obsidian.</li>
+      <li><strong>HTML</strong> — paste directly into Word or Google Docs: table formatting is
+      preserved, including the three horizontal rules.</li>
+      <li><strong>CSV</strong> — open in Excel and format by hand if you want full control.</li>
+      <li><strong>APA paragraph</strong> — running prose for your Results section.</li>
+    </ul>
+
+    <h3>How R reports very small p values</h3>
+    <p>Two notations cause confusion. <code>4.56e-09</code> is scientific notation and equals
+    0.00000000456. <code>&lt; 2e-16</code> is R's numeric precision limit — the value is too small to be
+    represented. In both cases, report it as <strong>p &lt; .001</strong>. Never write "p = .000",
+    which is mathematically impossible. This tool handles the conversion automatically, including the
+    APA convention of dropping the leading zero.</p>
+
+    <h3>Native alternatives in R</h3>
+    <p>If you work with many models, it is worth automating inside R itself:</p>
+    <pre class="box" style="font-family:ui-monospace;font-size:.72rem">library(broom);       tidy(model, conf.int = TRUE)
+library(stargazer);   stargazer(model, type = "latex")
+library(modelsummary); modelsummary(model, output = "latex")
+library(gtsummary)    # excellent for participant characteristics tables</pre>
+    <p>This tool is for the case where you already have the output in hand and need the table now —
+    without installing a package or rewriting your script.</p>
+
+    <p>To understand what each number in the output means, see the guide on
+    <a href="/en/guides/interpreting-summary-lm-r">reading summary(lm) line by line</a>. For writing
+    conventions, see <a href="/en/guides/reporting-results-apa">how to report statistical results in
+    APA 7</a>.</p>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module">
+import { mountShell } from '/js/ui.js';
+mountShell();
+const $ = id => document.getElementById(id);
+let P = null, fmt = 'latex';
+
+const DEMO = `Call:
+lm(formula = quality_of_life ~ age + income + education, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.4531  -3.2104   0.1876   3.4522  11.9087 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   42.35601    4.51203   9.388  < 2e-16 ***
+age            0.81230    0.12450   6.524 4.56e-09 ***
+income        -0.14560    0.08920  -1.632    0.105    
+education      2.03410    0.64120   3.172  0.00184 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.124 on 146 degrees of freedom
+Multiple R-squared:  0.4231,	Adjusted R-squared:  0.4152 
+F-statistic: 53.89 on 3 and 146 DF,  p-value: < 2.2e-16`;
+
+$('btnDemo').onclick = () => { $('src').value = DEMO; convert(); };
+$('btnConv').onclick = convert;
+['dec', 'sig', 'ci'].forEach(i => $(i).onchange = () => { if (P) { build(); } });
+
+function num(s) { return parseFloat(String(s).replace(/[<>]/g, '').trim()); }
+function fmtN(v, d) {
+  if (!Number.isFinite(v)) return '—';
+  return v.toFixed(d);
+}
+function fmtP(raw) {
+  const v = num(raw);
+  const lt = /^</.test(String(raw).trim()) || v < 0.001;
+  if (lt) return '< .001';
+  return v.toFixed(3).replace(/^0/, '');
+}
+function stars(raw) {
+  const v = num(raw);
+  return v < 0.001 ? '***' : v < 0.01 ? '**' : v < 0.05 ? '*' : v < 0.1 ? '.' : '';
+}
+
+function convert() {
+  const t = $('src').value;
+  if (!t.trim()) return alert('Paste your R output first.');
+  P = parse(t);
+  if (!P.rows.length) { $('msg').textContent = 'I could not find a "Coefficients" block or an ANOVA table. Paste the full console output.'; return; }
+  $('msg').textContent = `${P.rows.length} coefficients recognised.`;
+  build();
+  $('out').classList.remove('hidden');
+  $('fmts').classList.remove('hidden');
+}
+
+function parse(txt) {
+  const out = { type: 'lm', rows: [], call: '', r2: null, r2a: null, F: null, dfF: null, pF: null, rse: null, dfRes: null };
+  const lines = txt.split(/\r?\n/);
+
+  const callI = lines.findIndex(l => /^\s*lm\(|^Call:/.test(l));
+  if (callI >= 0) out.call = (lines[callI].replace(/^Call:\s*/, '') || lines[callI + 1] || '').trim();
+
+  const ci = lines.findIndex(l => /^Coefficients:/i.test(l));
+  if (ci >= 0) {
+    for (let i = ci + 1; i < lines.length; i++) {
+      const l = lines[i];
+      if (/^---/.test(l) || /^Signif/.test(l) || !l.trim()) { if (out.rows.length) break; continue; }
+      if (/Estimate|Std\.?\s*Error/i.test(l)) continue;
+      const m = l.match(/^\s*(.+?)\s{2,}(-?[\d.]+(?:e[+-]?\d+)?)\s+(-?[\d.]+(?:e[+-]?\d+)?)\s+(-?[\d.]+)\s+(<?\s*[\d.]+(?:e[+-]?\d+)?)/i);
+      if (m) out.rows.push({ name: m[1].trim(), est: num(m[2]), se: num(m[3]), t: num(m[4]), p: m[5] });
+    }
+  }
+  if (!out.rows.length && /Analysis of Variance|Df\s+Sum Sq/i.test(txt)) {
+    out.type = 'anova';
+    lines.forEach(l => {
+      const m = l.match(/^\s*(.+?)\s{2,}(\d+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+(<?\s*[\d.e+-]+)/i);
+      if (m) out.rows.push({ name: m[1].trim(), df: +m[2], ss: num(m[3]), ms: num(m[4]), t: num(m[5]), p: m[6], isAnova: true });
+    });
+  }
+
+  const g = re => { const m = txt.match(re); return m ? num(m[1]) : null; };
+  out.r2 = g(/Multiple R-squared:\s*([\d.]+)/i);
+  out.r2a = g(/Adjusted R-squared:\s*([\d.]+)/i);
+  out.rse = g(/Residual standard error:\s*([\d.]+)/i);
+  out.dfRes = g(/Residual standard error:.*?on\s+(\d+)\s+degrees/i);
+  const fm = txt.match(/F-statistic:\s*([\d.]+)\s*on\s*(\d+)\s*and\s*(\d+)\s*DF,\s*p-value:\s*(<?\s*[\d.e+-]+)/i);
+  if (fm) { out.F = num(fm[1]); out.dfF = [+fm[2], +fm[3]]; out.pF = fm[4]; }
+  return out;
+}
+
+function cols() {
+  const d = +$('dec').value, s = $('sig').value, useCi = $('ci').checked;
+  if (P.type === 'anova') {
+    return { head: ['Source', 'df', 'SS', 'MS', 'F', 'p'],
+      body: P.rows.map(r => [r.name, r.df, fmtN(r.ss, d), fmtN(r.ms, d), fmtN(r.t, d),
+        s === 'star' ? stars(r.p) : s === 'both' ? `${fmtP(r.p)} ${stars(r.p)}` : fmtP(r.p)]) };
+  }
+  const head = ['Predictor', 'β', 'SE'];
+  if (useCi) head.push('95% CI');
+  head.push('t', 'p');
+  const body = P.rows.map(r => {
+    const row = [r.name.replace('(Intercept)', 'Intercept'), fmtN(r.est, d), fmtN(r.se, d)];
+    if (useCi) row.push(`[${fmtN(r.est - 1.96 * r.se, d)}, ${fmtN(r.est + 1.96 * r.se, d)}]`);
+    row.push(fmtN(r.t, d));
+    row.push(s === 'star' ? stars(r.p) : s === 'both' ? `${fmtP(r.p)}${stars(r.p) ? ' ' + stars(r.p) : ''}` : fmtP(r.p));
+    return row;
+  });
+  return { head, body };
+}
+
+function note() {
+  const d = +$('dec').value;
+  const bits = [];
+  if (P.type !== 'anova') bits.push('β = unstandardised coefficient; SE = standard error');
+  if (P.r2 != null) bits.push(`R² = ${fmtN(P.r2, 3)}; adjusted R² = ${fmtN(P.r2a, 3)}`);
+  if (P.F != null) bits.push(`F(${P.dfF[0]}, ${P.dfF[1]}) = ${fmtN(P.F, 2)}, p ${fmtP(P.pF).startsWith('<') ? fmtP(P.pF) : '= ' + fmtP(P.pF)}`);
+  if (P.rse != null) bits.push(`residual standard error = ${fmtN(P.rse, d)}`);
+  if ($('sig').value !== 'num') bits.push('*** p < .001; ** p < .01; * p < .05');
+  return bits.join('. ') + '.';
+}
+
+function build() {
+  const { head, body } = cols();
+  const nt = note();
+
+  $('info').innerHTML = [
+    ['Detected type', P.type === 'anova' ? 'ANOVA table' : 'Linear regression (lm)'],
+    ['Coefficients', P.rows.length],
+    P.r2 != null ? ['Adjusted R²', fmtN(P.r2a, 3)] : null,
+    P.F != null ? ['Overall F', `${fmtN(P.F, 2)} (${P.dfF[0]}, ${P.dfF[1]})`] : null,
+    P.dfRes != null ? ['Estimated n', P.dfRes + P.rows.length] : null
+  ].filter(Boolean).map(([k, v]) => `<div class="kv"><span>${k}</span><span>${v}</span></div>`).join('');
+
+  $('prev').innerHTML = `<p class="text-xs font-semibold mb-2">Table 1 — Model coefficients</p>
+    <table class="apa"><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${body.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+    <tfoot><tr><td colspan="${head.length}">Note. ${nt}</td></tr></tfoot></table>`;
+
+  render();
+}
+
+const OUT = {};
+function render() {
+  const { head, body } = cols();
+  const nt = note();
+  const d = +$('dec').value;
+
+  const esc = s => String(s).replace(/([&%$#_])/g, '\\$1').replace(/β/g, '$\\beta$').replace(/²/g, '$^2$');
+  OUT.latex = `\\begin{table}[htbp]
+\\centering
+\\caption{Linear regression model coefficients}
+\\label{tab:regression}
+\\begin{tabular}{l${'r'.repeat(head.length - 1)}}
+\\toprule
+${head.map(esc).join(' & ')} \\\\
+\\midrule
+${body.map(r => r.map(esc).join(' & ') + ' \\\\').join('\n')}
+\\bottomrule
+\\end{tabular}
+\\begin{tablenotes}
+\\small\\item Note. ${esc(nt)}
+\\end{tablenotes}
+\\end{table}`;
+
+  OUT.md = `**Table 1** — Linear regression model coefficients\n\n`
+    + `| ${head.join(' | ')} |\n| ${head.map(() => '---').join(' | ')} |\n`
+    + body.map(r => `| ${r.join(' | ')} |`).join('\n')
+    + `\n\n*Note.* ${nt}`;
+
+  OUT.html = `<table style="border-collapse:collapse;font-family:'Times New Roman',serif;font-size:11pt">
+<caption style="text-align:left;font-weight:bold;padding-bottom:6px">Table 1 — Linear regression model coefficients</caption>
+<thead><tr style="border-top:1.5px solid #000;border-bottom:1px solid #000">
+${head.map(h => `<th style="padding:5px 10px;text-align:left">${h}</th>`).join('')}</tr></thead>
+<tbody>
+${body.map(r => `<tr>${r.map(c => `<td style="padding:5px 10px">${c}</td>`).join('')}</tr>`).join('\n')}
+</tbody>
+<tfoot><tr style="border-top:1.5px solid #000"><td colspan="${head.length}" style="padding:5px 10px;font-style:italic;font-size:9pt">Note. ${nt}</td></tr></tfoot>
+</table>`;
+
+  OUT.csv = [head, ...body].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+
+  if (P.type === 'anova') {
+    OUT.apa = `The analysis of variance yielded the effects shown in Table 1. `
+      + P.rows.filter(r => num(r.p) < 0.05).map(r =>
+        `${r.name} showed a significant effect (F(${r.df}, —) = ${fmtN(r.t, 2)}, p ${fmtP(r.p).startsWith('<') ? fmtP(r.p) : '= ' + fmtP(r.p)})`).join('; ') + '.';
+  } else {
+    const sig = P.rows.filter(r => r.name !== '(Intercept)' && num(r.p) < 0.05);
+    const ns = P.rows.filter(r => r.name !== '(Intercept)' && num(r.p) >= 0.05);
+    let s = '';
+    if (P.F != null) s += `The ${P.rows.length > 2 ? 'multiple' : 'simple'} linear regression model was `
+      + `statistically significant, F(${P.dfF[0]}, ${P.dfF[1]}) = ${fmtN(P.F, 2)}, `
+      + `p ${fmtP(P.pF).startsWith('<') ? fmtP(P.pF) : '= ' + fmtP(P.pF)}`;
+    if (P.r2a != null) s += `, accounting for ${fmtN(P.r2a * 100, 1)}% of the variance in the outcome `
+      + `(R² = ${fmtN(P.r2, 3)}, adjusted R² = ${fmtN(P.r2a, 3)})`;
+    s += '. ';
+    sig.forEach(r => {
+      s += `${r.name} was ${r.est > 0 ? 'positively' : 'negatively'} and significantly associated with the outcome `
+        + `(β = ${fmtN(r.est, 4)}, SE = ${fmtN(r.se, 4)}, t = ${fmtN(r.t, 2)}, `
+        + `p ${fmtP(r.p).startsWith('<') ? fmtP(r.p) : '= ' + fmtP(r.p)}, `
+        + `95% CI [${fmtN(r.est - 1.96 * r.se, 4)}, ${fmtN(r.est + 1.96 * r.se, 4)}]), indicating a mean `
+        + `${r.est > 0 ? 'increase' : 'decrease'} of ${fmtN(Math.abs(r.est), 3)} units in the outcome `
+        + `per additional unit of the predictor, holding the other variables constant. `;
+    });
+    if (ns.length) s += `No significant contribution was observed for ${ns.map(r =>
+      `${r.name} (β = ${fmtN(r.est, 4)}, p = ${num(r.p).toFixed(3).replace(/^0/, '')})`).join(' or ')}. `;
+    if (P.rse != null) s += `The residual standard error was ${fmtN(P.rse, d)}.`;
+    OUT.apa = s;
+  }
+
+  show();
+}
+
+const TIPS = {
+  latex: 'Add \\usepackage{booktabs} and \\usepackage{threeparttable} to your preamble.',
+  md: 'Paste into R Markdown, Quarto, Notion or Obsidian.',
+  html: 'Copy and paste straight into Word or Google Docs — table formatting is preserved.',
+  csv: 'Comma-separated, compatible with English-locale Excel.',
+  apa: 'Review the wording and confirm your variable units before inserting it.'
+};
+
+document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-f]').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); fmt = b.dataset.f; show();
+});
+
+function show() {
+  $('code').textContent = OUT[fmt] || '';
+  $('tip').textContent = TIPS[fmt] || '';
+}
+
+$('btnCopyOut').onclick = e => navigator.clipboard.writeText(OUT[fmt])
+  .then(() => { e.target.textContent = 'Copied!'; setTimeout(() => e.target.textContent = 'Copy', 1500); });
+
+$('btnDlOut').onclick = () => {
+  const ext = { latex: 'tex', md: 'md', html: 'html', csv: 'csv', apa: 'txt' }[fmt];
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF' + OUT[fmt]], { type: 'text/plain;charset=utf-8' }));
+  a.download = `table.${ext}`; a.click();
+};
+</script>
+</body>
+</html>
