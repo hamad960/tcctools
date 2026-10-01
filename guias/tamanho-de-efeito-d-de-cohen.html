@@ -1,0 +1,196 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tamanho de Efeito d de Cohen: Como Calcular, Interpretar e Reportar em ABNT/APA</title>
+<meta name="description" content="Guia completo sobre o d de Cohen: quando usar, fórmula matemática, faixas de interpretação (pequeno, médio, grande), diferença para Hedges' g e exemplos de redação acadêmica.">
+<link rel="canonical" href="https://tcctools.com.br/guias/tamanho-de-efeito-d-de-cohen">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/tamanho-de-efeito-d-de-cohen">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/cohens-d-effect-size">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/cohens-d-effect-size">
+<meta property="og:title" content="Tamanho de Efeito d de Cohen: Guia Prático com Exemplos">
+<meta property="og:description" content="Aprenda a calcular e interpretar o d de Cohen com fórmulas, tabelas de referência e modelos de parágrafo prontos para TCC.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tamanho de Efeito d de Cohen: Como Calcular, Interpretar e Reportar em ABNT/APA",
+  "description": "Aprenda quando usar o d de Cohen, sua fórmula, pontos de corte de interpretação e como redigir os resultados em normas acadêmicas.",
+  "inLanguage": "pt-BR",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "Equipe Estatística TCC" },
+  "publisher": { "@type": "Organization", "name": "Estatística TCC" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Por que reportar o d de Cohen além do p-valor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O p-valor depende fortemente do tamanho da amostra (n). Com amostras muito grandes, diferenças ínfimas tornam-se estatisticamente significativas. O d de Cohen mede a magnitude real da diferença entre grupos em unidades de desvio-padrão, revelando se o achado tem relevância prática."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quais são os pontos de corte para interpretar o d de Cohen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Segundo a convenção clássica de Jacob Cohen (1988): d = 0,20 é considerado efeito pequeno; d = 0,50 é médio; d = 0,80 é grande; e valores acima de 1,20 a 1,30 costumam ser classificados como muito grandes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Qual a diferença entre d de Cohen e Hedges' g?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O d de Cohen tende a superestimar levemente o tamanho do efeito em amostras pequenas (n < 20 por grupo). O g de Hedges aplica um fator de correção para pequenos tamanhos amostrais, sendo mais conservador e recomendado nesses cenários."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/" class="hover:text-blue-400">Início</a> ›
+    <a href="/guias/qual-teste-estatistico-usar" class="hover:text-blue-400">Guias</a> › Tamanho de efeito d de Cohen
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Tamanho de efeito d de Cohen: como calcular e interpretar</h1>
+  <p class="text-sm text-slate-400 mb-8">Atualizado em 1 de outubro de 2026 · Leitura de 9 minutos · Por Equipe Estatística TCC</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      Durante décadas, pesquisas acadêmicas resumiram seus testes de hipótese a uma única métrica: o <strong>p-valor</strong>. Contudo, dizer que uma diferença entre dois grupos é estatisticamente significativa (\(p < 0{,}05\)) não informa o que a banca examinadora realmente quer saber: <em>quão grande e importante é essa diferença no mundo real?</em> É exatamente para responder a essa pergunta que serve o <strong>d de Cohen</strong>.
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Calculadora Automática</h2>
+      <p class="text-xs text-slate-400">Quer calcular o d de Cohen dos seus dados diretamente com intervalo de confiança de 95% e parágrafo ABNT pronto?</p>
+      <a href="/calculadora" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Abrir Calculadora Estatística →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. O que é o d de Cohen e quando usar?</h2>
+    <p>
+      O <strong>d de Cohen</strong> é a métrica padronizada de tamanho de efeito mais utilizada para comparar as médias de dois grupos (como no teste t de Student para amostras independentes ou pareadas).
+    </p>
+    <p>
+      Ele expressa a distância entre duas médias em termos de <strong>desvios-padrão</strong>. Por exemplo, um \(d = 0{,}50\) significa que a média do grupo experimental está a meio desvio-padrão acima da média do grupo controle. Como é adimensional (não depende da unidade de medida original, seja em centímetros, pontos ou segundos), ele permite comparar estudos de diferentes áreas e realizar meta-análises.
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. Fórmula matemática</h2>
+    <p>
+      Para dois grupos independentes (\(G_1\) e \(G_2\)), a fórmula é a diferença entre as médias dividida pelo desvio-padrão combinado (pooled standard deviation, \(s_p\)):
+    </p>
+    <div class="bg-slate-900 p-4 rounded-lg font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto text-center">
+      d = (M₁ − M₂) / s_p
+    </div>
+    <p>Onde o desvio-padrão combinado (\(s_p\)) pondera a variabilidade de ambos os grupos pelos respectivos graus de liberdade:</p>
+    <div class="bg-slate-900 p-4 rounded-lg font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto text-center">
+      s_p = √[ ((n₁ − 1)·s₁² + (n₂ − 1)·s₂²) / (n₁ + n₂ − 2) ]
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. Faixas de interpretação (Cohen, 1988)</h2>
+    <p>
+      Jacob Cohen propôs diretrizes heurísticas para classificar a magnitude do efeito nas ciências comportamentais e humanas:
+    </p>
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 overflow-x-auto my-4">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-4">Valor de |d|</th>
+            <th class="py-2 pr-4">Magnitude</th>
+            <th class="py-2">Interpretação Prática</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+          <tr><td class="py-2 pr-4 font-mono text-blue-400">< 0,20</td><td class="py-2 pr-4">Inexpressivo / Nulo</td><td class="py-2">Diferença imperceptível na prática cotidiana.</td></tr>
+          <tr><td class="py-2 pr-4 font-mono text-blue-400">0,20 a 0,49</td><td class="py-2 pr-4">Pequeno</td><td class="py-2">Efeito sutil; detectável apenas com medições cuidadosas.</td></tr>
+          <tr><td class="py-2 pr-4 font-mono text-blue-400">0,50 a 0,79</td><td class="py-2 pr-4">Médio</td><td class="py-2">Visível a olho nu para um observador atento da área.</td></tr>
+          <tr><td class="py-2 pr-4 font-mono text-blue-400">0,80 a 1,19</td><td class="py-2 pr-4">Grande</td><td class="py-2">Diferença substantiva e com claro impacto prático.</td></tr>
+          <tr><td class="py-2 pr-4 font-mono text-blue-400">≥ 1,20</td><td class="py-2 pr-4">Muito grande</td><td class="py-2">Grupos amplamente separados, com pouca sobreposição.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-slate-400 italic">
+      Nota: O próprio Cohen alertou que esses pontos de corte são convenções genéricas. Em áreas clínicas ou de educação, um \(d = 0{,}30\) pode representar um avanço com enorme impacto populacional.
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. d de Cohen vs. Hedges' g: quando alternar?</h2>
+    <p>
+      Em amostras pequenas (menos de 20 participantes em cada grupo), o d de Cohen tende a superestimar ligeiramente a magnitude populacional do efeito.
+    </p>
+    <p>
+      Nessas situações, a literatura recomenda aplicar a correção de Larry Hedges, conhecida como <strong>Hedges' g</strong>:
+    </p>
+    <div class="bg-slate-900 p-4 rounded-lg font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto text-center">
+      g = d × [ 1 − (3 / (4·(n₁ + n₂ ) − 9)) ]
+    </div>
+    <p>
+      Quando as amostras ultrapassam 50 participantes por grupo, a diferença numérica entre Cohen's d e Hedges' g torna-se desprezível (menos de 1%).
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">5. Como reportar em normas ABNT e APA</h2>
+    <p>
+      Tanto o manual de estilo da <strong>APA (7ª edição)</strong> quanto as boas práticas de redação científica da <strong>ABNT</strong> exigem que o tamanho de efeito acompanhe o teste t e o intervalo de confiança de 95%:
+    </p>
+
+    <div class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-lg space-y-2">
+      <p class="text-xs font-bold text-white uppercase tracking-wider">Modelo de parágrafo (Padrão ABNT / APA):</p>
+      <p class="text-xs text-slate-300 italic">
+        "O grupo submetido à intervenção apresentou média de desempenho significativamente superior (M = 78,4; DP = 10,2) em relação ao grupo controle (M = 69,1; DP = 11,5), t(58) = 3,31; p = 0,002. O tamanho de efeito foi de magnitude grande (d de Cohen = 0,86; IC 95% [0,33; 1,38]), evidenciando substancial relevância prática da metodologia adotada."
+      </p>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">Perguntas Frequentes</h2>
+    <details class="bg-slate-900/60 border border-slate-800 rounded-lg p-4">
+      <summary class="cursor-pointer font-medium text-slate-200">O d de Cohen pode ser negativo?</summary>
+      <p class="mt-2 text-slate-400">Sim. O sinal indica apenas a direção da diferença. Se o Grupo 1 tem média menor que o Grupo 2, o valor será negativo. Na interpretação da magnitude, considera-se o módulo (|d|).</p>
+    </details>
+    <details class="bg-slate-900/60 border border-slate-800 rounded-lg p-4">
+      <summary class="cursor-pointer font-medium text-slate-200">Qual tamanho de efeito usar para testes não paramétricos?</summary>
+      <p class="mt-2 text-slate-400">Para o teste de Mann-Whitney ou Wilcoxon, o d de Cohen não é o mais indicado. Utiliza-se a correlação bisseriel de postos (r) ou o valor z dividido pela raiz quadrada de n (\(r = z / \sqrt{N}\)). Nossa calculadora faz essa conversão automaticamente.</p>
+    </details>
+
+    <!-- BLOCO AFILIADOS / LEITURAS RECOMENDADAS -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Leituras e Manuais Recomendados</h3>
+      <p class="text-xs text-slate-400">Aprofunde seu conhecimento nos manuais clássicos de análise estatística:</p>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com.br/dp/8580555462?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Descobrindo a Estatística usando o SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Explicação aprofundada e acessível sobre tamanhos de efeito e contrastes.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com.br/dp/858271505X?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Estatística Sem Matemática</p>
+          <p class="text-slate-400 mt-1">Christine Dancey & John Reidy · Ideal para estudantes de saúde e ciências humanas.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+

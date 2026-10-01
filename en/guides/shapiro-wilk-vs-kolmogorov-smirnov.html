@@ -1,0 +1,157 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shapiro-Wilk vs Kolmogorov-Smirnov: Which Normality Test to Trust?</title>
+<meta name="description" content="Detailed comparison between Shapiro-Wilk and Kolmogorov-Smirnov (Lilliefors) tests: statistical power, sample size sensitivity, Q-Q plots, and how to defend your choice.">
+<link rel="canonical" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/shapiro-wilk-vs-kolmogorov-smirnov">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov">
+<meta property="og:title" content="Shapiro-Wilk vs Kolmogorov-Smirnov: Which Normality Test to Trust?">
+<meta property="og:description" content="Discover why statisticians favor Shapiro-Wilk over Kolmogorov-Smirnov and how to avoid common pitfalls in normality testing.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Shapiro-Wilk vs Kolmogorov-Smirnov: Which Normality Test to Trust?",
+  "description": "Evidence-based statistical comparison of normality tests across different sample sizes and distributions.",
+  "inLanguage": "en",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "tcctools Editorial Team" },
+  "publisher": { "@type": "Organization", "name": "tcctools" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do statisticians prefer Shapiro-Wilk over Kolmogorov-Smirnov?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Extensive Monte Carlo simulation studies consistently show that the Shapiro-Wilk test possesses significantly greater statistical power to detect departures from normality across virtually all sample sizes and non-normal shapes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the Lilliefors correction?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The standard Kolmogorov-Smirnov test assumes the population mean and variance are known in advance. When these parameters are estimated from sample data, the standard K-S test is overly conservative. Lilliefors adjusts critical values, but its power remains inferior to Shapiro-Wilk."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/en/" class="hover:text-blue-400">Home</a> ›
+    <a href="/en/guides/which-statistical-test" class="hover:text-blue-400">Guides</a> › Shapiro-Wilk vs Kolmogorov-Smirnov
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Shapiro-Wilk vs Kolmogorov-Smirnov: which test to trust</h1>
+  <p class="text-sm text-slate-400 mb-8">Updated October 1, 2026 · 11 min read · By tcctools Editorial Team</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      Before running parametric hypothesis tests such as an independent t-test or ANOVA, researchers must evaluate whether data conform to a normal distribution. In statistical packages like SPSS, two test outputs appear side by side: <strong>Shapiro-Wilk</strong> and <strong>Kolmogorov-Smirnov</strong>. When they conflict, which one should you trust and defend in your dissertation?
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Test Normality Online with R-Validated Precision</h2>
+      <p class="text-xs text-slate-400">Upload your data to run Royston's AS R94 Shapiro-Wilk algorithm, inspect Q-Q plots, and view skewness and kurtosis metrics in seconds.</p>
+      <a href="/en/normality" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Open Normality Testing Tool →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. Direct verdict: Shapiro-Wilk is superior</h2>
+    <p>
+      If you need an unequivocal, empirically backed recommendation: <strong>rely on the Shapiro-Wilk test</strong>.
+    </p>
+    <p>
+      Systematic power analyses (e.g., Razali & Wah, 2011; Yap & Sim, 2011) demonstrate that Shapiro-Wilk provides the highest sensitivity across sample sizes ranging from \(n = 7\) to \(n = 2000\), comfortably outperforming Kolmogorov-Smirnov, Anderson-Darling, and Jarque-Bera.
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. Why Kolmogorov-Smirnov falls short</h2>
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>Parameter Estimation Problem:</strong> The original K-S test requires knowing true population parameters a priori. In research, parameters are estimated from sample data. The <em>Lilliefors correction</em> remedies this bias but still leaves K-S with significantly less statistical power than Shapiro-Wilk.</li>
+      <li><strong>Insensitivity in the Tails:</strong> K-S measures only the maximum vertical distance between empirical and theoretical cumulative distribution functions. Because cumulative distributions approach 0 and 1 at the extremes, K-S is relatively insensitive to tail deviations—precisely where non-normality most harms t-tests and regression models.</li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. Sample size dynamics</h2>
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 overflow-x-auto my-4">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-4">Sample Size</th>
+            <th class="py-2 pr-4">Test Behavior</th>
+            <th class="py-2">Recommended Course of Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-rose-400">Small (n < 20)</td>
+            <td class="py-2 pr-4">Low power. Often yields p > .05 despite heavy non-normality.</td>
+            <td class="py-2">Rely primarily on Q-Q plots; default to non-parametric tests if ambiguous.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-emerald-400">Moderate (20 ≤ n ≤ 200)</td>
+            <td class="py-2 pr-4">Optimal operating range for Shapiro-Wilk.</td>
+            <td class="py-2">Trust Shapiro-Wilk p-value corroborated by skewness and kurtosis.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-amber-400">Large (n > 300)</td>
+            <td class="py-2 pr-4">Hypersensitive: rejects normality on trivial imperfections.</td>
+            <td class="py-2">Rely on Central Limit Theorem robustness and visual Q-Q linearity.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. Methodology chapter write-up template</h2>
+    <div class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-lg space-y-2">
+      <p class="text-xs font-bold text-white uppercase tracking-wider">Example methodology statement:</p>
+      <p class="text-xs text-slate-300 italic">
+        "Data normality was evaluated using the Shapiro-Wilk test, favored over Kolmogorov-Smirnov due to its superior power across moderate sample sizes (Razali & Wah, 2011; Shapiro & Wilk, 1965). Statistical tests were supplemented with visual inspection of normal Q-Q plots and skewness/kurtosis coefficients."
+      </p>
+    </div>
+
+    <!-- RECOMMENDED READING -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Recommended Statistics Literature</h3>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com/dp/1526461358?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Discovering Statistics Using IBM SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Clear guide on verifying assumptions and handling non-normal distributions.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">View on Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com/dp/0471221770?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Applied Statistics and Probability for Engineers</p>
+          <p class="text-slate-400 mt-1">Montgomery & Runger · Classical treatment of probability plots and goodness of fit.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">View on Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+

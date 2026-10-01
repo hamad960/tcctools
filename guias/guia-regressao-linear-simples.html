@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Regressão Linear Simples: Guia Passo a Passo para TCC, Pressupostos e Interpretação</title>
+<meta name="description" content="Aprenda regressão linear simples do zero para seu TCC: verificação de pressupostos dos resíduos, interpretação do R² e dos coeficientes, equação da reta e redação em ABNT/APA.">
+<link rel="canonical" href="https://tcctools.com.br/guias/guia-regressao-linear-simples">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/guia-regressao-linear-simples">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide">
+<meta property="og:title" content="Regressão Linear Simples: Guia Passo a Passo">
+<meta property="og:description" content="Aprenda a interpretar coeficientes, R², verificar homocedasticidade e escrever a equação da reta no seu trabalho acadêmico.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Regressão Linear Simples: Guia Passo a Passo para TCC",
+  "description": "Como rodar e interpretar modelos de regressão linear simples na pesquisa científica.",
+  "inLanguage": "pt-BR",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "Equipe Estatística TCC" },
+  "publisher": { "@type": "Organization", "name": "Estatística TCC" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que significa o R² (coeficiente de determinação)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O R² representa a proporção da variância total da variável dependente (Y) que é explicada ou predita linearmente pela variável independente (X). Por exemplo, um R² de 0,42 indica que 42% da variabilidade do desfecho é explicada pelo modelo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quais são os 4 pressupostos da regressão linear simples?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Os quatro pressupostos fundamentais (LINE) são: Linearidade da relação entre X e Y; Independência das observações/resíduos; Normalidade da distribuição dos resíduos; e Homocedasticidade (variância constante dos resíduos em todos os níveis de X)."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/" class="hover:text-blue-400">Início</a> ›
+    <a href="/guias/qual-teste-estatistico-usar" class="hover:text-blue-400">Guias</a> › Regressão Linear Simples
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Regressão linear simples: guia passo a passo para TCC</h1>
+  <p class="text-sm text-slate-400 mb-8">Atualizado em 1 de outubro de 2026 · Leitura de 11 minutos · Por Equipe Estatística TCC</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      Enquanto a correlação apenas avalia a força da associação mútua entre duas variáveis, a <strong>regressão linear simples</strong> vai além: ela estabelece uma relação funcional de causa e efeito presumida, permitindo <strong>prever o valor de uma variável desfecho (Y)</strong> a partir de uma variável preditora (X).
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Executar Regressão Linear com 1 Clique</h2>
+      <p class="text-xs text-slate-400">Suba sua planilha no site: calculamos o intercepto, a inclinação, o R², o teste F do modelo e o teste de normalidade dos resíduos com parágrafo pronto em ABNT.</p>
+      <a href="/calculadora" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Abrir Calculadora Estatística →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. A equação matemática fundamental</h2>
+    <p>O modelo linear simples é expresso pela equação da reta:</p>
+    <div class="bg-slate-900 p-4 rounded-lg font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto text-center">
+      Y = β₀ + β₁·X + ε
+    </div>
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>Y (Variável Dependente / Desfecho):</strong> Aquilo que você quer explicar ou prever (ex.: Nota no exame).</li>
+      <li><strong>X (Variável Independente / Preditora):</strong> O fator que você acredita influenciar Y (ex.: Horas de estudo).</li>
+      <li><strong>\(\beta_0\) (Intercepto ou Coeficiente Linear):</strong> O valor esperado de Y quando X é igual a zero.</li>
+      <li><strong>\(\beta_1\) (Inclinação ou Coeficiente Angular):</strong> Quanto Y varia (em média) para cada acréscimo de 1 unidade em X. Se for positivo, a reta sobe; se negativo, desce.</li>
+      <li><strong>\(\varepsilon\) (Erro / Resíduo):</strong> A distância vertical entre os pontos reais observados e a reta prevista pelo modelo.</li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. Os quatro pressupostos obrigatórios (Acrônimo LINE)</h2>
+    <p>Uma regressão só é válida se os resíduos respeitarem as premissas clássicas:</p>
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 overflow-x-auto my-4">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-4">Pressuposto</th>
+            <th class="py-2 pr-4">O que significa</th>
+            <th class="py-2">Como diagnosticar</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-blue-400">Linearidade</td>
+            <td class="py-2 pr-4">A relação média entre X e Y segue uma reta.</td>
+            <td class="py-2">Gráfico de dispersão entre X e Y ou gráfico de resíduos vs. valores ajustados.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-blue-400">Independência</td>
+            <td class="py-2 pr-4">Os erros de observações diferentes não se correlacionam.</td>
+            <td class="py-2">Delineamento experimental correto ou teste de Durbin-Watson para séries temporais.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-blue-400">Normalidade</td>
+            <td class="py-2 pr-4">Os <em>resíduos</em> do modelo seguem distribuição normal.</td>
+            <td class="py-2">Teste de Shapiro-Wilk aplicado aos resíduos e inspeção do Q-Q plot.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-blue-400">Homocedasticidade</td>
+            <td class="py-2 pr-4">A variância dos resíduos é constante ao longo de todos os valores de X.</td>
+            <td class="py-2">Teste de Breusch-Pagan ou gráfico de resíduos dispersos em faixa horizontal sem formato de cone.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. Como interpretar o R² (Coeficiente de Determinação)</h2>
+    <p>
+      O \(R^2\) varia entre 0 e 1 (ou 0% a 100%). Um \(R^2 = 0{,}48\) significa que <strong>48% de toda a oscilação observada em Y pode ser atribuída à sua relação linear com X</strong>. Os 52% restantes dependem de outros fatores não medidos pelo seu estudo ou de variabilidade biológica/social aleatória.
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. Exemplo de redação acadêmica (ABNT / APA)</h2>
+    <div class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-lg space-y-2">
+      <p class="text-xs font-bold text-white uppercase tracking-wider">Como colocar no seu TCC:</p>
+      <p class="text-xs text-slate-300 italic">
+        "Foi realizada uma análise de regressão linear simples para verificar em que medida as horas dedicadas ao treinamento (X) predizem a pontuação de produtividade (Y). O modelo demonstrou significância estatística, F(1, 48) = 38,14; p < 0,001; R² = 0,44. O coeficiente angular indicou que cada hora adicional de capacitação associou-se a um incremento médio de 2,45 pontos no escore (β = 2,45; erro-padrão = 0,40; t = 6,18; p < 0,001; IC 95% [1,65; 3,25]). Os resíduos atenderam aos pressupostos de normalidade (Shapiro-Wilk, p = 0,41) e homocedasticidade."
+      </p>
+    </div>
+
+    <!-- BLOCO AFILIADOS -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Aprofunde seus estudos</h3>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com.br/dp/8580555462?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Descobrindo a Estatística com SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Guia mestre sobre regressão simples, múltipla e diagnóstico de resíduos.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com.br/dp/8522490518?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Como Elaborar Projetos de Pesquisa</p>
+          <p class="text-slate-400 mt-1">Antonio Carlos Gil · Fundamentos para hipóteses direcionais e modelos causais.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,165 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simple Linear Regression: Step-by-Step Guide (Assumptions, R², APA Format)</title>
+<meta name="description" content="Step-by-step tutorial on simple linear regression: LINE assumptions, residual diagnostics, R-squared interpretation, slope and intercept, and APA 7th edition write-ups.">
+<link rel="canonical" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/guia-regressao-linear-simples">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide">
+<meta property="og:title" content="Simple Linear Regression: A Step-by-Step Guide">
+<meta property="og:description" content="Master linear regression: assumptions, residual diagnostics, R-squared, regression equation, and APA reporting.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Simple Linear Regression: A Step-by-Step Guide",
+  "description": "Comprehensive guide to fitting, diagnosing, and reporting simple linear regression models in scientific papers.",
+  "inLanguage": "en",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "tcctools Editorial Team" },
+  "publisher": { "@type": "Organization", "name": "tcctools" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does R-squared (R²) represent in simple linear regression?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "R-squared represents the proportion of total variance in the dependent variable (Y) explained by its linear relationship with the predictor (X). An R² of .45 indicates that 45% of the variation in outcome scores is accounted for by the model."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the four LINE assumptions in linear regression?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The four core assumptions are: Linearity between X and Y; Independence of residual observations; Normality of residual errors; and Equal variance (homoscedasticity) of residuals across all predicted values."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/en/" class="hover:text-blue-400">Home</a> ›
+    <a href="/en/guides/which-statistical-test" class="hover:text-blue-400">Guides</a> › Simple Linear Regression
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Simple linear regression: a step-by-step guide</h1>
+  <p class="text-sm text-slate-400 mb-8">Updated October 1, 2026 · 11 min read · By tcctools Editorial Team</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      While correlation quantifies how two variables move together symmetrically, <strong>simple linear regression</strong> models a directional relationship. It allows you to <strong>predict the value of an outcome (Y)</strong> based on a predictor (X) and test whether that prediction is statistically meaningful.
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Run Regression in Your Browser</h2>
+      <p class="text-xs text-slate-400">Upload your spreadsheet to compute coefficients, model F-test, R², residual normality checks, and copy automated APA paragraphs.</p>
+      <a href="/en/calculator" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Open Regression Tool →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. The fundamental regression equation</h2>
+    <div class="bg-slate-900 p-4 rounded-lg font-mono text-xs text-slate-200 border border-slate-800 overflow-x-auto text-center">
+      Y = β₀ + β₁·X + ε
+    </div>
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>Y (Dependent / Outcome variable):</strong> The variable you seek to predict.</li>
+      <li><strong>X (Independent / Predictor variable):</strong> The variable hypothesized to influence Y.</li>
+      <li><strong>\(\beta_0\) (Intercept):</strong> The expected value of Y when X equals zero.</li>
+      <li><strong>\(\beta_1\) (Slope):</strong> The average change in Y for each one-unit increase in X.</li>
+      <li><strong>\(\varepsilon\) (Residual error):</strong> The vertical discrepancy between observed data points and the fitted regression line.</li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. The LINE assumptions</h2>
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 overflow-x-auto my-4">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-4">Assumption</th>
+            <th class="py-2 pr-4">Definition</th>
+            <th class="py-2">Diagnostic Method</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-blue-400">Linearity</td>
+            <td class="py-2 pr-4">Mean values of Y follow a straight-line function of X.</td>
+            <td class="py-2">Scatter plot of X vs Y; residual plot vs fitted values.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-blue-400">Independence</td>
+            <td class="py-2 pr-4">Observation errors are uncorrelated across subjects.</td>
+            <td class="py-2">Sound experimental design; Durbin-Watson for sequential data.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-blue-400">Normality</td>
+            <td class="py-2 pr-4">Model <em>residuals</em> follow a normal distribution.</td>
+            <td class="py-2">Shapiro-Wilk test on residual series; normal Q-Q plot.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-blue-400">Equal Variance</td>
+            <td class="py-2 pr-4">Residual variance remains constant across all values of X (homoscedasticity).</td>
+            <td class="py-2">Fitted vs residual scatter plot showing even horizontal band without funnel shape.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. Interpreting R-squared (R²)</h2>
+    <p>
+      The coefficient of determination (\(R^2\)) ranges from 0 to 1. An \(R^2 = .44\) indicates that <strong>44% of the variance in the outcome variable is explained by the regression equation</strong>. The remaining 56% is attributed to unmeasured extraneous factors or random noise.
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. APA 7th Edition write-up template</h2>
+    <div class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-lg space-y-2">
+      <p class="text-xs font-bold text-white uppercase tracking-wider">Example reporting paragraph:</p>
+      <p class="text-xs text-slate-300 italic">
+        "A simple linear regression was calculated to predict employee productivity scores based on training hours completed. A significant regression equation was found, F(1, 48) = 38.14, p < .001, with an R² of .44. Participants' predicted productivity score increased by 2.45 points for each training hour completed (B = 2.45, SE = 0.40, t = 6.18, p < .001, 95% CI [1.65, 3.25]). Residuals conformed to normality (Shapiro-Wilk p = .41) and homoscedasticity."
+      </p>
+    </div>
+
+    <!-- RECOMMENDED READING -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Recommended Reference Books</h3>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com/dp/1526461358?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Discovering Statistics Using IBM SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Comprehensive and accessible guide to regression modeling and diagnostics.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">View on Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com/dp/0470542810?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Introduction to Linear Regression Analysis</p>
+          <p class="text-slate-400 mt-1">Montgomery, Peck & Vining · The authoritative academic textbook on linear modeling.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">View on Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+

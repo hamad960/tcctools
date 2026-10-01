@@ -1,0 +1,155 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pearson vs Spearman Correlation: Which One to Use in Your Paper (APA Style)</title>
+<meta name="description" content="Deciding between Pearson and Spearman correlation: assumptions of normality and linearity, monotonicity, handling outliers, and APA 7th edition write-up examples.">
+<link rel="canonical" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/correlacao-pearson-vs-spearman">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation">
+<meta property="og:title" content="Pearson vs Spearman Correlation: Definitive Decision Guide">
+<meta property="og:description" content="Discover when to switch from Pearson to Spearman correlation, how to inspect monotonicity, and how to report findings.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Pearson vs Spearman Correlation: Which One to Use in Your Paper",
+  "description": "Comprehensive comparison between Pearson product-moment and Spearman rank-order correlation coefficients.",
+  "inLanguage": "en",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "tcctools Editorial Team" },
+  "publisher": { "@type": "Organization", "name": "tcctools" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When should I choose Spearman over Pearson?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Choose Spearman correlation if: 1) data violate bivariate normality; 2) variables are ordinal (e.g., Likert survey ratings); 3) the relationship is monotonic but non-linear; or 4) extreme outliers are present in the dataset."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a linear and a monotonic relationship?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A linear relationship follows a constant rate of change along a straight line. A monotonic relationship means that as one variable increases, the other strictly increases or decreases, even along a curve."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/en/" class="hover:text-blue-400">Home</a> ›
+    <a href="/en/guides/which-statistical-test" class="hover:text-blue-400">Guides</a> › Pearson vs Spearman
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Pearson vs Spearman correlation: which one to use</h1>
+  <p class="text-sm text-slate-400 mb-8">Updated October 1, 2026 · 10 min read · By tcctools Editorial Team</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      Measuring association between continuous or ordinal variables is a cornerstone of scientific inquiry. However, many authors default to <strong>Pearson's r</strong> without verifying bivariate normality or checking whether the relationship is truly linear. Violating these assumptions can lead to severely biased estimates or harsh review critiques.
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Automated Correlation Analysis</h2>
+      <p class="text-xs text-slate-400">Upload your CSV or Excel file to instantly generate Pearson and Spearman matrices with p-values, scatter plots, and formatted APA results.</p>
+      <a href="/en/calculator" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Open Correlation Calculator →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. Quick comparison table</h2>
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 overflow-x-auto my-4">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-4">Dimension</th>
+            <th class="py-2 pr-4">Pearson Correlation (\(r\))</th>
+            <th class="py-2">Spearman Correlation (\(r_s\) or \(\rho\))</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+          <tr><td class="py-2 pr-4 font-semibold">Test category</td><td class="py-2 pr-4">Parametric</td><td class="py-2">Non-parametric (rank-based)</td></tr>
+          <tr><td class="py-2 pr-4 font-semibold">Data scale</td><td class="py-2 pr-4">Continuous (interval or ratio)</td><td class="py-2">Ordinal, discrete, or continuous</td></tr>
+          <tr><td class="py-2 pr-4 font-semibold">Relationship type</td><td class="py-2 pr-4">Strictly linear</td><td class="py-2">Monotonic (curved or straight)</td></tr>
+          <tr><td class="py-2 pr-4 font-semibold">Normality requirement</td><td class="py-2 pr-4">Required (bivariate normal)</td><td class="py-2">Not required</td></tr>
+          <tr><td class="py-2 pr-4 font-semibold">Outlier sensitivity</td><td class="py-2 pr-4 text-rose-400">High (a single outlier shifts r)</td><td class="py-2 text-emerald-400">Low (robust against extreme values)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. Linear vs. monotonic relationships</h2>
+    <p>
+      Understanding the distinction is vital:
+    </p>
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>Linear:</strong> Points lie along a straight line; the expected change in Y per unit increase in X remains constant across the entire distribution.</li>
+      <li><strong>Monotonic:</strong> As X increases, Y consistently increases (or consistently decreases), but not necessarily at a constant rate. Spearman evaluates the monotonicity of raw values by assessing the linearity of their ranked values.</li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. Survey questions and Likert scales</h2>
+    <p>
+      Single survey items scored on a Likert scale (e.g., 1 = Strongly Disagree to 5 = Strongly Agree) are ordinal data. Distances between successive numbers cannot be assumed equal. Under strict statistical methodology, <strong>Spearman rank correlation is the correct choice</strong>. Only when multiple Likert items are summed or averaged into a validated continuous composite scale can Pearson correlation be considered.
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. APA 7th Edition reporting templates</h2>
+    <div class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-lg space-y-3">
+      <div>
+        <p class="text-xs font-bold text-white uppercase tracking-wider">Reporting Pearson's r:</p>
+        <p class="text-xs text-slate-300 italic mt-1">
+          "A Pearson product-moment correlation coefficient was computed to assess the relationship between study hours and exam scores. There was a moderate positive correlation, r(82) = .54, 95% CI [.37, .68], p < .001."
+        </p>
+      </div>
+      <div class="border-t border-slate-800 pt-2">
+        <p class="text-xs font-bold text-white uppercase tracking-wider">Reporting Spearman's rs:</p>
+        <p class="text-xs text-slate-300 italic mt-1">
+          "A Spearman rank-order correlation revealed a statistically significant negative association between job satisfaction rankings and turnover intent, rs(118) = −.42, p < .001."
+        </p>
+      </div>
+    </div>
+
+    <!-- RECOMMENDED READING -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Recommended Reference Books</h3>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com/dp/1526461358?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Discovering Statistics Using IBM SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Clear chapter on correlation diagnostics, scatter plots, and robust alternatives.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">View on Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com/dp/1462538647?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Research Design in Psychology and Social Sciences</p>
+          <p class="text-slate-400 mt-1">Comprehensive treatment of observational designs and bivariate association.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">View on Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+

@@ -1,174 +1,290 @@
 <!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Conversor R para LaTeX — summary(lm) em Tabela Booktabs</title>
-<meta name="description" content="Cole a saída do summary(lm), anova ou t.test do R e receba a tabela em LaTeX booktabs, Markdown, HTML ou Word, com o parágrafo de resultados em ABNT.">
-<link rel="canonical" href="https://tcctools.com.br/r-latex">
-<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/privacidade">
-<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/privacy">
-<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/privacy">
-<link rel="stylesheet" href="/css/tokens.css"><meta property="og:title" content="Conversor R → LaTeX">
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent','default',{
-    ad_storage:'denied',
-    ad_user_data:'denied',
-    ad_personalization:'denied',
-    analytics_storage:'denied',
-    wait_for_update:500
-  });
-</script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Conversor R para LaTeX — summary(lm) em Tabela Booktabs</title>
+    <meta
+      name="description"
+      content="Cole a saída do summary(lm), anova ou t.test do R e receba a tabela em LaTeX booktabs, Markdown, HTML ou Word, com o parágrafo de resultados em ABNT."
+    />
+    <link rel="canonical" href="https://tcctools.com.br/r-latex" />
+    <link
+      rel="alternate"
+      hreflang="pt-br"
+      href="https://tcctools.com.br/privacidade"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://tcctools.com.br/en/privacy"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://tcctools.com.br/en/privacy"
+    />
+    <link rel="stylesheet" href="/css/tokens.css" />
+    <meta property="og:title" content="Conversor R → LaTeX" />
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+        wait_for_update: 500,
+      });
+    </script>
 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent','default',{
-    ad_storage:'denied',
-    ad_user_data:'denied',
-    ad_personalization:'denied',
-    analytics_storage:'denied',
-    wait_for_update:500
-  });
-</script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+        wait_for_update: 500,
+      });
+    </script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137" crossorigin="anonymous"></script><meta property="og:description" content="Da saída bruta do R à tabela booktabs pronta para publicação.">
-<meta property="og:type" content="website">
-<script src="https://cdn.tailwindcss.com"></script><link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#2563eb">
-<link rel="stylesheet" href="/css/tokens.css">
-</head>
-<body class="bg-slate-950 text-slate-100">
-<div id="site-header"></div>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3144572977098137"
+      crossorigin="anonymous"
+    ></script>
+    <meta
+      property="og:description"
+      content="Da saída bruta do R à tabela booktabs pronta para publicação."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="/css/tw.css" />
+    <link rel="stylesheet" href="/css/tokens.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+  </head>
+  <body class="bg-slate-950 text-slate-100">
+    <div id="site-header"></div>
 
-<main class="page page-wide">
-  <header>
-    <h1 class="h1">Conversor R → LaTeX, Markdown e Word</h1>
-    <p class="sub mt-2">Cole a saída bruta do <code class="text-emerald-400">summary(lm)</code>,
-    <code class="text-emerald-400">anova()</code> ou <code class="text-emerald-400">t.test()</code> e
-    receba a <strong>tabela formatada em booktabs</strong>, além de Markdown, HTML, CSV e do
-    <strong>parágrafo de resultados em ABNT</strong>.</p>
-  </header>
+    <main class="page page-wide">
+      <header>
+        <h1 class="h1">Conversor R → LaTeX, Markdown e Word</h1>
+        <p class="sub mt-2">
+          Cole a saída bruta do
+          <code class="text-emerald-400">summary(lm)</code>,
+          <code class="text-emerald-400">anova()</code> ou
+          <code class="text-emerald-400">t.test()</code> e receba a
+          <strong>tabela formatada em booktabs</strong>, além de Markdown, HTML,
+          CSV e do <strong>parágrafo de resultados em ABNT</strong>.
+        </p>
+      </header>
 
-  <div class="grid2">
-    <section class="card">
-      <div class="flex justify-between items-center mb-2">
-        <h2 class="card-t" style="margin:0">1. Cole a saída do R</h2>
-        <button id="btnDemo" class="btn-o">Ver exemplo</button>
+      <div class="grid2">
+        <section class="card">
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="card-t" style="margin: 0">1. Cole a saída do R</h2>
+            <button id="btnDemo" class="btn-o">Ver exemplo</button>
+          </div>
+          <textarea
+            id="src"
+            rows="18"
+            class="inp"
+            style="
+              font-family: ui-monospace;
+              font-size: 0.72rem;
+              line-height: 1.5;
+            "
+            placeholder="Cole aqui a saída completa do console do R, incluindo o bloco Coefficients..."
+          ></textarea>
+          <div class="grid md:grid-cols-2 gap-3 mt-3">
+            <label class="lbl" style="margin: 0"
+              >Casas decimais
+              <select id="dec" class="sel">
+                <option>2</option>
+                <option selected>3</option>
+                <option>4</option>
+              </select></label
+            >
+            <label class="lbl" style="margin: 0"
+              >Notação de significância
+              <select id="sig" class="sel">
+                <option value="star">Asteriscos (***)</option>
+                <option value="num" selected>P-valor numérico</option>
+                <option value="both">Ambos</option>
+              </select></label
+            >
+          </div>
+          <label class="lbl mt-2" style="margin: 0">
+            <input
+              id="ptbr"
+              type="checkbox"
+              checked
+              style="width: auto; margin-right: 0.4rem"
+            />
+            Usar vírgula decimal (padrão brasileiro)</label
+          >
+          <label class="lbl" style="margin: 0">
+            <input
+              id="ci"
+              type="checkbox"
+              style="width: auto; margin-right: 0.4rem"
+            />
+            Incluir coluna de IC 95% (estimado como β ± 1,96·EP)</label
+          >
+          <button id="btnConv" class="btn mt-3">Converter</button>
+          <p id="msg" class="hint mt-2"></p>
+        </section>
+
+        <section id="out" class="hidden flex flex-col gap-4">
+          <div class="card">
+            <h2 class="card-t">Detectado</h2>
+            <div id="info" class="flex flex-col gap-1"></div>
+          </div>
+          <div class="card">
+            <h2 class="card-t">Pré-visualização</h2>
+            <div id="prev" class="overflow-x-auto"></div>
+          </div>
+        </section>
       </div>
-      <textarea id="src" rows="18" class="inp" style="font-family:ui-monospace;font-size:.72rem;line-height:1.5"
-        placeholder="Cole aqui a saída completa do console do R, incluindo o bloco Coefficients..."></textarea>
-      <div class="grid md:grid-cols-2 gap-3 mt-3">
-        <label class="lbl" style="margin:0">Casas decimais
-          <select id="dec" class="sel"><option>2</option><option selected>3</option><option>4</option></select></label>
-        <label class="lbl" style="margin:0">Notação de significância
-          <select id="sig" class="sel">
-            <option value="star">Asteriscos (***)</option>
-            <option value="num" selected>P-valor numérico</option>
-            <option value="both">Ambos</option>
-          </select></label>
-      </div>
-      <label class="lbl mt-2" style="margin:0">
-        <input id="ptbr" type="checkbox" checked style="width:auto;margin-right:.4rem">
-        Usar vírgula decimal (padrão brasileiro)</label>
-      <label class="lbl" style="margin:0">
-        <input id="ci" type="checkbox" style="width:auto;margin-right:.4rem">
-        Incluir coluna de IC 95% (estimado como β ± 1,96·EP)</label>
-      <button id="btnConv" class="btn mt-3">Converter</button>
-      <p id="msg" class="hint mt-2"></p>
-    </section>
 
-    <section id="out" class="hidden flex flex-col gap-4">
-      <div class="card">
-        <h2 class="card-t">Detectado</h2>
-        <div id="info" class="flex flex-col gap-1"></div>
-      </div>
-      <div class="card">
-        <h2 class="card-t">Pré-visualização</h2>
-        <div id="prev" class="overflow-x-auto"></div>
-      </div>
-    </section>
-  </div>
+      <section id="fmts" class="hidden card">
+        <div class="tabs mb-3">
+          <button class="tab on" data-f="latex">LaTeX (booktabs)</button>
+          <button class="tab" data-f="md">Markdown</button>
+          <button class="tab" data-f="html">HTML</button>
+          <button class="tab" data-f="csv">CSV / Excel</button>
+          <button class="tab" data-f="abnt">Parágrafo ABNT</button>
+        </div>
+        <div class="flex justify-end gap-2 mb-2">
+          <button id="btnCopyOut" class="btn-o">Copiar</button>
+          <button id="btnDlOut" class="btn-g">Baixar arquivo</button>
+        </div>
+        <pre
+          id="code"
+          class="box"
+          style="
+            white-space: pre-wrap;
+            font-family: ui-monospace;
+            font-size: 0.72rem;
+            max-height: 28rem;
+            overflow: auto;
+          "
+        ></pre>
+        <p id="tip" class="hint mt-2"></p>
+      </section>
 
-  <section id="fmts" class="hidden card">
-    <div class="tabs mb-3">
-      <button class="tab on" data-f="latex">LaTeX (booktabs)</button>
-      <button class="tab" data-f="md">Markdown</button>
-      <button class="tab" data-f="html">HTML</button>
-      <button class="tab" data-f="csv">CSV / Excel</button>
-      <button class="tab" data-f="abnt">Parágrafo ABNT</button>
-    </div>
-    <div class="flex justify-end gap-2 mb-2">
-      <button id="btnCopyOut" class="btn-o">Copiar</button>
-      <button id="btnDlOut" class="btn-g">Baixar arquivo</button>
-    </div>
-    <pre id="code" class="box" style="white-space:pre-wrap;font-family:ui-monospace;font-size:.72rem;max-height:28rem;overflow:auto"></pre>
-    <p id="tip" class="hint mt-2"></p>
-  </section>
+      <article class="prose border-t border-slate-800 pt-8">
+        <h2>Por que não copiar a saída do R direto no Word</h2>
+        <p>
+          Colar o bloco de texto do console no documento é o caminho mais rápido
+          para uma correção. A saída do R usa fonte monoespaçada, alinhamento
+          por espaços, colunas em inglês (<em>Estimate</em>,
+          <em>Std. Error</em>, <em>Pr(&gt;|t|)</em>), notação científica
+          ilegível como <code>4.56e-09</code> e ponto decimal — quatro violações
+          de norma de uma vez.
+        </p>
+        <p>
+          Uma tabela científica adequada tem cabeçalhos em português, três
+          linhas horizontais e nenhuma vertical, vírgula decimal, número
+          uniforme de casas por coluna, título acima e nota explicativa abaixo.
+          É exatamente isso que esta ferramenta produz.
+        </p>
 
-  <article class="prose border-t border-slate-800 pt-8">
-    <h2>Por que não copiar a saída do R direto no Word</h2>
-    <p>Colar o bloco de texto do console no documento é o caminho mais rápido para uma correção.
-    A saída do R usa fonte monoespaçada, alinhamento por espaços, colunas em inglês
-    (<em>Estimate</em>, <em>Std. Error</em>, <em>Pr(&gt;|t|)</em>), notação científica ilegível como
-    <code>4.56e-09</code> e ponto decimal — quatro violações de norma de uma vez.</p>
-    <p>Uma tabela científica adequada tem cabeçalhos em português, três linhas horizontais e nenhuma
-    vertical, vírgula decimal, número uniforme de casas por coluna, título acima e nota
-    explicativa abaixo. É exatamente isso que esta ferramenta produz.</p>
+        <h3>O que é booktabs</h3>
+        <p>
+          É o pacote LaTeX que implementa o padrão tipográfico de tabelas
+          científicas, com os comandos <code>\toprule</code>,
+          <code>\midrule</code> e <code>\bottomrule</code>. Ele existe porque
+          tabelas com grade completa — o padrão do Excel — são consideradas
+          visualmente ruidosas e dificultam a leitura de dados numéricos.
+          Adicione ao preâmbulo do seu documento:
+        </p>
+        <pre class="box" style="font-family: ui-monospace; font-size: 0.75rem">
+\usepackage{booktabs}
+\usepackage{siunitx}   % alinhamento por casa decimal (opcional)</pre
+        >
 
-    <h3>O que é booktabs</h3>
-    <p>É o pacote LaTeX que implementa o padrão tipográfico de tabelas científicas, com os comandos
-    <code>\toprule</code>, <code>\midrule</code> e <code>\bottomrule</code>. Ele existe porque
-    tabelas com grade completa — o padrão do Excel — são consideradas visualmente ruidosas e
-    dificultam a leitura de dados numéricos. Adicione ao preâmbulo do seu documento:</p>
-    <pre class="box" style="font-family:ui-monospace;font-size:.75rem">\usepackage{booktabs}
-\usepackage{siunitx}   % alinhamento por casa decimal (opcional)</pre>
+        <h3>Formatos disponíveis e onde usar cada um</h3>
+        <ul>
+          <li>
+            <strong>LaTeX</strong> — para quem escreve em Overleaf ou usa a
+            classe abnTeX2.
+          </li>
+          <li>
+            <strong>Markdown</strong> — para R Markdown, Quarto, Notion ou
+            Obsidian.
+          </li>
+          <li>
+            <strong>HTML</strong> — cole diretamente no Word ou no Google Docs:
+            a formatação de tabela é preservada, incluindo as três linhas
+            horizontais.
+          </li>
+          <li>
+            <strong>CSV</strong> — abra no Excel e formate manualmente, se
+            preferir controle total.
+          </li>
+          <li>
+            <strong>Parágrafo ABNT</strong> — o texto corrido para a seção de
+            resultados.
+          </li>
+        </ul>
 
-    <h3>Formatos disponíveis e onde usar cada um</h3>
-    <ul>
-      <li><strong>LaTeX</strong> — para quem escreve em Overleaf ou usa a classe abnTeX2.</li>
-      <li><strong>Markdown</strong> — para R Markdown, Quarto, Notion ou Obsidian.</li>
-      <li><strong>HTML</strong> — cole diretamente no Word ou no Google Docs: a formatação de
-      tabela é preservada, incluindo as três linhas horizontais.</li>
-      <li><strong>CSV</strong> — abra no Excel e formate manualmente, se preferir controle total.</li>
-      <li><strong>Parágrafo ABNT</strong> — o texto corrido para a seção de resultados.</li>
-    </ul>
+        <h3>Como o R apresenta p-valores muito pequenos</h3>
+        <p>
+          Duas notações causam confusão. <code>4.56e-09</code> é notação
+          científica e equivale a 0,00000000456. <code>&lt; 2e-16</code> é o
+          limite de precisão numérica do R — o valor é tão pequeno que não pode
+          ser representado. Em ambos os casos, reporte como
+          <strong>p &lt; 0,001</strong>. Jamais escreva "p = 0,000", que é
+          matematicamente impossível. Esta ferramenta faz essa conversão
+          automaticamente.
+        </p>
 
-    <h3>Como o R apresenta p-valores muito pequenos</h3>
-    <p>Duas notações causam confusão. <code>4.56e-09</code> é notação científica e equivale a
-    0,00000000456. <code>&lt; 2e-16</code> é o limite de precisão numérica do R — o valor é tão
-    pequeno que não pode ser representado. Em ambos os casos, reporte como
-    <strong>p &lt; 0,001</strong>. Jamais escreva "p = 0,000", que é matematicamente impossível.
-    Esta ferramenta faz essa conversão automaticamente.</p>
-
-    <h3>Alternativas nativas no R</h3>
-    <p>Se você trabalha com muitos modelos, vale automatizar dentro do próprio R:</p>
-    <pre class="box" style="font-family:ui-monospace;font-size:.72rem">library(broom);    tidy(modelo, conf.int = TRUE)
+        <h3>Alternativas nativas no R</h3>
+        <p>
+          Se você trabalha com muitos modelos, vale automatizar dentro do
+          próprio R:
+        </p>
+        <pre class="box" style="font-family: ui-monospace; font-size: 0.72rem">
+library(broom);    tidy(modelo, conf.int = TRUE)
 library(stargazer); stargazer(modelo, type = "latex")
 library(modelsummary); modelsummary(modelo, output = "latex")
-library(gtsummary)   # excelente para tabelas de caracterização</pre>
-    <p>Esta ferramenta serve para o caso em que você já tem a saída em mãos e precisa da tabela
-    agora — sem instalar pacote nem reescrever o script.</p>
+library(gtsummary)   # excelente para tabelas de caracterização</pre
+        >
+        <p>
+          Esta ferramenta serve para o caso em que você já tem a saída em mãos e
+          precisa da tabela agora — sem instalar pacote nem reescrever o script.
+        </p>
 
-    <p>Para entender o significado de cada número da saída, veja o guia
-    <a href="/guias/interpretar-summary-lm-r">como interpretar o summary(lm) linha por linha</a>.
-    Para as convenções de redação, consulte
-    <a href="/guias/como-reportar-resultados-abnt">como reportar resultados em ABNT</a>.</p>
-  </article>
-</main>
+        <p>
+          Para entender o significado de cada número da saída, veja o guia
+          <a href="/guias/interpretar-summary-lm-r"
+            >como interpretar o summary(lm) linha por linha</a
+          >. Para as convenções de redação, consulte
+          <a href="/guias/como-reportar-resultados-abnt"
+            >como reportar resultados em ABNT</a
+          >.
+        </p>
+      </article>
+    </main>
 
-<div id="site-footer"></div>
+    <div id="site-footer"></div>
 
-<script type="module">
-import { mountShell } from '/js/ui.js';
-mountShell();
-const $ = id => document.getElementById(id);
-let P = null, fmt = 'latex';
+    <script type="module">
+      import { mountShell } from "/js/ui.js";
+      mountShell();
+      const $ = (id) => document.getElementById(id);
+      let P = null,
+        fmt = "latex";
 
-const DEMO = `Call:
+      const DEMO = `Call:
 lm(formula = qualidade_vida ~ idade + renda + escolaridade, data = dados)
 
 Residuals:
@@ -188,145 +304,267 @@ Residual standard error: 5.124 on 146 degrees of freedom
 Multiple R-squared:  0.4231,	Adjusted R-squared:  0.4152 
 F-statistic: 53.89 on 3 and 146 DF,  p-value: < 2.2e-16`;
 
-$('btnDemo').onclick = () => { $('src').value = DEMO; convert(); };
-$('btnConv').onclick = convert;
-['dec', 'sig', 'ptbr', 'ci'].forEach(i => $(i).onchange = () => { if (P) { build(); } });
+      $("btnDemo").onclick = () => {
+        $("src").value = DEMO;
+        convert();
+      };
+      $("btnConv").onclick = convert;
+      ["dec", "sig", "ptbr", "ci"].forEach(
+        (i) =>
+          ($(i).onchange = () => {
+            if (P) {
+              build();
+            }
+          }),
+      );
 
-function num(s) { return parseFloat(String(s).replace(/[<>]/g, '').trim()); }
-function fmtN(v, d) {
-  if (!Number.isFinite(v)) return '—';
-  let s = v.toFixed(d);
-  return $('ptbr').checked ? s.replace('.', ',') : s;
-}
-function fmtP(raw) {
-  const v = num(raw);
-  const lt = /^</.test(String(raw).trim()) || v < 0.001;
-  if (lt) return $('ptbr').checked ? '< 0,001' : '< 0.001';
-  return fmtN(v, 3);
-}
-function stars(raw) {
-  const v = num(raw);
-  return v < 0.001 ? '***' : v < 0.01 ? '**' : v < 0.05 ? '*' : v < 0.1 ? '.' : '';
-}
+      function num(s) {
+        return parseFloat(String(s).replace(/[<>]/g, "").trim());
+      }
+      function fmtN(v, d) {
+        if (!Number.isFinite(v)) return "—";
+        let s = v.toFixed(d);
+        return $("ptbr").checked ? s.replace(".", ",") : s;
+      }
+      function fmtP(raw) {
+        const v = num(raw);
+        const lt = /^</.test(String(raw).trim()) || v < 0.001;
+        if (lt) return $("ptbr").checked ? "< 0,001" : "< 0.001";
+        return fmtN(v, 3);
+      }
+      function stars(raw) {
+        const v = num(raw);
+        return v < 0.001
+          ? "***"
+          : v < 0.01
+            ? "**"
+            : v < 0.05
+              ? "*"
+              : v < 0.1
+                ? "."
+                : "";
+      }
 
-function convert() {
-  const t = $('src').value;
-  if (!t.trim()) return alert('Cole a saída do R.');
-  P = parse(t);
-  if (!P.rows.length) { $('msg').textContent = 'Não encontrei o bloco "Coefficients" ou uma tabela de ANOVA. Cole a saída completa do console.'; return; }
-  $('msg').textContent = `${P.rows.length} coeficientes reconhecidos.`;
-  build();
-  $('out').classList.remove('hidden');
-  $('fmts').classList.remove('hidden');
-}
+      function convert() {
+        const t = $("src").value;
+        if (!t.trim()) return alert("Cole a saída do R.");
+        P = parse(t);
+        if (!P.rows.length) {
+          $("msg").textContent =
+            'Não encontrei o bloco "Coefficients" ou uma tabela de ANOVA. Cole a saída completa do console.';
+          return;
+        }
+        $("msg").textContent = `${P.rows.length} coeficientes reconhecidos.`;
+        build();
+        $("out").classList.remove("hidden");
+        $("fmts").classList.remove("hidden");
+      }
 
-function parse(txt) {
-  const out = { type: 'lm', rows: [], call: '', r2: null, r2a: null, F: null, dfF: null, pF: null, rse: null, dfRes: null };
-  const lines = txt.split(/\r?\n/);
+      function parse(txt) {
+        const out = {
+          type: "lm",
+          rows: [],
+          call: "",
+          r2: null,
+          r2a: null,
+          F: null,
+          dfF: null,
+          pF: null,
+          rse: null,
+          dfRes: null,
+        };
+        const lines = txt.split(/\r?\n/);
 
-  const callI = lines.findIndex(l => /^\s*lm\(|^Call:/.test(l));
-  if (callI >= 0) out.call = (lines[callI].replace(/^Call:\s*/, '') || lines[callI + 1] || '').trim();
+        const callI = lines.findIndex((l) => /^\s*lm\(|^Call:/.test(l));
+        if (callI >= 0)
+          out.call = (
+            lines[callI].replace(/^Call:\s*/, "") ||
+            lines[callI + 1] ||
+            ""
+          ).trim();
 
-  const ci = lines.findIndex(l => /^Coefficients:/i.test(l));
-  if (ci >= 0) {
-    for (let i = ci + 1; i < lines.length; i++) {
-      const l = lines[i];
-      if (/^---/.test(l) || /^Signif/.test(l) || !l.trim()) { if (out.rows.length) break; continue; }
-      if (/Estimate|Std\.?\s*Error/i.test(l)) continue;
-      // nome (pode ter espaços em fatores) + 4 números
-      const m = l.match(/^\s*(.+?)\s{2,}(-?[\d.]+(?:e[+-]?\d+)?)\s+(-?[\d.]+(?:e[+-]?\d+)?)\s+(-?[\d.]+)\s+(<?\s*[\d.]+(?:e[+-]?\d+)?)/i);
-      if (m) out.rows.push({ name: m[1].trim(), est: num(m[2]), se: num(m[3]), t: num(m[4]), p: m[5] });
-    }
-  }
-  // ANOVA
-  if (!out.rows.length && /Analysis of Variance|Df\s+Sum Sq/i.test(txt)) {
-    out.type = 'anova';
-    lines.forEach(l => {
-      const m = l.match(/^\s*(.+?)\s{2,}(\d+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+(<?\s*[\d.e+-]+)/i);
-      if (m) out.rows.push({ name: m[1].trim(), df: +m[2], ss: num(m[3]), ms: num(m[4]), t: num(m[5]), p: m[6], isAnova: true });
-    });
-  }
+        const ci = lines.findIndex((l) => /^Coefficients:/i.test(l));
+        if (ci >= 0) {
+          for (let i = ci + 1; i < lines.length; i++) {
+            const l = lines[i];
+            if (/^---/.test(l) || /^Signif/.test(l) || !l.trim()) {
+              if (out.rows.length) break;
+              continue;
+            }
+            if (/Estimate|Std\.?\s*Error/i.test(l)) continue;
+            // nome (pode ter espaços em fatores) + 4 números
+            const m = l.match(
+              /^\s*(.+?)\s{2,}(-?[\d.]+(?:e[+-]?\d+)?)\s+(-?[\d.]+(?:e[+-]?\d+)?)\s+(-?[\d.]+)\s+(<?\s*[\d.]+(?:e[+-]?\d+)?)/i,
+            );
+            if (m)
+              out.rows.push({
+                name: m[1].trim(),
+                est: num(m[2]),
+                se: num(m[3]),
+                t: num(m[4]),
+                p: m[5],
+              });
+          }
+        }
+        // ANOVA
+        if (!out.rows.length && /Analysis of Variance|Df\s+Sum Sq/i.test(txt)) {
+          out.type = "anova";
+          lines.forEach((l) => {
+            const m = l.match(
+              /^\s*(.+?)\s{2,}(\d+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+(<?\s*[\d.e+-]+)/i,
+            );
+            if (m)
+              out.rows.push({
+                name: m[1].trim(),
+                df: +m[2],
+                ss: num(m[3]),
+                ms: num(m[4]),
+                t: num(m[5]),
+                p: m[6],
+                isAnova: true,
+              });
+          });
+        }
 
-  const g = re => { const m = txt.match(re); return m ? num(m[1]) : null; };
-  out.r2 = g(/Multiple R-squared:\s*([\d.]+)/i);
-  out.r2a = g(/Adjusted R-squared:\s*([\d.]+)/i);
-  out.rse = g(/Residual standard error:\s*([\d.]+)/i);
-  out.dfRes = g(/Residual standard error:.*?on\s+(\d+)\s+degrees/i);
-  const fm = txt.match(/F-statistic:\s*([\d.]+)\s*on\s*(\d+)\s*and\s*(\d+)\s*DF,\s*p-value:\s*(<?\s*[\d.e+-]+)/i);
-  if (fm) { out.F = num(fm[1]); out.dfF = [+fm[2], +fm[3]]; out.pF = fm[4]; }
-  return out;
-}
+        const g = (re) => {
+          const m = txt.match(re);
+          return m ? num(m[1]) : null;
+        };
+        out.r2 = g(/Multiple R-squared:\s*([\d.]+)/i);
+        out.r2a = g(/Adjusted R-squared:\s*([\d.]+)/i);
+        out.rse = g(/Residual standard error:\s*([\d.]+)/i);
+        out.dfRes = g(/Residual standard error:.*?on\s+(\d+)\s+degrees/i);
+        const fm = txt.match(
+          /F-statistic:\s*([\d.]+)\s*on\s*(\d+)\s*and\s*(\d+)\s*DF,\s*p-value:\s*(<?\s*[\d.e+-]+)/i,
+        );
+        if (fm) {
+          out.F = num(fm[1]);
+          out.dfF = [+fm[2], +fm[3]];
+          out.pF = fm[4];
+        }
+        return out;
+      }
 
-function cols() {
-  const d = +$('dec').value, s = $('sig').value, useCi = $('ci').checked;
-  if (P.type === 'anova') {
-    return { head: ['Fonte', 'gl', 'SQ', 'QM', 'F', 'p'],
-      body: P.rows.map(r => [r.name, r.df, fmtN(r.ss, d), fmtN(r.ms, d), fmtN(r.t, d),
-        s === 'star' ? stars(r.p) : s === 'both' ? `${fmtP(r.p)} ${stars(r.p)}` : fmtP(r.p)]) };
-  }
-  const head = ['Preditor', 'β', 'EP'];
-  if (useCi) head.push('IC 95%');
-  head.push('t', 'p');
-  const body = P.rows.map(r => {
-    const row = [r.name.replace('(Intercept)', 'Intercepto'), fmtN(r.est, d), fmtN(r.se, d)];
-    if (useCi) row.push(`[${fmtN(r.est - 1.96 * r.se, d)}; ${fmtN(r.est + 1.96 * r.se, d)}]`);
-    row.push(fmtN(r.t, d));
-    row.push(s === 'star' ? stars(r.p) : s === 'both' ? `${fmtP(r.p)}${stars(r.p) ? ' ' + stars(r.p) : ''}` : fmtP(r.p));
-    return row;
-  });
-  return { head, body };
-}
+      function cols() {
+        const d = +$("dec").value,
+          s = $("sig").value,
+          useCi = $("ci").checked;
+        if (P.type === "anova") {
+          return {
+            head: ["Fonte", "gl", "SQ", "QM", "F", "p"],
+            body: P.rows.map((r) => [
+              r.name,
+              r.df,
+              fmtN(r.ss, d),
+              fmtN(r.ms, d),
+              fmtN(r.t, d),
+              s === "star"
+                ? stars(r.p)
+                : s === "both"
+                  ? `${fmtP(r.p)} ${stars(r.p)}`
+                  : fmtP(r.p),
+            ]),
+          };
+        }
+        const head = ["Preditor", "β", "EP"];
+        if (useCi) head.push("IC 95%");
+        head.push("t", "p");
+        const body = P.rows.map((r) => {
+          const row = [
+            r.name.replace("(Intercept)", "Intercepto"),
+            fmtN(r.est, d),
+            fmtN(r.se, d),
+          ];
+          if (useCi)
+            row.push(
+              `[${fmtN(r.est - 1.96 * r.se, d)}; ${fmtN(r.est + 1.96 * r.se, d)}]`,
+            );
+          row.push(fmtN(r.t, d));
+          row.push(
+            s === "star"
+              ? stars(r.p)
+              : s === "both"
+                ? `${fmtP(r.p)}${stars(r.p) ? " " + stars(r.p) : ""}`
+                : fmtP(r.p),
+          );
+          return row;
+        });
+        return { head, body };
+      }
 
-function note() {
-  const d = +$('dec').value;
-  const bits = [];
-  if (P.type !== 'anova') bits.push('β = coeficiente não padronizado; EP = erro-padrão');
-  if (P.r2 != null) bits.push(`R² = ${fmtN(P.r2, 3)}; R² ajustado = ${fmtN(P.r2a, 3)}`);
-  if (P.F != null) bits.push(`F(${P.dfF[0]}, ${P.dfF[1]}) = ${fmtN(P.F, 2)}; p ${fmtP(P.pF).startsWith('<') ? fmtP(P.pF) : '= ' + fmtP(P.pF)}`);
-  if (P.rse != null) bits.push(`erro-padrão residual = ${fmtN(P.rse, d)}`);
-  if ($('sig').value !== 'num') bits.push('*** p < 0,001; ** p < 0,01; * p < 0,05');
-  return bits.join('. ') + '.';
-}
+      function note() {
+        const d = +$("dec").value;
+        const bits = [];
+        if (P.type !== "anova")
+          bits.push("β = coeficiente não padronizado; EP = erro-padrão");
+        if (P.r2 != null)
+          bits.push(`R² = ${fmtN(P.r2, 3)}; R² ajustado = ${fmtN(P.r2a, 3)}`);
+        if (P.F != null)
+          bits.push(
+            `F(${P.dfF[0]}, ${P.dfF[1]}) = ${fmtN(P.F, 2)}; p ${fmtP(P.pF).startsWith("<") ? fmtP(P.pF) : "= " + fmtP(P.pF)}`,
+          );
+        if (P.rse != null)
+          bits.push(`erro-padrão residual = ${fmtN(P.rse, d)}`);
+        if ($("sig").value !== "num")
+          bits.push("*** p < 0,001; ** p < 0,01; * p < 0,05");
+        return bits.join(". ") + ".";
+      }
 
-function build() {
-  const { head, body } = cols();
-  const nt = note();
+      function build() {
+        const { head, body } = cols();
+        const nt = note();
 
-  // info
-  $('info').innerHTML = [
-    ['Tipo detectado', P.type === 'anova' ? 'Tabela de ANOVA' : 'Regressão linear (lm)'],
-    ['Coeficientes', P.rows.length],
-    P.r2 != null ? ['R² ajustado', fmtN(P.r2a, 3)] : null,
-    P.F != null ? ['F global', `${fmtN(P.F, 2)} (${P.dfF[0]}, ${P.dfF[1]})`] : null,
-    P.dfRes != null ? ['n estimado', P.dfRes + P.rows.length] : null
-  ].filter(Boolean).map(([k, v]) => `<div class="kv"><span>${k}</span><span>${v}</span></div>`).join('');
+        // info
+        $("info").innerHTML = [
+          [
+            "Tipo detectado",
+            P.type === "anova" ? "Tabela de ANOVA" : "Regressão linear (lm)",
+          ],
+          ["Coeficientes", P.rows.length],
+          P.r2 != null ? ["R² ajustado", fmtN(P.r2a, 3)] : null,
+          P.F != null
+            ? ["F global", `${fmtN(P.F, 2)} (${P.dfF[0]}, ${P.dfF[1]})`]
+            : null,
+          P.dfRes != null ? ["n estimado", P.dfRes + P.rows.length] : null,
+        ]
+          .filter(Boolean)
+          .map(
+            ([k, v]) =>
+              `<div class="kv"><span>${k}</span><span>${v}</span></div>`,
+          )
+          .join("");
 
-  // preview
-  $('prev').innerHTML = `<p class="text-xs font-semibold mb-2">Tabela 1 — Coeficientes do modelo</p>
-    <table class="apa"><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-    <tbody>${body.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+        // preview
+        $("prev").innerHTML =
+          `<p class="text-xs font-semibold mb-2">Tabela 1 — Coeficientes do modelo</p>
+    <table class="apa"><thead><tr>${head.map((h) => `<th>${h}</th>`).join("")}</tr></thead>
+    <tbody>${body.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>
     <tfoot><tr><td colspan="${head.length}">Nota. ${nt}</td></tr></tfoot></table>`;
 
-  render();
-}
+        render();
+      }
 
-const OUT = {};
-function render() {
-  const { head, body } = cols();
-  const nt = note();
-  const d = +$('dec').value;
+      const OUT = {};
+      function render() {
+        const { head, body } = cols();
+        const nt = note();
+        const d = +$("dec").value;
 
-  // LaTeX
-  const esc = s => String(s).replace(/([&%$#_])/g, '\\$1').replace(/β/g, '$\\beta$').replace(/²/g, '$^2$');
-  OUT.latex = `\\begin{table}[htbp]
+        // LaTeX
+        const esc = (s) =>
+          String(s)
+            .replace(/([&%$#_])/g, "\\$1")
+            .replace(/β/g, "$\\beta$")
+            .replace(/²/g, "$^2$");
+        OUT.latex = `\\begin{table}[htbp]
 \\centering
 \\caption{Coeficientes do modelo de regressão linear}
 \\label{tab:regressao}
-\\begin{tabular}{l${'r'.repeat(head.length - 1)}}
+\\begin{tabular}{l${"r".repeat(head.length - 1)}}
 \\toprule
-${head.map(esc).join(' & ')} \\\\
+${head.map(esc).join(" & ")} \\\\
 \\midrule
-${body.map(r => r.map(esc).join(' & ') + ' \\\\').join('\n')}
+${body.map((r) => r.map(esc).join(" & ") + " \\\\").join("\n")}
 \\bottomrule
 \\end{tabular}
 \\begin{tablenotes}
@@ -334,85 +572,132 @@ ${body.map(r => r.map(esc).join(' & ') + ' \\\\').join('\n')}
 \\end{tablenotes}
 \\end{table}`;
 
-  // Markdown
-  OUT.md = `**Tabela 1** — Coeficientes do modelo de regressão linear\n\n`
-    + `| ${head.join(' | ')} |\n| ${head.map(() => '---').join(' | ')} |\n`
-    + body.map(r => `| ${r.join(' | ')} |`).join('\n')
-    + `\n\n*Nota.* ${nt}`;
+        // Markdown
+        OUT.md =
+          `**Tabela 1** — Coeficientes do modelo de regressão linear\n\n` +
+          `| ${head.join(" | ")} |\n| ${head.map(() => "---").join(" | ")} |\n` +
+          body.map((r) => `| ${r.join(" | ")} |`).join("\n") +
+          `\n\n*Nota.* ${nt}`;
 
-  // HTML (colável no Word)
-  OUT.html = `<table style="border-collapse:collapse;font-family:'Times New Roman',serif;font-size:11pt">
+        // HTML (colável no Word)
+        OUT.html = `<table style="border-collapse:collapse;font-family:'Times New Roman',serif;font-size:11pt">
 <caption style="text-align:left;font-weight:bold;padding-bottom:6px">Tabela 1 — Coeficientes do modelo de regressão linear</caption>
 <thead><tr style="border-top:1.5px solid #000;border-bottom:1px solid #000">
-${head.map(h => `<th style="padding:5px 10px;text-align:left">${h}</th>`).join('')}</tr></thead>
+${head.map((h) => `<th style="padding:5px 10px;text-align:left">${h}</th>`).join("")}</tr></thead>
 <tbody>
-${body.map(r => `<tr>${r.map(c => `<td style="padding:5px 10px">${c}</td>`).join('')}</tr>`).join('\n')}
+${body.map((r) => `<tr>${r.map((c) => `<td style="padding:5px 10px">${c}</td>`).join("")}</tr>`).join("\n")}
 </tbody>
 <tfoot><tr style="border-top:1.5px solid #000"><td colspan="${head.length}" style="padding:5px 10px;font-style:italic;font-size:9pt">Nota. ${nt}</td></tr></tfoot>
 </table>`;
 
-  // CSV
-  OUT.csv = [head, ...body].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\r\n');
+        // CSV
+        OUT.csv = [head, ...body]
+          .map((r) =>
+            r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(";"),
+          )
+          .join("\r\n");
 
-  // ABNT
-  if (P.type === 'anova') {
-    OUT.abnt = `A análise de variância indicou os efeitos apresentados na Tabela 1. `
-      + P.rows.filter(r => num(r.p) < 0.05).map(r =>
-        `O fator ${r.name} apresentou efeito significativo (F(${r.df}, —) = ${fmtN(r.t, 2)}; p ${fmtP(r.p).startsWith('<') ? fmtP(r.p) : '= ' + fmtP(r.p)})`).join('; ') + '.';
-  } else {
-    const sig = P.rows.filter(r => r.name !== '(Intercept)' && num(r.p) < 0.05);
-    const ns = P.rows.filter(r => r.name !== '(Intercept)' && num(r.p) >= 0.05);
-    let s = '';
-    if (P.F != null) s += `O modelo de regressão linear ${P.rows.length > 2 ? 'múltipla' : 'simples'} mostrou-se `
-      + `estatisticamente significativo (F(${P.dfF[0]}, ${P.dfF[1]}) = ${fmtN(P.F, 2)}; `
-      + `p ${fmtP(P.pF).startsWith('<') ? fmtP(P.pF) : '= ' + fmtP(P.pF)})`;
-    if (P.r2a != null) s += `, explicando ${fmtN(P.r2a * 100, 1)}% da variância do desfecho `
-      + `(R² = ${fmtN(P.r2, 3)}; R² ajustado = ${fmtN(P.r2a, 3)})`;
-    s += '. ';
-    sig.forEach(r => {
-      s += `A variável ${r.name} apresentou associação ${r.est > 0 ? 'positiva' : 'negativa'} e significativa com o desfecho `
-        + `(β = ${fmtN(r.est, 4)}; EP = ${fmtN(r.se, 4)}; t = ${fmtN(r.t, 2)}; `
-        + `p ${fmtP(r.p).startsWith('<') ? fmtP(r.p) : '= ' + fmtP(r.p)}; `
-        + `IC 95% [${fmtN(r.est - 1.96 * r.se, 4)}; ${fmtN(r.est + 1.96 * r.se, 4)}]), indicando `
-        + `${r.est > 0 ? 'aumento' : 'redução'} médio de ${fmtN(Math.abs(r.est), 3)} unidade no desfecho `
-        + `por unidade adicional da preditora, controladas as demais variáveis do modelo. `;
-    });
-    if (ns.length) s += `Não foram observadas contribuições significativas de ${ns.map(r =>
-      `${r.name} (β = ${fmtN(r.est, 4)}; p = ${fmtN(num(r.p), 3)})`).join(' e de ')}. `;
-    if (P.rse != null) s += `O erro-padrão residual foi de ${fmtN(P.rse, d)}.`;
-    OUT.abnt = s;
-  }
+        // ABNT
+        if (P.type === "anova") {
+          OUT.abnt =
+            `A análise de variância indicou os efeitos apresentados na Tabela 1. ` +
+            P.rows
+              .filter((r) => num(r.p) < 0.05)
+              .map(
+                (r) =>
+                  `O fator ${r.name} apresentou efeito significativo (F(${r.df}, —) = ${fmtN(r.t, 2)}; p ${fmtP(r.p).startsWith("<") ? fmtP(r.p) : "= " + fmtP(r.p)})`,
+              )
+              .join("; ") +
+            ".";
+        } else {
+          const sig = P.rows.filter(
+            (r) => r.name !== "(Intercept)" && num(r.p) < 0.05,
+          );
+          const ns = P.rows.filter(
+            (r) => r.name !== "(Intercept)" && num(r.p) >= 0.05,
+          );
+          let s = "";
+          if (P.F != null)
+            s +=
+              `O modelo de regressão linear ${P.rows.length > 2 ? "múltipla" : "simples"} mostrou-se ` +
+              `estatisticamente significativo (F(${P.dfF[0]}, ${P.dfF[1]}) = ${fmtN(P.F, 2)}; ` +
+              `p ${fmtP(P.pF).startsWith("<") ? fmtP(P.pF) : "= " + fmtP(P.pF)})`;
+          if (P.r2a != null)
+            s +=
+              `, explicando ${fmtN(P.r2a * 100, 1)}% da variância do desfecho ` +
+              `(R² = ${fmtN(P.r2, 3)}; R² ajustado = ${fmtN(P.r2a, 3)})`;
+          s += ". ";
+          sig.forEach((r) => {
+            s +=
+              `A variável ${r.name} apresentou associação ${r.est > 0 ? "positiva" : "negativa"} e significativa com o desfecho ` +
+              `(β = ${fmtN(r.est, 4)}; EP = ${fmtN(r.se, 4)}; t = ${fmtN(r.t, 2)}; ` +
+              `p ${fmtP(r.p).startsWith("<") ? fmtP(r.p) : "= " + fmtP(r.p)}; ` +
+              `IC 95% [${fmtN(r.est - 1.96 * r.se, 4)}; ${fmtN(r.est + 1.96 * r.se, 4)}]), indicando ` +
+              `${r.est > 0 ? "aumento" : "redução"} médio de ${fmtN(Math.abs(r.est), 3)} unidade no desfecho ` +
+              `por unidade adicional da preditora, controladas as demais variáveis do modelo. `;
+          });
+          if (ns.length)
+            s += `Não foram observadas contribuições significativas de ${ns
+              .map(
+                (r) =>
+                  `${r.name} (β = ${fmtN(r.est, 4)}; p = ${fmtN(num(r.p), 3)})`,
+              )
+              .join(" e de ")}. `;
+          if (P.rse != null)
+            s += `O erro-padrão residual foi de ${fmtN(P.rse, d)}.`;
+          OUT.abnt = s;
+        }
 
-  show();
-}
+        show();
+      }
 
-const TIPS = {
-  latex: 'Adicione \\usepackage{booktabs} e \\usepackage{threeparttable} ao preâmbulo do seu documento.',
-  md: 'Cole em R Markdown, Quarto, Notion ou Obsidian.',
-  html: 'Copie e cole diretamente no Word ou Google Docs — a formatação da tabela é preservada.',
-  csv: 'Separador ponto e vírgula, compatível com Excel em português.',
-  abnt: 'Revise a redação e confirme as unidades das variáveis antes de inserir no trabalho.'
-};
+      const TIPS = {
+        latex:
+          "Adicione \\usepackage{booktabs} e \\usepackage{threeparttable} ao preâmbulo do seu documento.",
+        md: "Cole em R Markdown, Quarto, Notion ou Obsidian.",
+        html: "Copie e cole diretamente no Word ou Google Docs — a formatação da tabela é preservada.",
+        csv: "Separador ponto e vírgula, compatível com Excel em português.",
+        abnt: "Revise a redação e confirme as unidades das variáveis antes de inserir no trabalho.",
+      };
 
-document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => {
-  document.querySelectorAll('[data-f]').forEach(x => x.classList.remove('on'));
-  b.classList.add('on'); fmt = b.dataset.f; show();
-});
+      document.querySelectorAll("[data-f]").forEach(
+        (b) =>
+          (b.onclick = () => {
+            document
+              .querySelectorAll("[data-f]")
+              .forEach((x) => x.classList.remove("on"));
+            b.classList.add("on");
+            fmt = b.dataset.f;
+            show();
+          }),
+      );
 
-function show() {
-  $('code').textContent = OUT[fmt] || '';
-  $('tip').textContent = TIPS[fmt] || '';
-}
+      function show() {
+        $("code").textContent = OUT[fmt] || "";
+        $("tip").textContent = TIPS[fmt] || "";
+      }
 
-$('btnCopyOut').onclick = e => navigator.clipboard.writeText(OUT[fmt])
-  .then(() => { e.target.textContent = 'Copiado!'; setTimeout(() => e.target.textContent = 'Copiar', 1500); });
+      $("btnCopyOut").onclick = (e) =>
+        navigator.clipboard.writeText(OUT[fmt]).then(() => {
+          e.target.textContent = "Copiado!";
+          setTimeout(() => (e.target.textContent = "Copiar"), 1500);
+        });
 
-$('btnDlOut').onclick = () => {
-  const ext = { latex: 'tex', md: 'md', html: 'html', csv: 'csv', abnt: 'txt' }[fmt];
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob(['\uFEFF' + OUT[fmt]], { type: 'text/plain;charset=utf-8' }));
-  a.download = `tabela.${ext}`; a.click();
-};
-</script>
-</body>
+      $("btnDlOut").onclick = () => {
+        const ext = {
+          latex: "tex",
+          md: "md",
+          html: "html",
+          csv: "csv",
+          abnt: "txt",
+        }[fmt];
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(
+          new Blob(["\uFEFF" + OUT[fmt]], { type: "text/plain;charset=utf-8" }),
+        );
+        a.download = `tabela.${ext}`;
+        a.click();
+      };
+    </script>
+  </body>
 </html>

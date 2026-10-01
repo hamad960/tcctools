@@ -1,0 +1,144 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to Interpret a 95% Confidence Interval in Academic Papers (Myths & APA Style)</title>
+<meta name="description" content="Master how to interpret a 95% confidence interval: difference between mean CI and effect size CI, the classic probability misconception, and standard APA reporting examples.">
+<link rel="canonical" href="https://tcctools.com.br/en/guides/interpret-confidence-interval">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/interpret-confidence-interval">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/como-interpretar-intervalo-de-confianca-95">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/interpret-confidence-interval">
+<meta property="og:title" content="How to Interpret a 95% Confidence Interval">
+<meta property="og:description" content="Demystify confidence intervals: clear definitions, width interpretation, and ready-to-use APA reporting templates.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Interpret a 95% Confidence Interval",
+  "description": "Practical guide on understanding, reporting, and defending confidence intervals in empirical research.",
+  "inLanguage": "en",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "tcctools Editorial Team" },
+  "publisher": { "@type": "Organization", "name": "tcctools" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does a 95% confidence interval actually mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It means that if we repeated the study independently infinite times under identical protocols and computed an interval from each sample, 95% of those calculated intervals would encompass the true population parameter. It does NOT mean there is a 95% chance that the true parameter lies within that specific single computed interval."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does a 95% CI relate to p < .05?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When comparing two means or testing a regression slope, if the 95% confidence interval of the difference does not contain the null value (zero), the corresponding two-tailed hypothesis test is statistically significant at p < .05."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/en/" class="hover:text-blue-400">Home</a> ›
+    <a href="/en/guides/which-statistical-test" class="hover:text-blue-400">Guides</a> › 95% Confidence Interval
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">How to interpret a 95% confidence interval</h1>
+  <p class="text-sm text-slate-400 mb-8">Updated October 1, 2026 · 9 min read · By tcctools Editorial Team</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      Journal editors, peer reviewers, and academic committees increasingly demand that authors present <strong>95% Confidence Intervals (95% CI)</strong> instead of solely relying on p-values. While a p-value answers a binary question (whether to reject the null hypothesis), a confidence interval conveys both the <strong>magnitude of an effect</strong> and the <strong>precision of the measurement</strong>.
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Automated Confidence Interval Calculator</h2>
+      <p class="text-xs text-slate-400">Our free statistical calculator computes exact Student t-distribution intervals for means, group differences, correlations, and regression slopes.</p>
+      <a href="/en/calculator" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Calculate 95% CI Online →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. The common textbook misconception</h2>
+    <div class="bg-rose-950/40 border border-rose-800/60 rounded-lg p-4 space-y-2">
+      <p class="text-xs font-bold text-rose-300 uppercase">Incorrect definition often penalized in defense:</p>
+      <p class="text-xs text-slate-300">
+        <em>"There is a 95% probability that the true population mean lies between 12.4 and 18.2."</em>
+      </p>
+      <p class="text-xs text-slate-400">
+        In frequentist statistics, the population parameter is a fixed, unchanging value. Once an interval is calculated from observed sample data, the parameter is either inside it or not: the probability is strictly 1 or 0.
+      </p>
+    </div>
+
+    <div class="bg-emerald-950/40 border border-emerald-800/60 rounded-lg p-4 space-y-2 mt-4">
+      <p class="text-xs font-bold text-emerald-300 uppercase">The correct interpretation:</p>
+      <p class="text-xs text-slate-300">
+        <em>"We are 95% confident that the interval [12.4, 18.2] contains the true population mean, in the sense that if we repeated the experiment and calculated confidence intervals across many samples, 95% of those intervals would capture the true parameter."</em>
+      </p>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. Interval width and precision</h2>
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>Narrow Interval:</strong> Indicates high precision and certainty. Achieved through robust sample sizes and low measurement error.</li>
+      <li><strong>Wide Interval:</strong> Signals heavy estimation uncertainty. Even when an effect is statistically significant (\(p < .05\)), an overly broad interval (e.g., recovery time reduction between 0.1 and 18.5 hours) suggests the study was underpowered to estimate the true magnitude reliably.</li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. The null value benchmark (Zero)</h2>
+    <p>When reporting differences between conditions:</p>
+    <ul class="list-disc pl-6 space-y-2">
+      <li>If the 95% CI <strong>excludes zero</strong> (e.g., [2.1, 7.4]), the difference is statistically significant at \(\alpha = .05\).</li>
+      <li>If the 95% CI <strong>straddles zero</strong> (e.g., [−1.2, 4.8]), the null hypothesis cannot be rejected at \(\alpha = .05\).</li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. APA 7th Edition reporting format</h2>
+    <div class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-lg space-y-2">
+      <p class="text-xs font-bold text-white uppercase tracking-wider">Example APA statement:</p>
+      <p class="text-xs text-slate-300 italic">
+        "Participants demonstrated a significant reduction in depressive symptoms following the intervention, M_diff = 6.30, 95% CI [3.20, 9.40], t(44) = 4.12, p < .001."
+      </p>
+    </div>
+
+    <!-- RECOMMENDED READING -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Recommended Reference Books</h3>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com/dp/041587968X?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Understanding The New Statistics: Effect Sizes & Confidence Intervals</p>
+          <p class="text-slate-400 mt-1">Geoff Cumming · The definitive handbook championing estimation thinking over p-values.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">View on Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com/dp/1526461358?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Discovering Statistics Using IBM SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Comprehensive coverage of confidence intervals across all classical tests.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">View on Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+

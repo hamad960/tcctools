@@ -118,9 +118,103 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/contact"/>
   </url>
 
-  <!-- PT-only pages -->
-  
-  <url><loc>https://tcctools.com.br/guias/qual-teste-estatistico-usar</loc><priority>0.9</priority></url>
-  <url><loc>https://tcctools.com.br/guias/interpretar-summary-lm-r</loc><priority>0.9</priority></url>
-  <url><loc>https://tcctools.com.br/guias/como-reportar-resultados-abnt</loc><priority>0.9</priority></url>
+  <!-- Guias / Guides -->
+  <url><loc>https://tcctools.com.br/guias/qual-teste-estatistico-usar</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/qual-teste-estatistico-usar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/which-statistical-test"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/which-statistical-test"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/which-statistical-test</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/qual-teste-estatistico-usar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/which-statistical-test"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/which-statistical-test"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/guias/interpretar-summary-lm-r</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/interpretar-summary-lm-r"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/interpreting-summary-lm-r"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/interpreting-summary-lm-r"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/interpreting-summary-lm-r</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/interpretar-summary-lm-r"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/interpreting-summary-lm-r"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/interpreting-summary-lm-r"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/guias/como-reportar-resultados-abnt</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/como-reportar-resultados-abnt"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/reporting-results-apa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/reporting-results-apa"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/reporting-results-apa</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/como-reportar-resultados-abnt"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/reporting-results-apa"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/reporting-results-apa"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/guias/tamanho-de-efeito-d-de-cohen</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/tamanho-de-efeito-d-de-cohen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/cohens-d-effect-size"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/cohens-d-effect-size"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/cohens-d-effect-size</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/tamanho-de-efeito-d-de-cohen"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/cohens-d-effect-size"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/cohens-d-effect-size"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/guias/correlacao-pearson-vs-spearman</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/correlacao-pearson-vs-spearman"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/correlacao-pearson-vs-spearman"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/guias/grafico-de-dispersao-publicacao</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/grafico-de-dispersao-publicacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/scatter-plot-publication"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/scatter-plot-publication"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/scatter-plot-publication</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/grafico-de-dispersao-publicacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/scatter-plot-publication"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/scatter-plot-publication"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/guias/shapiro-wilk-vs-kolmogorov-smirnov</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/shapiro-wilk-vs-kolmogorov-smirnov"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/shapiro-wilk-vs-kolmogorov-smirnov"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/guias/como-interpretar-intervalo-de-confianca-95</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/como-interpretar-intervalo-de-confianca-95"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/interpret-confidence-interval"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/interpret-confidence-interval"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/interpret-confidence-interval</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/como-interpretar-intervalo-de-confianca-95"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/interpret-confidence-interval"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/interpret-confidence-interval"/>
+  </url>
+
+  <url><loc>https://tcctools.com.br/guias/guia-regressao-linear-simples</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/guia-regressao-linear-simples"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide"/>
+  </url>
+  <url><loc>https://tcctools.com.br/en/guides/simple-linear-regression-guide</loc><priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/guia-regressao-linear-simples"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/simple-linear-regression-guide"/>
+  </url>
 </urlset>

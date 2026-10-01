@@ -1,0 +1,166 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Correlação de Pearson vs Spearman: Qual Usar no seu TCC? Diferenças e Exemplos</title>
+<meta name="description" content="Entenda as diferenças entre as correlações de Pearson e Spearman: pressupostos de normalidade e linearidade, quando substituir e como reportar r e rho em ABNT/APA.">
+<link rel="canonical" href="https://tcctools.com.br/guias/correlacao-pearson-vs-spearman">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/correlacao-pearson-vs-spearman">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/pearson-vs-spearman-correlation">
+<meta property="og:title" content="Correlação de Pearson vs Spearman: Guia Definitivo">
+<meta property="og:description" content="Descubra quando escolher Pearson ou Spearman, como verificar pressupostos e como interpretar o coeficiente de correlação.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Correlação de Pearson vs Spearman: Qual Usar no seu TCC?",
+  "description": "Comparativo completo entre Pearson e Spearman: pressupostos teóricos, sensibilidade a outliers e redação científica.",
+  "inLanguage": "pt-BR",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "Equipe Estatística TCC" },
+  "publisher": { "@type": "Organization", "name": "Estatística TCC" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quando devo usar a correlação de Spearman no lugar de Pearson?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Você deve optar por Spearman quando: 1) os dados violarem o pressuposto de distribuição normal bivariada; 2) as variáveis forem ordinais (como escalas Likert de 1 a 5); 3) a relação for monotônica mas não linear; ou 4) houver presença de outliers influentes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "O que significa relação monotônica?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Uma relação é monotônica quando, à medida que uma variável aumenta, a outra invariavelmente aumenta (monotônica positiva) ou diminui (monotônica negativa), mesmo que não seja em linha reta constante. Spearman avalia monotonicidade, enquanto Pearson exige linearidade estrita."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/" class="hover:text-blue-400">Início</a> ›
+    <a href="/guias/qual-teste-estatistico-usar" class="hover:text-blue-400">Guias</a> › Pearson vs Spearman
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Correlação de Pearson vs Spearman: qual usar no seu TCC?</h1>
+  <p class="text-sm text-slate-400 mb-8">Atualizado em 1 de outubro de 2026 · Leitura de 10 minutos · Por Equipe Estatística TCC</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      Avaliar a relação entre duas variáveis quantitativas é um dos objetivos mais frequentes em monografias, dissertações e artigos. No entanto, muitos pesquisadores utilizam o coeficiente de <strong>Pearson</strong> de forma automática, sem checar se os dados atendem aos pressupostos exigidos — arriscando correções severas na banca examinadora.
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Testar Dados na Prática</h2>
+      <p class="text-xs text-slate-400">Importe sua planilha para calcular coeficientes de Pearson e Spearman com p-valor, gráfico de dispersão e texto ABNT gerado automaticamente.</p>
+      <a href="/calculadora" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Abrir Calculadora Estatística →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. Resumo comparativo rápido</h2>
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 overflow-x-auto my-4">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-4">Critério</th>
+            <th class="py-2 pr-4">Correlação de Pearson (\(r\))</th>
+            <th class="py-2">Correlação de Spearman (\(\rho\) ou \(r_s\))</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+          <tr><td class="py-2 pr-4 font-semibold">Natureza do teste</td><td class="py-2 pr-4">Paramétrico</td><td class="py-2">Não paramétrico (baseado em postos/ranks)</td></tr>
+          <tr><td class="py-2 pr-4 font-semibold">Tipo de variável</td><td class="py-2 pr-4">Contínua (intervalar ou razão)</td><td class="py-2">Ordinal, discreta ou contínua</td></tr>
+          <tr><td class="py-2 pr-4 font-semibold">Tipo de relação</td><td class="py-2 pr-4">Linear estrita (linha reta)</td><td class="py-2">Monotônica (curvas contínuas crescentes/decrescentes)</td></tr>
+          <tr><td class="py-2 pr-4 font-semibold">Pressuposto de normalidade</td><td class="py-2 pr-4">Exigido (ambas as variáveis)</td><td class="py-2">Não exigido</td></tr>
+          <tr><td class="py-2 pr-4 font-semibold">Sensibilidade a outliers</td><td class="py-2 pr-4 text-rose-400">Muito alta (um ponto distorce o r)</td><td class="py-2 text-emerald-400">Baixa (robusto a valores extremos)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. O que é relação linear vs. monotônica?</h2>
+    <p>
+      O erro mais comum é confundir relação linear com relação monotônica:
+    </p>
+    <ul class="list-disc pl-6 space-y-2">
+      <li>
+        <strong>Relação Linear (Pearson):</strong> A variação ocorre em taxa constante. Se X aumenta em 1 unidade, Y aumenta ou diminui sempre na mesma proporção média. Exemplo: horas trabalhadas vs. salário em regime horista.
+      </li>
+      <li>
+        <strong>Relação Monotônica (Spearman):</strong> As variáveis caminham juntas na mesma direção, mas não necessariamente em velocidade fixa. Por exemplo, conforme o estresse aumenta, a pressão arterial aumenta, mas o salto inicial pode ser maior do que nos estágios avançados. Pearson perderia poder nessa curva, enquanto Spearman captará com precisão a associação de postos.
+      </li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. E as escalas Likert de pesquisa?</h2>
+    <p>
+      Se o seu questionário mede atitudes ou opiniões com alternativas como <em>"1 - Discordo totalmente"</em> até <em>"5 - Concordo totalmente"</em>, você está lidando com <strong>dados ordinais</strong>.
+    </p>
+    <p>
+      A distância entre "Discordo" e "Neutro" não é quantitativamente idêntica à distância entre "Neutro" e "Concordo". Por essa razão estrita, a correlação de <strong>Spearman é metodologicamente a escolha mais indicada</strong>. Apenas se você somar múltiplos itens para gerar um escore composto contínuo (validado psicometricamente) e comprovar normalidade é que Pearson se torna justificável.
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. Como reportar no texto do TCC (ABNT / APA)</h2>
+    <p>
+      Ao redigir o capítulo de resultados, apresente o símbolo do coeficiente, os graus de liberdade (ou tamanho amostral), o valor numérico, o intervalo de confiança e o p-valor exato:
+    </p>
+
+    <div class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-lg space-y-3">
+      <div>
+        <p class="text-xs font-bold text-white uppercase tracking-wider">Exemplo de Pearson (ABNT / APA):</p>
+        <p class="text-xs text-slate-300 italic mt-1">
+          "Foi identificada correlação linear positiva e moderada entre o tempo de estudo semanal e a nota final do exame, r(82) = 0,54; IC 95% [0,37; 0,68]; p < 0,001."
+        </p>
+      </div>
+      <div class="border-t border-slate-800 pt-2">
+        <p class="text-xs font-bold text-white uppercase tracking-wider">Exemplo de Spearman (ABNT / APA):</p>
+        <p class="text-xs text-slate-300 italic mt-1">
+          "A análise revelou correlação monotônica negativa e significativa entre o nível de satisfação profissional e a intenção de rotatividade, rs(118) = −0,42; p < 0,001."
+        </p>
+      </div>
+    </div>
+
+    <!-- BLOCO AFILIADOS / LEITURAS RECOMENDADAS -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Manuais Recomendados de Análise e Métodos</h3>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com.br/dp/8580555462?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Descobrindo a Estatística com SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Capítulo completo sobre correlação, pressupostos e diagramas de dispersão.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com.br/dp/8522490518?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Como Elaborar Projetos de Pesquisa</p>
+          <p class="text-slate-400 mt-1">Antonio Carlos Gil · Referência essencial para delineamento de pesquisa e instrumentos.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+

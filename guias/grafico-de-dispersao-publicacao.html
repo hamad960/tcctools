@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Como Fazer Gráfico de Dispersão para Artigos e TCC: Padrão 300 DPI, Eixos e ABNT</title>
+<meta name="description" content="Aprenda a criar gráficos de dispersão profissionais para artigos científicos e TCC: resolução mínima de 300 dpi, paletas de cores para daltonismo, reta de regressão e normas ABNT/APA.">
+<link rel="canonical" href="https://tcctools.com.br/guias/grafico-de-dispersao-publicacao">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/grafico-de-dispersao-publicacao">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/scatter-plot-publication">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/scatter-plot-publication">
+<meta property="og:title" content="Gráficos de Dispersão para Publicação Científica">
+<meta property="og:description" content="Guia prático para formatar figuras científicas com resolução de impressão, paleta acessível e legendas segundo a ABNT.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Como Fazer Gráfico de Dispersão para Artigos e TCC",
+  "description": "Boas práticas de visualização de dados científicos: resolução gráfica, acessibilidade visual e normas ABNT.",
+  "inLanguage": "pt-BR",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "Equipe Estatística TCC" },
+  "publisher": { "@type": "Organization", "name": "Estatística TCC" }
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/" class="hover:text-blue-400">Início</a> ›
+    <a href="/guias/qual-teste-estatistico-usar" class="hover:text-blue-400">Guias</a> › Gráficos para Publicação
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Como fazer gráfico de dispersão para artigos científicos e TCC</h1>
+  <p class="text-sm text-slate-400 mb-8">Atualizado em 1 de outubro de 2026 · Leitura de 8 minutos · Por Equipe Estatística TCC</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      Poucas coisas causam uma primeira impressão tão negativa em uma banca avaliadora ou revisor de periódico do que figuras pixeladas, com eixos cortados, fontes minúsculas ou paletas de cores inacessíveis. O <strong>gráfico de dispersão (scatter plot)</strong> é a representação visual rainha para expor a relação entre duas variáveis contínuas.
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Exportação em Alta Resolução Gratuita</h2>
+      <p class="text-xs text-slate-400">Nossa calculadora estatística gera automaticamente gráficos de dispersão já formatados com opção de download em <strong>PNG de 300 DPI</strong> e tema claro editorial.</p>
+      <a href="/calculadora" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Gerar Gráfico no Calculadora →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. Resolução mínima: o padrão de 300 DPI</h2>
+    <p>
+      Telas digitais costumam exibir imagens a 72 ou 96 DPI (pontos por polegada). No entanto, para impressão tipográfica de teses, dissertações ou periódicos indexados, a resolução mínima exigida universalmente é de <strong>300 DPI</strong> (e 600 DPI para figuras lineares em preto e branco).
+    </p>
+    <p>
+      Se você apenas tirar um "print de tela" do Excel ou do software estatístico, sua imagem ficará borrada no PDF final. Exporte sempre em resolução nativa alta ou em formato vetorial (SVG / PDF).
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. Anatomia de um gráfico de publicação</h2>
+    <ul class="list-disc pl-6 space-y-2">
+      <li>
+        <strong>Eixo X (Abscissas):</strong> Deve abrigar sempre a variável independente ou preditora. Inclua o nome da variável e a unidade de medida entre parênteses — por exemplo: <em>Dose administrada (mg/kg)</em>.
+      </li>
+      <li>
+        <strong>Eixo Y (Ordenadas):</strong> Abriga a variável dependente ou desfecho, também com unidades claras: <em>Tempo de recuperação (horas)</em>.
+      </li>
+      <li>
+        <strong>Escala e Proporção:</strong> Evite truncar o eixo zero a menos que haja justificativa metodológica expressa (e indique a quebra de escala com clareza).
+      </li>
+      <li>
+        <strong>Linha de Regressão / Ajuste:</strong> Se o objetivo for ilustrar tendência, plote a reta ajustada por mínimos quadrados, idealmente acompanhada da faixa sombreada do intervalo de confiança de 95%.
+      </li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. Cores acessíveis e daltonismo (ColorBrewer / Viridis)</h2>
+    <p>
+      Aproximadamente 8% da população masculina e 0,5% da feminina possuem alguma forma de daltonismo (deficiência na visão de cores), predominantemente a confusão entre vermelho e verde.
+    </p>
+    <p>
+      Evite combinar pontos em verde e vermelho para comparar grupos. Utilize paletas perceptualmente uniformes comprovadas, como <strong>Viridis</strong>, <strong>Plasma</strong> ou a seleção <em>ColorBrewer</em> (azul vs. laranja ou preto vs. tons contrastantes com formatos de pontos diferentes: círculos vazados, quadrados e triângulos).
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. Como formatar segundo a norma ABNT (NBR 14724)</h2>
+    <p>
+      Conforme as diretrizes editoriais brasileiras da ABNT:
+    </p>
+    <ol class="list-decimal pl-6 space-y-2">
+      <li>
+        <strong>Identificação no topo:</strong> A palavra "Figura", seguida do número de ordem em algarismos arábicos, travessão e título conciso (ex.: <em>Figura 2 — Dispersão entre massa corporal e consumo de oxigênio</em>).
+      </li>
+      <li>
+        <strong>Fonte no rodapé:</strong> Imediatamente abaixo da figura deve constar a fonte consultada (ex.: <em>Fonte: Elaborado pelo autor (2026).</em>), mesmo que seja de autoria própria.
+      </li>
+    </ol>
+
+    <!-- BLOCO AFILIADOS -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Livros Recomendados sobre Metodologia e Escrita</h3>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com.br/dp/8522490518?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Como Elaborar Projetos de Pesquisa</p>
+          <p class="text-slate-400 mt-1">Antonio Carlos Gil · Estruturação completa do trabalho acadêmico e apresentação gráfica.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com.br/dp/8580555462?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Descobrindo a Estatística com SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Práticas recomendadas para gráficos de publicação científica e análise de dados.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+

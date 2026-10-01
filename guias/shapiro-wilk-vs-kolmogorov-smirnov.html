@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shapiro-Wilk vs Kolmogorov-Smirnov: Qual Teste de Normalidade é Mais Confiável?</title>
+<meta name="description" content="Comparação detalhada entre os testes de Shapiro-Wilk e Kolmogorov-Smirnov (Lilliefors): poder estatístico, limitações com amostras pequenas e grandes e quando confiar em cada um.">
+<link rel="canonical" href="https://tcctools.com.br/guias/shapiro-wilk-vs-kolmogorov-smirnov">
+<link rel="alternate" hreflang="pt-br" href="https://tcctools.com.br/guias/shapiro-wilk-vs-kolmogorov-smirnov">
+<link rel="alternate" hreflang="en" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov">
+<link rel="alternate" hreflang="x-default" href="https://tcctools.com.br/en/guides/shapiro-wilk-vs-kolmogorov-smirnov">
+<meta property="og:title" content="Shapiro-Wilk vs Kolmogorov-Smirnov: Qual Escolher?">
+<meta property="og:description" content="Entenda as diferenças de poder estatístico entre Shapiro-Wilk e Kolmogorov-Smirnov e evite erros na verificação de pressupostos.">
+<meta property="og:type" content="article">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Shapiro-Wilk vs Kolmogorov-Smirnov: Qual Teste de Normalidade é Mais Confiável?",
+  "description": "Análise comparativa de poder estatístico entre Shapiro-Wilk e Kolmogorov-Smirnov com correção de Lilliefors.",
+  "inLanguage": "pt-BR",
+  "datePublished": "2026-10-01",
+  "author": { "@type": "Organization", "name": "Equipe Estatística TCC" },
+  "publisher": { "@type": "Organization", "name": "Estatística TCC" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Por que estatísticos preferem Shapiro-Wilk a Kolmogorov-Smirnov?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Estudos de simulação de Monte Carlo comprovam que o teste de Shapiro-Wilk possui poder estatístico significativamente superior para detectar desvios de normalidade na maioria das distribuições teóricas (especialmente em amostras pequenas e moderadas, de n = 7 a n = 200)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quando o Kolmogorov-Smirnov é aceitável?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O teste de Kolmogorov-Smirnov só deve ser aplicado quando os parâmetros de média e desvio-padrão da população forem conhecidos a priori, ou com a correção de Lilliefors quando estimados da amostra. Mesmo assim, sua sensibilidade é inferior à do Shapiro-Wilk."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+<div id="site-header"></div>
+
+<main class="max-w-3xl mx-auto px-6 py-10">
+  <nav class="text-xs text-slate-500 mb-4">
+    <a href="/" class="hover:text-blue-400">Início</a> ›
+    <a href="/guias/qual-teste-estatistico-usar" class="hover:text-blue-400">Guias</a> › Shapiro-Wilk vs Kolmogorov-Smirnov
+  </nav>
+
+  <h1 class="text-3xl font-bold leading-tight mb-3">Shapiro-Wilk vs Kolmogorov-Smirnov: qual teste de normalidade usar?</h1>
+  <p class="text-sm text-slate-400 mb-8">Atualizado em 1 de outubro de 2026 · Leitura de 11 minutos · Por Equipe Estatística TCC</p>
+
+  <article class="space-y-6 text-sm leading-relaxed text-slate-300">
+    <p class="text-base text-slate-200">
+      Antes de rodar qualquer teste t, ANOVA ou correlação de Pearson, o pesquisador precisa verificar o pressuposto de distribuição normal. Nos softwares clássicos (como SPSS), aparecem lado a lado duas opções famosas: <strong>Shapiro-Wilk</strong> e <strong>Kolmogorov-Smirnov</strong>. Quando os dois discordam — ou quando você precisa justificar sua escolha na banca —, qual deles você deve defender?
+    </p>
+
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 my-6 space-y-2">
+      <h2 class="text-sm font-bold text-blue-400 uppercase tracking-wide">Testar Normalidade com Algoritmo AS R94</h2>
+      <p class="text-xs text-slate-400">Use nossa ferramenta de normalidade gratuita: ela calcula o teste de Shapiro-Wilk com aproximação de Royston, gera o gráfico Q-Q e calcula assimetria e curtose.</p>
+      <a href="/normalidade" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-semibold mt-2 transition">Abrir Teste de Normalidade →</a>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">1. Resposta direta: Shapiro-Wilk é superior na quase totalidade dos casos</h2>
+    <p>
+      Se você precisa de uma recomendação clara e consensual na literatura estatística contemporânea: <strong>use o teste de Shapiro-Wilk</strong>.
+    </p>
+    <p>
+      Estudos comparativos exaustivos (como Razali & Wah, 2011) demonstraram repetidamente que o teste de Shapiro-Wilk apresenta o <strong>maior poder estatístico</strong> para todas as combinações comuns de tamanho amostral e tipos de assimetria ou curtose, superando o Kolmogorov-Smirnov, o Anderson-Darling e o Jarque-Bera.
+    </p>
+
+    <h2 class="text-xl font-bold text-white pt-4">2. As limitações do Kolmogorov-Smirnov (K-S)</h2>
+    <p>
+      O teste de Kolmogorov-Smirnov original foi desenhado para testar se uma amostra provém de uma distribuição teórica <em>com parâmetros média e variância conhecidos a priori</em> (e não calculados a partir da própria amostra).
+    </p>
+    <ul class="list-disc pl-6 space-y-2">
+      <li>
+        <strong>Correção de Lilliefors:</strong> Quando a média e a variância são estimadas dos próprios dados coletados (o cenário de 100% dos TCCs), o K-S padrão torna-se excessivamente conservador. O teste de <em>Lilliefors</em> ajusta os valores críticos, mas seu poder estatístico ainda permanece inferior ao de Shapiro-Wilk.
+      </li>
+      <li>
+        <strong>Insensibilidade nas caudas:</strong> O K-S compara apenas a maior distância vertical entre as distribuições acumuladas. Por isso, ele é relativamente cego a anomalias nas caudas da distribuição, que são justamente os desvios que mais afetam testes como o teste t e a ANOVA.
+      </li>
+    </ul>
+
+    <h2 class="text-xl font-bold text-white pt-4">3. O paradoxo do tamanho amostral</h2>
+    <p>
+      Nenhum teste de normalidade deve ser interpretado às cegas pelo p-valor:
+    </p>
+    <div class="bg-slate-900 border border-slate-800 rounded-lg p-4 overflow-x-auto my-4">
+      <table class="w-full text-xs text-left">
+        <thead class="text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="py-2 pr-4">Cenário Amostral</th>
+            <th class="py-2 pr-4">Comportamento do Teste</th>
+            <th class="py-2">Conduta Recomendada</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-rose-400">Amostras pequenas (n < 20)</td>
+            <td class="py-2 pr-4">Poder estatístico baixo. Pode dar p > 0,05 mesmo com dados não normais.</td>
+            <td class="py-2">Priorizar gráficos Q-Q e adotar testes não paramétricos conservadoramente.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-emerald-400">Amostras moderadas (20 ≤ n ≤ 200)</td>
+            <td class="py-2 pr-4">Shapiro-Wilk opera na sua faixa ideal de sensibilidade.</td>
+            <td class="py-2">Confiar no p-valor de Shapiro-Wilk em conjunto com assimetria e curtose.</td>
+          </tr>
+          <tr>
+            <td class="py-2 pr-4 font-semibold text-amber-400">Amostras grandes (n > 300)</td>
+            <td class="py-2 pr-4">Hipersensibilidade: rejeita a normalidade por qualquer mínima imperfeição.</td>
+            <td class="py-2">Invocar o Teorema Central do Limite e inspecionar visualmente o Q-Q Plot.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="text-xl font-bold text-white pt-4">4. Como justificar o Shapiro-Wilk no capítulo de metodologia</h2>
+    <div class="bg-slate-900 border-l-4 border-blue-500 p-4 rounded-r-lg space-y-2">
+      <p class="text-xs font-bold text-white uppercase tracking-wider">Sugestão de texto para o TCC:</p>
+      <p class="text-xs text-slate-300 italic">
+        "A aderência à distribuição normal foi avaliada por meio do teste de Shapiro-Wilk, adotado em razão de seu maior poder estatístico em relação ao teste de Kolmogorov-Smirnov para amostras de porte moderado (Shapiro & Wilk, 1965; Razali & Wah, 2011). A análise foi complementada pela inspeção visual de diagramas quantil-quantil (Q-Q plots) e pela verificação dos coeficientes de assimetria e curtose."
+      </p>
+    </div>
+
+    <!-- BLOCO AFILIADOS -->
+    <section class="border-t border-slate-800 pt-8 mt-10 space-y-3">
+      <h3 class="text-sm font-bold text-slate-200">Livros Recomendados de Estatística Aplicada</h3>
+      <div class="grid sm:grid-cols-2 gap-3 text-xs">
+        <a href="https://www.amazon.com.br/dp/8580555462?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Descobrindo a Estatística com SPSS / R</p>
+          <p class="text-slate-400 mt-1">Andy Field · Explicação detalhada sobre a teoria dos testes de normalidade e pressupostos.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+        <a href="https://www.amazon.com.br/dp/858271505X?tag=hamad960-20" target="_blank" rel="noopener sponsored" class="p-3 bg-slate-900 border border-slate-800 hover:border-blue-500 rounded-lg block transition">
+          <p class="font-bold text-slate-200">Estatística Sem Matemática</p>
+          <p class="text-slate-400 mt-1">Dancey & Reidy · Guia prático de interpretação de saídas estatísticas sem fórmulas complexas.</p>
+          <span class="text-blue-400 text-[11px] mt-2 inline-block">Ver na Amazon →</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script type="module">
+  import { mountShell } from '/js/ui.js';
+  mountShell();
+</script>
+</body>
+</html>
+
